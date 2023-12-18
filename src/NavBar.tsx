@@ -1,17 +1,14 @@
-import fontawesome from "@fortawesome/fontawesome";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { faCheckSquare, faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { useDate } from "./UpdateTime";
 
-fontawesome.library.add(faCheckSquare, faCoffee, faGithub);
+// fontawesome.library.add(faGithub);
 
 function Navbar() {
     //   const [count, setCount] = useState(0);
     const date = useDate();
-    const comingsoon = () => {
-        console.log("Coming soon");
-        // return <div className="text-center">coming soon</div>;
-    };
+    // const comingsoon = () => {
+    //     console.log("Coming soon");
+    //     // return <div className="text-center">coming soon</div>;
+    // };
     return (
         <nav className="max-w-screen-xl grid grid-cols-12 items-center justify-between lg:space-y-0 space-y-1 mx-auto p-4">
             <div className="lg:order-1 lg:col-span-4 col-span-6 flex justify-start">

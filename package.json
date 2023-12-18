@@ -1,11 +1,14 @@
 {
   "name": "iamdhakre-dev-react",
+  "homepage": "https://www.iamdhakrey.com",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -16,11 +19,13 @@
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "gh-pages": "^6.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-markdown": "^9.0.1"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-common-types": "^6.5.1",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",

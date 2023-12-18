@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 
 const Terminal = () => {
     const [input, setInput] = useState("");
-    const [output, setOutput] = useState<never[]>([]);
+    const [output, setOutput] = useState<any[]>([
+        { type: "", command: "", text: "" },
+    ]);
 
     const handleInputChange = (e: any) => {
         // console.log(e.target.value);
@@ -116,7 +118,7 @@ const Terminal = () => {
     return (
         <div className="pt-0 font-source space-y-3 overflow-y-scroll h-[83vh] max-w-screen-xl mx-auto text-white p-4">
             <div>
-                {output.map((item, index) => (
+                {output.map((item, index: number) => (
                     <div
                         key={index}
                         className={
@@ -129,7 +131,7 @@ const Terminal = () => {
                             iamdhakrey:~# {item.command}
                         </span>
                         <div>
-                            {item.text.map((itemname, index) => (
+                            {item.text.map((itemname: string) => (
                                 <div>{itemname}</div>
                             ))}
                         </div>

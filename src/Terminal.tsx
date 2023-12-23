@@ -1,18 +1,19 @@
 // Terminal.js
 import { useEffect, useState } from "react";
+import ParrotAnimation from "./DancingParrot";
 
 const Terminal = () => {
     const [input, setInput] = useState("");
-    const [output, setOutput] = useState<any[]>([
-        { type: "", command: "", text: "" },
-    ]);
+    const [output, setOutput] = useState<any[]>([]);
 
+    const [showCommand, setshowCommand] = useState(true);
     const handleInputChange = (e: any) => {
         // console.log(e.target.value);
         setInput(e.target.value);
     };
 
     const handleEnterKey = (e: any) => {
+        console.log(e.target.value);
         if (e.key === "Enter") {
             // Handle the command and update the output
             if (e.target.value === "") {
@@ -26,13 +27,12 @@ const Terminal = () => {
     };
 
     const handleCommand = (main_command: string) => {
-        // You can implement command handling logic here
-        // For simplicity, just echoing the command for now
         const name = [
             "Usage: ",
             "-> info        - Displays information about me.",
             "-> whoami      - Displays information about me.",
             "-> about       - Displays information about me.",
+            "-> parrot      - Dancing parrot.",
             "-> clear       - clear display.",
         ];
         const about = [
@@ -59,6 +59,17 @@ const Terminal = () => {
             ]);
         } else if (command == "clear") {
             setOutput([]);
+        } else if (command == "parrot") {
+            setshowCommand(false);
+            console.log(showCommand);
+            setOutput([
+                {
+                    type: "parrot",
+                    text: ["Parrot"],
+                    command: command,
+                    parrot: <ParrotAnimation />,
+                },
+            ]);
         } else if (command == "help") {
             setOutput((prevOutput) => [
                 ...prevOutput,
@@ -88,11 +99,6 @@ const Terminal = () => {
         "Run 'help' for more information",
     ];
 
-    // const placeholders = [
-    //     "First Placeholder",
-    //     "Second Placeholder",
-    //     "Third Placeholder",
-    // ];
     const [currentPlaceholderIndex, setCurrentPlaceholderIndex] = useState(0);
     const [typedText, setTypedText] = useState("");
 
@@ -124,7 +130,7 @@ const Terminal = () => {
                         className={
                             item.type === "command"
                                 ? "text-green-400"
-                                : "text-white"
+                                : "hidden"
                         }
                     >
                         <span className="text-white">
@@ -137,9 +143,26 @@ const Terminal = () => {
                         </div>
                     </div>
                 ))}
+
+                {output.map((item, index: number) => (
+                    <div
+                        key={index}
+                        className={
+                            item.type === "parrot"
+                                ? "text-red-400"
+                                : "text-yellow-400"
+                        }
+                    >
+                        {item.parrot}
+                    </div>
+                ))}
             </div>
             <div>
-                <i className="text-white cursor-shadow">
+                <i
+                    className={
+                        showCommand ? " text-white cursor-shadow" : "hidden"
+                    }
+                >
                     iamdhakrey:~#
                     <input
                         type="text"
@@ -147,9 +170,7 @@ const Terminal = () => {
                         value={input}
                         onChange={handleInputChange}
                         onKeyDown={handleEnterKey}
-                        // placeholder={placeholders[currentPlaceholderIndex]}
                         placeholder={typedText}
-                        // class="cursor-shadow"
                     />
                 </i>
                 {/* </span> */}

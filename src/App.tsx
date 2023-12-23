@@ -10,6 +10,7 @@ function App() {
             <Navbar />
             <Terminal />
             <Footer />
+            {/* <FileViewer /> */}
         </div>
     );
 }

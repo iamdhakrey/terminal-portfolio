@@ -67,34 +67,36 @@ function Blogs() {
 
     return (
         <div className="min-h-screen bg-black text-green-400 font-mono pb-16">
-            <div className="max-w-6xl mx-auto py-8 px-4">
+            <div className="max-w-6xl mx-auto py-4 sm:py-8 px-2 sm:px-4">
                 {/* Terminal navigation */}
-                <div className="mb-6">
-                    <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
-                        <div className="flex items-center space-x-2">
-                            <span className="text-blue-400">user@localhost</span>
-                            <span className="text-white">:</span>
-                            <span className="text-blue-600">~/blogs</span>
-                            <span className="text-white">$ </span>
-                            <Link
-                                to="/blogs"
-                                className="text-green-400 hover:text-green-300 underline"
-                            >
-                                cd ..
-                            </Link>
-                            <span className="text-gray-500 ml-4"># Back to blog list</span>
+                <div className="mb-4 sm:mb-6">
+                    <div className="bg-gray-900 border border-gray-700 rounded-lg p-3 sm:p-4">
+                        <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+                            <div className="flex items-center space-x-1 text-xs sm:text-sm">
+                                <span className="text-blue-400 hidden sm:inline">user@localhost</span>
+                                <span className="text-white hidden sm:inline">:</span>
+                                <span className="text-blue-600 hidden sm:inline">~/blogs</span>
+                                <span className="text-white">$ </span>
+                                <Link
+                                    to="/blogs"
+                                    className="text-green-400 hover:text-green-300 underline"
+                                >
+                                    cd ..
+                                </Link>
+                            </div>
+                            <span className="text-gray-500 text-xs sm:text-sm"># Back to blog list</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Terminal window */}
                 <div className="bg-gray-900 border border-gray-700 rounded-t-lg">
-                    <div className="flex items-center justify-between p-4 border-b border-gray-700">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border-b border-gray-700 space-y-2 sm:space-y-0">
                         <div className="flex items-center space-x-2">
                             <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                             <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                            <span className="text-gray-400 text-sm ml-4">~/blogs/{filename}.md</span>
+                            <span className="text-gray-400 text-xs sm:text-sm ml-4 break-all">~/blogs/{filename}.md</span>
                         </div>
                         <div className="text-gray-500 text-xs">
                             vim {filename}.md

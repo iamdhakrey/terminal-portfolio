@@ -1,7 +1,7 @@
 ---
 title: "Sudoku Solver - Modular Rust Workspace"
 date: "2025-01-01"
-author: "Tech Blog"
+author: "Hrithik Dhakrey"
 --- 
 # Sudoku Solver - Modular Rust Workspace
 

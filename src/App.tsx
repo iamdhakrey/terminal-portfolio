@@ -3,17 +3,17 @@ import Footer from "./Footer";
 import Navbar from "./NavBar";
 import Terminal from "./Terminal";
 import BlogList from "./BlogList";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import Blogs from "./Blogs";
 
 // library.add(faGift);
 
 function App() {
     return (
-        <Router>
-            <Navbar />
-            <div className="min-h-screen flex flex-col">
-                <div className="flex-1 overflow-auto">
+        <HashRouter>
+            <div className="min-h-screen flex flex-col bg-black pb-16"> {/* Added padding bottom for fixed footer */}
+                <Navbar />
+                <div className="flex-1">
                     <Routes>
                         <Route path="/" element={<Terminal />} />
                         <Route path="/blogs" element={<BlogList />} />
@@ -23,7 +23,7 @@ function App() {
                 </div>
                 <Footer />
             </div>
-        </Router>
+        </HashRouter>
     );
 }
 

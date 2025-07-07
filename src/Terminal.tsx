@@ -445,6 +445,83 @@ const Terminal = () => {
                 });
                 break;
 
+            case "cat":
+                const filename = params[0];
+                if (filename) {
+                    if (filename.includes("blog") || filename.includes(".md")) {
+                        addToOutput({
+                            type: "command",
+                            command: cmd,
+                            text: [
+                                `📄 Reading file: ${filename}`,
+                                "✨ Opening blog post...",
+                                "",
+                                "💡 Use 'cd blogs' to navigate to blog directory",
+                                "   or visit /blogs to see all posts"
+                            ]
+                        });
+                        setTimeout(() => navigate("/blogs"), 1000);
+                    } else {
+                        addToOutput({
+                            type: "command",
+                            command: cmd,
+                            text: [
+                                `cat: ${filename}: No such file or directory`,
+                                "",
+                                "Available files:",
+                                "  • README.md",
+                                "  • portfolio.sh",
+                                "  • blogs/ (directory)",
+                                "",
+                                "💡 Try 'cat blogs' or 'ls blogs' to see blog posts"
+                            ]
+                        });
+                    }
+                } else {
+                    addToOutput({
+                        type: "command",
+                        command: cmd,
+                        text: [
+                            "Usage: cat [file]",
+                            "",
+                            "Examples:",
+                            "  cat README.md",
+                            "  cat blogs",
+                            "  cat linux_commands.md"
+                        ]
+                    });
+                }
+                break;
+
+            case "grep":
+                const pattern = params[0];
+                const file = params[1];
+                if (pattern && file) {
+                    addToOutput({
+                        type: "command",
+                        command: cmd,
+                        text: [
+                            `Searching for '${pattern}' in ${file}...`,
+                            "",
+                            "💡 This is a demo terminal.",
+                            "   Real grep functionality would search file contents."
+                        ]
+                    });
+                } else {
+                    addToOutput({
+                        type: "command",
+                        command: cmd,
+                        text: [
+                            "Usage: grep [pattern] [file]",
+                            "",
+                            "Examples:",
+                            "  grep 'linux' blogs/linux_commands.md",
+                            "  grep 'react' blogs/react-guide.md"
+                        ]
+                    });
+                }
+                break;
+
             default:
                 addToOutput({
                     type: "command",
@@ -504,18 +581,18 @@ const Terminal = () => {
 
     return (
         <div
-            className="pt-0 font-mono space-y-1 overflow-y-auto h-[calc(100vh-160px)] max-w-screen-xl mx-auto text-white p-4 bg-black"
+            className="pt-0 font-mono space-y-1 overflow-y-auto h-[calc(100vh-160px)] max-w-screen-xl mx-auto text-white p-2 sm:p-4 bg-black"
             onClick={() => inputRef.current?.focus()}
         >
             {/* Welcome message */}
             {output.length === 0 && (
-                <div className="mb-6 text-green-400">
-                    <div className="border border-gray-700 rounded-lg p-4 bg-gray-900">
-                        <h2 className="text-xl mb-2">🐧 Welcome to iamdhakrey.dev terminal!</h2>
-                        <p className="text-gray-400 mb-2">
+                <div className="mb-4 sm:mb-6 text-green-400">
+                    <div className="border border-gray-700 rounded-lg p-3 sm:p-4 bg-gray-900">
+                        <h2 className="text-lg sm:text-xl mb-2">🐧 Welcome to iamdhakrey.dev terminal!</h2>
+                        <p className="text-gray-400 mb-2 text-sm sm:text-base">
                             This is an interactive Linux-style terminal. Type <span className="text-green-400">'help'</span> to see available commands.
                         </p>
-                        <p className="text-gray-500 text-sm">
+                        <p className="text-gray-500 text-xs sm:text-sm">
                             💡 Pro tip: Use arrow keys for command history, Tab for completion
                         </p>
                     </div>
@@ -527,44 +604,43 @@ const Terminal = () => {
                 {output.map((item, index) => (
                     <div key={index}>
                         {item.type === "input" && (
-                            <div className="text-green-400">
+                            <div className="text-green-400 text-sm sm:text-base">
                                 {item.text.map((line: string, i: number) => (
-                                    <div key={i}>{line}</div>
+                                    <div key={i} className="break-all">{line}</div>
                                 ))}
                             </div>
                         )}
                         {item.type === "command" && (
-                            <div className="text-gray-200 ml-4">
+                            <div className="text-gray-200 ml-2 sm:ml-4 text-sm sm:text-base">
                                 {item.text.map((line: string, i: number) => (
-                                    <div key={i} className={
-                                        line.startsWith("❌") ? "text-red-400" :
+                                    <div key={i} className={`break-words ${line.startsWith("❌") ? "text-red-400" :
                                             line.startsWith("✨") || line.startsWith("📁") ? "text-blue-400" :
                                                 line.startsWith("💡") ? "text-yellow-400" :
                                                     line.startsWith("│") || line.startsWith("┌") || line.startsWith("└") || line.startsWith("├") ? "text-cyan-400" :
                                                         ""
-                                    }>
+                                        }`}>
                                         {line}
                                     </div>
                                 ))}
                             </div>
                         )}
                         {item.type === "neofetch" && (
-                            <div className="text-blue-400 ml-4 font-mono text-sm">
+                            <div className="text-blue-400 ml-2 sm:ml-4 font-mono text-xs sm:text-sm overflow-x-auto">
                                 {item.text.map((line: string, i: number) => (
-                                    <div key={i}>{line}</div>
+                                    <div key={i} className="whitespace-nowrap">{line}</div>
                                 ))}
                             </div>
                         )}
                         {item.type === "parrot" && (
-                            <div className="ml-4">
-                                <div className="text-yellow-400 mb-2">{item.text[0]}</div>
+                            <div className="ml-2 sm:ml-4">
+                                <div className="text-yellow-400 mb-2 text-sm sm:text-base">{item.text[0]}</div>
                                 {item.parrot}
                             </div>
                         )}
                         {item.type === "completion" && (
-                            <div className="text-yellow-400 ml-4">
+                            <div className="text-yellow-400 ml-2 sm:ml-4 text-sm sm:text-base">
                                 {item.text.map((line: string, i: number) => (
-                                    <div key={i}>{line}</div>
+                                    <div key={i} className="break-words">{line}</div>
                                 ))}
                             </div>
                         )}
@@ -573,15 +649,15 @@ const Terminal = () => {
             </div>
 
             {/* Input line */}
-            <div className="flex items-center text-green-400 pt-2">
-                <span className="text-blue-400">user@localhost</span>
-                <span className="text-white">:</span>
-                <span className="text-blue-600">~</span>
+            <div className="flex items-center text-green-400 pt-2 text-sm sm:text-base">
+                <span className="text-blue-400 hidden sm:inline">user@localhost</span>
+                <span className="text-white hidden sm:inline">:</span>
+                <span className="text-blue-600 hidden sm:inline">~</span>
                 <span className="text-white">$ </span>
                 <input
                     ref={inputRef}
                     type="text"
-                    className="bg-transparent text-white border-none outline-none flex-1 font-mono"
+                    className="bg-transparent text-white border-none outline-none flex-1 font-mono text-sm sm:text-base"
                     value={input}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}

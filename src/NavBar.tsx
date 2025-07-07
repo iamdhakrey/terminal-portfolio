@@ -8,16 +8,16 @@ function Navbar() {
 
     return (
         <nav className="bg-gray-900 border-b border-gray-700 font-mono">
-            <div className="max-w-screen-xl mx-auto px-4 py-3">
+            <div className="max-w-screen-xl mx-auto px-2 sm:px-4 py-2 sm:py-3">
                 {/* Terminal-style navigation */}
                 <div className="flex items-center justify-between">
                     {/* Left side - Terminal prompt */}
-                    <div className="flex items-center space-x-1 text-sm">
-                        <span className="text-blue-400">user@localhost</span>
-                        <span className="text-white">:</span>
-                        <span className="text-blue-600">~/</span>
-                        <span className="text-white">$ </span>
-                        <Link to="/" className="text-green-400 hover:text-green-300 font-bold">
+                    <div className="flex items-center space-x-1 text-xs sm:text-sm">
+                        <span className="text-blue-400 hidden sm:inline">user@localhost</span>
+                        <span className="text-white hidden sm:inline">:</span>
+                        <span className="text-blue-600 hidden sm:inline">~/</span>
+                        <span className="text-white hidden sm:inline">$ </span>
+                        <Link to="/" className="text-green-400 hover:text-green-300 font-bold text-sm sm:text-base">
                             <span className="text-green-400">i</span>amdhakrey
                             <span className="text-green-400">.</span>dev
                         </Link>
@@ -33,30 +33,30 @@ function Navbar() {
                     </div>
 
                     {/* Right side - Navigation commands */}
-                    <div className="flex items-center space-x-4 text-sm">
+                    <div className="flex items-center space-x-2 sm:space-x-4 text-xs sm:text-sm">
                         <Link
                             to="/blogs"
                             className="text-green-400 hover:text-green-300 font-source tracking-wide transition-colors"
                         >
-                            ./blogs
+                            <span className="hidden sm:inline">./</span>blogs
                         </Link>
-                        <span className="text-gray-600">|</span>
+                        <span className="text-gray-600 hidden sm:inline">|</span>
                         <a
                             href="https://t.me/iamdhakrey"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-400 hover:text-blue-300 font-source tracking-wide transition-colors"
                         >
-                            @telegram
+                            <span className="hidden sm:inline">@</span>tg
                         </a>
-                        <span className="text-gray-600">|</span>
+                        <span className="text-gray-600 hidden sm:inline">|</span>
                         <a
                             href="https://github.com/iamdhakrey/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-yellow-400 hover:text-yellow-300 font-source tracking-wide transition-colors"
                         >
-                            git://github
+                            <span className="hidden sm:inline">git://</span>gh
                         </a>
                     </div>
                 </div>

@@ -18,6 +18,7 @@ export interface BlogFile {
 export const BLOG_FILES = [
     'linux_commands.md',
     'react-typescript-guide.md',
+    'sudoko.md'
     // Add more blog files here as you create them
     // Example: 'web-development-tips.md', 'javascript-fundamentals.md', etc.
 ];

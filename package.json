@@ -22,6 +22,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@tailwindcss/typography": "^0.5.16",
     "buffer": "^6.0.3",
+    "firebase": "^11.10.0",
     "gh-pages": "^6.1.0",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",

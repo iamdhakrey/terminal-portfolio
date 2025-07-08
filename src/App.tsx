@@ -3,6 +3,7 @@ import Footer from "./Footer";
 import Navbar from "./NavBar";
 import Terminal from "./Terminal";
 import BlogList from "./BlogList";
+import Profile from "./Profile";
 import { Routes, Route, HashRouter } from "react-router-dom";
 import Blogs from "./Blogs";
 
@@ -18,6 +19,7 @@ function App() {
                         <Route path="/" element={<Terminal />} />
                         <Route path="/blogs" element={<BlogList />} />
                         <Route path="/blog/:filename" element={<Blogs />} />
+                        <Route path="/profile" element={<Profile />} />
                         {/* Add more routes as needed */}
                     </Routes>
                 </div>

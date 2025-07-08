@@ -2,13 +2,15 @@
     "name": "Hrithik Dhakrey",
     "username": "iamdhakrey",
     "title": "Full Stack Developer & DevOps Engineer",
-    "description": "Python Developer & DevOps Engineer | Discord Bot Developer | CLI Applications Creator | Linux Enthusiast",
-    "image": "/dbgrq23-ee7a8ee2-ff35-431a-9c70-51b5e05246e5.jpg",
+    "description": "Full Stack Developer & Rust Enthusiast | Go Backend Specialist & FinTech Builder | Desktop Apps with Tauri & Hardware Hacker | Python Developer & DevOps Engineer | Discord Bot Developer | CLI Applications Creator | Linux Enthusiast",
+    "image": "/iamdhakrey.png",
     "url": "https://iamdhakrey.dev/profile",
     "website": "https://iamdhakrey.dev",
     "location": "India",
     "bio": "I'm a passionate developer who loves creating innovative solutions and learning new technologies. Always excited to work on interesting projects and collaborate with fellow developers!",
     "skills": [
+        "GOLang",
+        "Rust",
         "Python",
         "JavaScript",
         "TypeScript",
@@ -35,13 +37,9 @@
         "projects": "25+",
         "profileViews": "1.2k+",
         "streak": "45 days",
-        "botUsers": "10k+"
+        "botUsers": "2k+"
     },
     "achievements": [
-        {
-            "title": "Top Python Developer",
-            "description": "Recognized in local developer community"
-        },
         {
             "title": "DevOps Automation Expert",
             "description": "Specialized in infrastructure as code"
@@ -57,10 +55,13 @@
     ],
     "currentFocus": [
         "Building scalable microservices architecture",
+        "Developing desktop applications with Tauri",
+        "Exploring hardware integration with Rust Tauri",
+        "Building CLI applications with Rust/GO",
         "DevOps automation and infrastructure as code",
         "Contributing to open source projects",
         "Learning cloud-native technologies"
     ],
-    "funFact": "I can solve a Rubik's cube in under 2 minutes and maintain several Discord bots used by 10k+ users!",
-    "lastUpdated": "2024-07-08"
+    "funFact": "I can solve a Rubik's cube in under 2 minutes and maintain several Discord bots used by 2k+ users!",
+    "lastUpdated": "2025-07-08"
 }

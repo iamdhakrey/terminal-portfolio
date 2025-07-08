@@ -48,7 +48,7 @@ const Terminal = () => {
         } else if (e.key === "Tab") {
             e.preventDefault();
             // Simple tab completion for common commands
-            const commands = ["help", "about", "whoami", "neofetch", "clear", "ls", "cd", "pwd", "fortune", "cowsay", "tree", "ps", "top", "grep", "cat", "man", "history", "date", "uptime", "uname"];
+            const commands = ["help", "about", "whoami", "profile", "neofetch", "clear", "ls", "cd", "pwd", "fortune", "cowsay", "tree", "ps", "top", "grep", "cat", "man", "history", "date", "uptime", "uname", "parrot", "sl"];
             const matches = commands.filter(cmd => cmd.startsWith(input.toLowerCase()));
             if (matches.length === 1) {
                 setInput(matches[0]);
@@ -92,11 +92,12 @@ const Terminal = () => {
                         "    neofetch     - Display system information",
                         "    whoami       - Current user information",
                         "    about        - About me",
+                        "    profile      - View shareable profile",
                         "    uname        - System information",
                         "    uptime       - System uptime",
                         "",
                         "  Navigation:",
-                        "    cd [dir]     - Change directory (cd blogs, cd ~)",
+                        "    cd [dir]     - Change directory (cd blogs, cd profile)",
                         "    ls [options] - List directory contents",
                         "    pwd          - Print working directory",
                         "    tree         - Display directory tree",
@@ -213,6 +214,26 @@ const Terminal = () => {
                 });
                 break;
 
+            case "profile":
+                addToOutput({
+                    type: "command",
+                    command: cmd,
+                    text: [
+                        "🚀 Opening shareable profile...",
+                        "✨ Perfect for sharing on social media!",
+                        "",
+                        "📤 Features:",
+                        "• Complete profile with contact info",
+                        "• Social media optimized",
+                        "• Shareable link format",
+                        "• Professional presentation",
+                        "",
+                        "🔗 Direct link: iamdhakrey.dev/profile"
+                    ]
+                });
+                setTimeout(() => navigate("/profile"), 1000);
+                break;
+
             case "clear":
                 setOutput([]);
                 break;
@@ -238,15 +259,16 @@ const Terminal = () => {
                         type: "command",
                         command: cmd,
                         text: [
-                            "total 12",
-                            "drwxr-xr-x 3 user user 4096 Jan  1 12:00 .",
+                            "total 15",
+                            "drwxr-xr-x 4 user user 4096 Jan  1 12:00 .",
                             "drwxr-xr-x 5 user user 4096 Jan  1 11:30 ..",
                             "drwxr-xr-x 2 user user 4096 Jan  1 12:00 blogs/",
+                            "drwxr-xr-x 2 user user 4096 Jan  1 12:00 profile/",
                             "-rwxr-xr-x 1 user user 2048 Jan  1 10:00 portfolio.sh*",
                             "-rw-r--r-- 1 user user 1024 Jan  1 09:30 README.md",
                             "",
-                            "📁 Directories: blogs/",
-                            "💡 Try 'ls blogs' to see blog posts"
+                            "📁 Directories: blogs/, profile/",
+                            "💡 Try 'ls blogs' to see blog posts or 'profile' for shareable profile"
                         ]
                     });
                 }
@@ -264,6 +286,16 @@ const Terminal = () => {
                         ]
                     });
                     setTimeout(() => navigate("/blogs"), 1000);
+                } else if (dir === "profile" || dir === "/profile") {
+                    addToOutput({
+                        type: "command",
+                        command: cmd,
+                        text: [
+                            "📁 Navigating to profile directory...",
+                            "✨ Opening shareable profile..."
+                        ]
+                    });
+                    setTimeout(() => navigate("/profile"), 1000);
                 } else if (dir === ".." || dir === "~" || dir === "/") {
                     addToOutput({
                         type: "command",
@@ -341,6 +373,9 @@ const Terminal = () => {
                         "│   ├── linux_commands.md",
                         "│   ├── react-typescript-guide.md",
                         "│   └── sudoko.md",
+                        "├── profile/",
+                        "│   ├── profile.sh*",
+                        "│   └── social-card.json",
                         "├── public/",
                         "│   ├── assets/",
                         "│   └── images/",
@@ -351,7 +386,7 @@ const Terminal = () => {
                         "├── README.md",
                         "└── package.json",
                         "",
-                        "4 directories, 8 files"
+                        "5 directories, 10 files"
                     ]
                 });
                 break;
@@ -660,7 +695,7 @@ const Terminal = () => {
                                     <div key={i} className={`break-words ${line.startsWith("❌") ? "text-red-400" :
                                         line.startsWith("✨") || line.startsWith("📁") ? "text-blue-400" :
                                             line.startsWith("💡") ? "text-yellow-400" :
-                                                line.startsWith("│") || line.startsWith("┌") || line.startsWith("└") || line.startsWith("├") ? "text-cyan-400" :
+                                                line.startsWith("│") || line.startsWith("┌") || line.startsWith("╰") || line.startsWith("├") ? "text-cyan-400" :
                                                     ""
                                         }`}>
                                         {line}

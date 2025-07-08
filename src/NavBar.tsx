@@ -41,6 +41,13 @@ function Navbar() {
                             <span className="hidden sm:inline">./</span>blogs
                         </Link>
                         <span className="text-gray-600 hidden sm:inline">|</span>
+                        <Link
+                            to="/profile"
+                            className="text-purple-400 hover:text-purple-300 font-source tracking-wide transition-colors"
+                        >
+                            <span className="hidden sm:inline">./</span>profile
+                        </Link>
+                        <span className="text-gray-600 hidden sm:inline">|</span>
                         <a
                             href="https://t.me/iamdhakrey"
                             target="_blank"

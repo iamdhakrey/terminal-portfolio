@@ -76,10 +76,10 @@ function Profile() {
     }
 
     const skills = [
-        { category: 'Languages', items: ['Python', 'JavaScript', 'TypeScript', 'HTML5', 'CSS3', 'SQL'] },
-        { category: 'Frameworks', items: ['FastAPI', 'Django', 'Flask', 'React', 'Next.js', 'Tailwind CSS'] },
+        { category: 'Languages', items: ['GoLang', 'Rust', 'Python', 'JavaScript', 'TypeScript', 'HTML5', 'CSS3', 'SQL'] },
+        { category: 'Frameworks', items: ['Echo(Go)', 'Actix(Rust)', 'FastAPI', 'Django', 'Flask', 'React', 'Tailwind CSS'] },
         { category: 'DevOps', items: ['Docker', 'Kubernetes', 'AWS', 'CI/CD', 'Linux', 'Nginx'] },
-        { category: 'Databases', items: ['PostgreSQL', 'MongoDB', 'Redis', 'SQLite'] },
+        { category: 'Databases', items: ['PostgreSQL', 'MongoDB', 'MySQL', 'SQLite', 'Redis', 'SQLite'] },
         { category: 'Tools', items: ['Git', 'VS Code', 'Postman', 'Discord.py', 'SQLAlchemy'] },
     ];
 

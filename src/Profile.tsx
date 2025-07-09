@@ -4,29 +4,37 @@ import { updateSEOTags, generateStructuredData, shareProfile } from './utils/seo
 
 function Profile() {
     const [profileData, setProfileData] = useState<any>(null);
+    const [githubData, setGithubData] = useState<any>(null);
     const [shareMessage, setShareMessage] = useState('');
 
     useEffect(() => {
         const loadProfileData = async () => {
             try {
-                const response = await fetch('/profile-data.json');
-                const data = await response.json();
-                setProfileData(data);
+                const [profileResponse, githubResponse] = await Promise.all([
+                    fetch('/profile-data.json'),
+                    fetch('/github-projects.json')
+                ]);
+
+                const profileData = await profileResponse.json();
+                const githubData = await githubResponse.json();
+
+                setProfileData(profileData);
+                setGithubData(githubData);
 
                 // Update SEO tags for social sharing
                 updateSEOTags({
-                    title: `${data.name} (@${data.username}) - ${data.title}`,
-                    description: data.description,
-                    image: `${window.location.origin}${data.image}`,
+                    title: `${profileData.name} (@${profileData.username}) - ${profileData.title}`,
+                    description: profileData.description,
+                    image: `${window.location.origin}${profileData.image}`,
                     url: window.location.href,
                     type: 'profile',
                     siteName: 'iamdhakrey.dev',
-                    author: data.name,
-                    keywords: `${data.name}, ${data.username}, ${data.skills.join(', ')}`
+                    author: profileData.name,
+                    keywords: `${profileData.name}, ${profileData.username}, ${profileData.skills.join(', ')}`
                 });
 
                 // Generate structured data for search engines
-                generateStructuredData(data);
+                generateStructuredData(profileData);
             } catch (error) {
                 console.error('Error loading profile data:', error);
                 // Fallback data
@@ -36,6 +44,9 @@ function Profile() {
                     title: 'Full Stack Developer & DevOps Engineer',
                     description: 'Python Developer & DevOps Engineer | Discord Bot Developer | CLI Applications Creator',
                     image: '/dbgrq23-ee7a8ee2-ff35-431a-9c70-51b5e05246e5.jpg'
+                });
+                setGithubData({
+                    stats: { totalRepos: 19, totalStars: 5, totalForks: 1 }
                 });
             }
         };
@@ -147,16 +158,16 @@ function Profile() {
                         {/* Quick Stats */}
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
                             <div className="bg-gray-800 border border-gray-600 rounded-lg p-3 text-center">
-                                <div className="text-yellow-400 text-xl sm:text-2xl font-bold">{profileData.stats.projects}</div>
+                                <div className="text-yellow-400 text-xl sm:text-2xl font-bold">{githubData?.stats?.totalRepos || profileData.stats.projects}</div>
                                 <div className="text-gray-400 text-xs sm:text-sm">Projects</div>
                             </div>
                             <div className="bg-gray-800 border border-gray-600 rounded-lg p-3 text-center">
-                                <div className="text-blue-400 text-xl sm:text-2xl font-bold">{profileData.stats.profileViews}</div>
-                                <div className="text-gray-400 text-xs sm:text-sm">Profile Views</div>
+                                <div className="text-blue-400 text-xl sm:text-2xl font-bold">{githubData?.stats?.totalStars || profileData.stats.profileViews}</div>
+                                <div className="text-gray-400 text-xs sm:text-sm">{githubData ? 'GitHub Stars' : 'Profile Views'}</div>
                             </div>
                             <div className="bg-gray-800 border border-gray-600 rounded-lg p-3 text-center">
-                                <div className="text-green-400 text-xl sm:text-2xl font-bold">{profileData.stats.streak}</div>
-                                <div className="text-gray-400 text-xs sm:text-sm">Streak</div>
+                                <div className="text-green-400 text-xl sm:text-2xl font-bold">{githubData?.stats?.totalForks || profileData.stats.streak}</div>
+                                <div className="text-gray-400 text-xs sm:text-sm">{githubData ? 'GitHub Forks' : 'Streak'}</div>
                             </div>
                             <div className="bg-gray-800 border border-gray-600 rounded-lg p-3 text-center">
                                 <div className="text-purple-400 text-xl sm:text-2xl font-bold">{profileData.stats.botUsers}</div>
@@ -187,6 +198,31 @@ function Profile() {
                                         <div className="text-blue-400 text-sm capitalize">{platform}</div>
                                     </a>
                                 ))}
+                            </div>
+                        </div>
+
+                        {/* Quick Navigation */}
+                        <div className="mb-8">
+                            <h2 className="text-lg font-semibold text-green-400 mb-4">
+                                <span className="text-gray-600">## </span>Quick Navigation
+                            </h2>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <Link
+                                    to="/projects"
+                                    className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center hover:bg-gray-700 transition-colors"
+                                >
+                                    <div className="text-3xl mb-2">🚀</div>
+                                    <div className="text-orange-400 font-semibold mb-1">Projects</div>
+                                    <div className="text-gray-400 text-xs">View {githubData?.stats?.totalRepos || '19'} repositories</div>
+                                </Link>
+                                <Link
+                                    to="/blogs"
+                                    className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center hover:bg-gray-700 transition-colors"
+                                >
+                                    <div className="text-3xl mb-2">📝</div>
+                                    <div className="text-green-400 font-semibold mb-1">Blog Posts</div>
+                                    <div className="text-gray-400 text-xs">Read technical articles</div>
+                                </Link>
                             </div>
                         </div>
 

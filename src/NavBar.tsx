@@ -42,6 +42,13 @@ function Navbar() {
                         </Link>
                         <span className="text-gray-600 hidden sm:inline">|</span>
                         <Link
+                            to="/projects"
+                            className="text-orange-400 hover:text-orange-300 font-source tracking-wide transition-colors"
+                        >
+                            <span className="hidden sm:inline">./</span>projects
+                        </Link>
+                        <span className="text-gray-600 hidden sm:inline">|</span>
+                        <Link
                             to="/profile"
                             className="text-purple-400 hover:text-purple-300 font-source tracking-wide transition-colors"
                         >

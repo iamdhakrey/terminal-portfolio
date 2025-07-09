@@ -10,7 +10,9 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "update-github": "./scripts/fetch-github-data.sh",
+    "update-data": "npm run update-github"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.8",

@@ -48,7 +48,7 @@ const Terminal = () => {
         } else if (e.key === "Tab") {
             e.preventDefault();
             // Simple tab completion for common commands
-            const commands = ["help", "about", "whoami", "profile", "neofetch", "clear", "ls", "cd", "pwd", "fortune", "cowsay", "tree", "ps", "top", "grep", "cat", "man", "history", "date", "uptime", "uname", "parrot", "sl"];
+            const commands = ["help", "about", "whoami", "profile", "projects", "neofetch", "clear", "ls", "cd", "pwd", "fortune", "cowsay", "tree", "ps", "top", "grep", "cat", "man", "history", "date", "uptime", "uname", "parrot", "sl"];
             const matches = commands.filter(cmd => cmd.startsWith(input.toLowerCase()));
             if (matches.length === 1) {
                 setInput(matches[0]);
@@ -97,7 +97,7 @@ const Terminal = () => {
                         "    uptime       - System uptime",
                         "",
                         "  Navigation:",
-                        "    cd [dir]     - Change directory (cd blogs, cd profile)",
+                        "    cd [dir]     - Change directory (cd blogs, cd profile, cd projects)",
                         "    ls [options] - List directory contents",
                         "    pwd          - Print working directory",
                         "    tree         - Display directory tree",
@@ -234,6 +234,26 @@ const Terminal = () => {
                 setTimeout(() => navigate("/profile"), 1000);
                 break;
 
+            case "projects":
+                addToOutput({
+                    type: "command",
+                    command: cmd,
+                    text: [
+                        "🚀 Loading GitHub projects...",
+                        "📊 Fetching repository statistics...",
+                        "",
+                        "📈 Repository Overview:",
+                        "• Live data from GitHub CLI",
+                        "• Filter by programming language",
+                        "• View project details and links",
+                        "• See star counts and activity",
+                        "",
+                        "🔗 Direct link: iamdhakrey.dev/projects"
+                    ]
+                });
+                setTimeout(() => navigate("/projects"), 1000);
+                break;
+
             case "clear":
                 setOutput([]);
                 break;
@@ -259,16 +279,17 @@ const Terminal = () => {
                         type: "command",
                         command: cmd,
                         text: [
-                            "total 15",
-                            "drwxr-xr-x 4 user user 4096 Jan  1 12:00 .",
+                            "total 18",
+                            "drwxr-xr-x 5 user user 4096 Jan  1 12:00 .",
                             "drwxr-xr-x 5 user user 4096 Jan  1 11:30 ..",
                             "drwxr-xr-x 2 user user 4096 Jan  1 12:00 blogs/",
                             "drwxr-xr-x 2 user user 4096 Jan  1 12:00 profile/",
+                            "drwxr-xr-x 2 user user 4096 Jan  1 12:00 projects/",
                             "-rwxr-xr-x 1 user user 2048 Jan  1 10:00 portfolio.sh*",
                             "-rw-r--r-- 1 user user 1024 Jan  1 09:30 README.md",
                             "",
-                            "📁 Directories: blogs/, profile/",
-                            "💡 Try 'ls blogs' to see blog posts or 'profile' for shareable profile"
+                            "📁 Directories: blogs/, profile/, projects/",
+                            "💡 Try 'cd blogs', 'cd profile', or 'cd projects'"
                         ]
                     });
                 }
@@ -296,6 +317,16 @@ const Terminal = () => {
                         ]
                     });
                     setTimeout(() => navigate("/profile"), 1000);
+                } else if (dir === "projects" || dir === "/projects") {
+                    addToOutput({
+                        type: "command",
+                        command: cmd,
+                        text: [
+                            "📁 Navigating to projects directory...",
+                            "🚀 Loading GitHub repositories..."
+                        ]
+                    });
+                    setTimeout(() => navigate("/projects"), 1000);
                 } else if (dir === ".." || dir === "~" || dir === "/") {
                     addToOutput({
                         type: "command",
@@ -376,6 +407,9 @@ const Terminal = () => {
                         "├── profile/",
                         "│   ├── profile.sh*",
                         "│   └── social-card.json",
+                        "├── projects/",
+                        "│   ├── github-repos.json",
+                        "│   └── featured-projects.md",
                         "├── public/",
                         "│   ├── assets/",
                         "│   └── images/",
@@ -386,7 +420,7 @@ const Terminal = () => {
                         "├── README.md",
                         "└── package.json",
                         "",
-                        "5 directories, 10 files"
+                        "6 directories, 12 files"
                     ]
                 });
                 break;

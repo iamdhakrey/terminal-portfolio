@@ -4,6 +4,7 @@ import Navbar from "./NavBar";
 import Terminal from "./Terminal";
 import BlogList from "./BlogList";
 import Profile from "./Profile";
+import Projects from "./Projects";
 import { Routes, Route, HashRouter } from "react-router-dom";
 import Blogs from "./Blogs";
 
@@ -20,6 +21,7 @@ function App() {
                         <Route path="/blogs" element={<BlogList />} />
                         <Route path="/blog/:filename" element={<Blogs />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/projects" element={<Projects />} />
                         {/* Add more routes as needed */}
                     </Routes>
                 </div>

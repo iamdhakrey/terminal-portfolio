@@ -25,7 +25,7 @@ USER_DATA=$(gh api user)
 
 # Fetch all repositories
 echo "📁 Fetching repositories..."
-REPOS_DATA=$(gh repo list --limit 100 --json name,description,url,homepageUrl,primaryLanguage,stargazerCount,forkCount,createdAt,updatedAt,pushedAt,repositoryTopics,licenseInfo,isPrivate,isFork,isArchived,languages)
+REPOS_DATA=$(gh repo list --limit 100 --json name,description,url,homepageUrl,primaryLanguage,stargazerCount,forkCount,createdAt,updatedAt,pushedAt,repositoryTopics,licenseInfo,isPrivate,isFork,isArchived)
 
 # Create enhanced repositories with language data
 echo "🔍 Enhancing repositories with language details..."

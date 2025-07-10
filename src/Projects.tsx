@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 interface GitHubRepo {
     name: string;
-    description: string;
+    description: string | null;
     html_url: string;
     homepage: string | null;
     language: string | null;
@@ -49,11 +49,16 @@ function Projects() {
     const [selectedLanguage, setSelectedLanguage] = useState<string>('all');
 
     useEffect(() => {
-        const loadGitHubData = async () => {
+        const loadData = async () => {
             try {
+                // Load GitHub data from static JSON file
                 const response = await fetch('/github-projects.json');
-                const data = await response.json();
-                setGithubData(data);
+                if (response.ok) {
+                    const data = await response.json();
+                    setGithubData(data);
+                } else {
+                    console.warn('GitHub data file not found, using fallback');
+                }
             } catch (error) {
                 console.error('Error loading GitHub data:', error);
             } finally {
@@ -61,7 +66,7 @@ function Projects() {
             }
         };
 
-        loadGitHubData();
+        loadData();
     }, []);
 
     const getLanguageColor = (language: string): string => {

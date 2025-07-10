@@ -96,6 +96,7 @@ export interface ProfileConfig {
     enabled: boolean;
     featuredPosts: string[];
     categories: string[];
+    availableBlogs: string[];
   };
 
   // SEO Configuration
@@ -314,8 +315,15 @@ export const profileConfig: ProfileConfig = {
 
   blogs: {
     enabled: true,
-    featuredPosts: ["react-typescript-guide", "linux_commands"],
-    categories: ["React", "TypeScript", "Linux", "DevOps", "Tutorial"]
+    featuredPosts: ["blog-linking-guide", "react-typescript-guide", "linux_commands"],
+    categories: ["React", "TypeScript", "Linux", "DevOps", "Tutorial", "Programming", "Documentation"],
+    availableBlogs: [
+      "blog-linking-guide.md",
+      "linux_commands.md",
+      "react-typescript-guide.md", 
+      "sudoko.md",
+      "demo_blogs.md",
+    ]
   },
 
   seo: {

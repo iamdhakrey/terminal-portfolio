@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2025-07-10
+
+### ✨ Features
+- feat: enhance blog navigation and linking features
+- feat: integrate blog configuration for dynamic blog file management
+- feat: add redirects configuration for index.html
+- feat: add availableBlogs property and update featuredPosts and categories in profile configuration
+- feat: enhance blog setup and linking features in README.md
+- feat: add blog linking guide for enhanced content navigation
+
+### 📝 Other Changes
+- chore: remove deprecated firebase configuration and add vercel configuration
+
+
 ## [1.0.0] - 2025-07-10
 
 ### ✨ Features

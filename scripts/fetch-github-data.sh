@@ -3,8 +3,6 @@
 # GitHub Repository Data Fetcher using GitHub CLI
 # This script fetches repository information and generates a static JSON file
 
-echo "🔍 Fetching GitHub repository data for iamdhakrey..."
-
 # Check if gh CLI is installed and authenticated
 if ! command -v gh &> /dev/null; then
     echo "❌ GitHub CLI (gh) is not installed. Please install it first."

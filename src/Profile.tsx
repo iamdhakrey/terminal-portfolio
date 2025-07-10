@@ -1,22 +1,60 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { updateSEOTags, generateStructuredData, shareProfile } from './utils/seoUtils';
+import { getProfileData, getSocialLinks, getSkills, getStats, getAchievements, getSEOConfig } from './utils/configManager';
 
 function Profile() {
     const [profileData, setProfileData] = useState<any>(null);
     const [githubData, setGithubData] = useState<any>(null);
     const [shareMessage, setShareMessage] = useState('');
 
+    // Load configuration data
+    const configProfile = getProfileData();
+    const socialLinks = getSocialLinks();
+    const configSkills = getSkills();
+    const stats = getStats();
+    const achievements = getAchievements();
+    const seoConfig = getSEOConfig();
+
     useEffect(() => {
         const loadProfileData = async () => {
             try {
-                const [profileResponse, githubResponse] = await Promise.all([
-                    fetch('/profile-data.json'),
-                    fetch('/github-projects.json')
-                ]);
+                // Use config as base profile data
+                let profileData: any = { ...configProfile };
+                let githubData = { stats: { totalRepos: 0, totalStars: 0, totalForks: 0 } };
 
-                const profileData = await profileResponse.json();
-                const githubData = await githubResponse.json();
+                // Try to load legacy profile-data.json for backwards compatibility
+                try {
+                    const profileResponse = await fetch('/profile-data.json');
+                    if (profileResponse.ok) {
+                        const jsonProfileData = await profileResponse.json();
+                        profileData = { ...configProfile, ...jsonProfileData };
+                    }
+                } catch (e) {
+                    console.log('No profile-data.json found, using config');
+                }
+
+                // Load GitHub data from static file
+                try {
+                    const githubResponse = await fetch('/github-projects.json');
+                    if (githubResponse.ok) {
+                        const fetchedGithubData = await githubResponse.json();
+                        if (fetchedGithubData) {
+                            githubData = fetchedGithubData;
+                        }
+                    }
+                } catch (e) {
+                    console.log('No GitHub data available, using defaults');
+                }
+
+                // Merge config data
+                profileData = {
+                    ...profileData,
+                    socialLinks: { ...socialLinks, ...(profileData.socialLinks || {}) },
+                    skills: configSkills.length > 0 ? configSkills : (profileData.skills || []),
+                    stats: { ...stats, ...(profileData.stats || {}) },
+                    achievements: achievements.length > 0 ? achievements : (profileData.achievements || [])
+                };
 
                 setProfileData(profileData);
                 setGithubData(githubData);
@@ -28,25 +66,25 @@ function Profile() {
                     image: `${window.location.origin}${profileData.image}`,
                     url: window.location.href,
                     type: 'profile',
-                    siteName: 'iamdhakrey.dev',
-                    author: profileData.name,
-                    keywords: `${profileData.name}, ${profileData.username}, ${profileData.skills.join(', ')}`
+                    siteName: seoConfig.siteName,
+                    author: seoConfig.author,
+                    keywords: `${profileData.name}, ${profileData.username}, ${(profileData.skills || []).join(', ')}`
                 });
 
                 // Generate structured data for search engines
                 generateStructuredData(profileData);
             } catch (error) {
                 console.error('Error loading profile data:', error);
-                // Fallback data
+                // Use config as fallback
                 setProfileData({
-                    name: 'Hrithik Dhakrey',
-                    username: 'iamdhakrey',
-                    title: 'Full Stack Developer & DevOps Engineer',
-                    description: 'Python Developer & DevOps Engineer | Discord Bot Developer | CLI Applications Creator',
-                    image: '/dbgrq23-ee7a8ee2-ff35-431a-9c70-51b5e05246e5.jpg'
+                    ...configProfile,
+                    socialLinks,
+                    skills: configSkills,
+                    stats,
+                    achievements
                 });
                 setGithubData({
-                    stats: { totalRepos: 19, totalStars: 5, totalForks: 1 }
+                    stats: { totalRepos: 0, totalStars: 0, totalForks: 0 }
                 });
             }
         };
@@ -86,13 +124,17 @@ function Profile() {
         );
     }
 
-    const skills = [
-        { category: 'Languages', items: ['GoLang', 'Rust', 'Python', 'JavaScript', 'TypeScript', 'HTML5', 'CSS3', 'SQL'] },
-        { category: 'Frameworks', items: ['Echo(Go)', 'Actix(Rust)', 'FastAPI', 'Django', 'Flask', 'React', 'Tailwind CSS'] },
-        { category: 'DevOps', items: ['Docker', 'Kubernetes', 'AWS', 'CI/CD', 'Linux', 'Nginx'] },
-        { category: 'Databases', items: ['PostgreSQL', 'MongoDB', 'MySQL', 'SQLite', 'Redis', 'SQLite'] },
-        { category: 'Tools', items: ['Git', 'VS Code', 'Postman', 'Discord.py', 'SQLAlchemy'] },
-    ];
+    // Process skills for display - either from config or fallback
+    const skillsForDisplay = profileData.skills || configSkills || [];
+    const processedSkills = Array.isArray(skillsForDisplay) && typeof skillsForDisplay[0] === 'string' 
+        ? [{ category: 'Skills', items: skillsForDisplay }]
+        : skillsForDisplay.length > 0 
+            ? skillsForDisplay
+            : [
+                { category: 'Languages', items: ['JavaScript', 'TypeScript', 'Python', 'HTML5', 'CSS3', 'SQL'] },
+                { category: 'Frameworks', items: ['React', 'Node.js', 'Express', 'Tailwind CSS'] },
+                { category: 'Tools', items: ['Git', 'VS Code', 'Docker', 'AWS'] }
+            ];
 
     return (
         <div className="min-h-screen bg-black text-green-400 font-mono pb-16">
@@ -232,13 +274,13 @@ function Profile() {
                                 <span className="text-gray-600">## </span>Technical Skills
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {skills.map((skillGroup, index) => (
+                                {processedSkills.map((skillGroup: any, index: number) => (
                                     <div key={index} className="bg-gray-800 border border-gray-600 rounded-lg p-4">
                                         <h3 className="text-yellow-400 font-semibold mb-2 text-sm">
                                             {skillGroup.category}
                                         </h3>
                                         <div className="flex flex-wrap gap-1">
-                                            {skillGroup.items.map((skill, skillIndex) => (
+                                            {skillGroup.items.map((skill: string, skillIndex: number) => (
                                                 <span
                                                     key={skillIndex}
                                                     className="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
@@ -270,25 +312,29 @@ function Profile() {
                         </div>
 
                         {/* Current Focus */}
-                        <div className="mb-8">
-                            <h2 className="text-lg font-semibold text-green-400 mb-4">
-                                <span className="text-gray-600">## </span>Current Focus
-                            </h2>
-                            <div className="bg-gray-800 border border-gray-600 rounded-lg p-4">
-                                <ul className="space-y-2 text-gray-300 text-sm">
-                                    {profileData.currentFocus.map((item: string, index: number) => (
-                                        <li key={index}>• {item}</li>
-                                    ))}
-                                </ul>
+                        {profileData.currentFocus && profileData.currentFocus.length > 0 && (
+                            <div className="mb-8">
+                                <h2 className="text-lg font-semibold text-green-400 mb-4">
+                                    <span className="text-gray-600">## </span>Current Focus
+                                </h2>
+                                <div className="bg-gray-800 border border-gray-600 rounded-lg p-4">
+                                    <ul className="space-y-2 text-gray-300 text-sm">
+                                        {profileData.currentFocus.map((item: string, index: number) => (
+                                            <li key={index}>• {item}</li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        )}
 
                         {/* Fun Fact */}
-                        <div className="bg-blue-900 border border-blue-600 rounded-lg p-4 text-center">
-                            <p className="text-blue-200 text-sm">
-                                🔍 <strong>Fun Fact:</strong> {profileData.funFact}
-                            </p>
-                        </div>
+                        {profileData.funFact && (
+                            <div className="bg-blue-900 border border-blue-600 rounded-lg p-4 text-center">
+                                <p className="text-blue-200 text-sm">
+                                    🔍 <strong>Fun Fact:</strong> {profileData.funFact}
+                                </p>
+                            </div>
+                        )}
 
                         {/* Share Button */}
                         <div className="mt-8 text-center">

@@ -4,6 +4,7 @@ date: "2025-07-10"
 description: "Learn how to create powerful connections between your blog posts using the built-in linking system"
 author: "Portfolio Author"
 category: "Documentation"
+tags: ["Blogging", "Documentation", "Content Management"]
 ---
 
 # Blog Linking Guide - Connect Your Content

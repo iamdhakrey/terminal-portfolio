@@ -319,10 +319,7 @@ export const profileConfig: ProfileConfig = {
     categories: ["React", "TypeScript", "Linux", "DevOps", "Tutorial", "Programming", "Documentation"],
     availableBlogs: [
       "blog-linking-guide.md",
-      "linux_commands.md",
       "react-typescript-guide.md", 
-      "sudoko.md",
-      "demo_blogs.md",
     ]
   },
 

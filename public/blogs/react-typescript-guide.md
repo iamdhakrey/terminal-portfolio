@@ -1,8 +1,10 @@
 ---
 title: "Getting Started with React and TypeScript"
 date: "2025-01-15"
-author: "Hrithik Dhakrey
 description: "Learn how to set up a React project with TypeScript for better development experience"
+author: "Hrithik Dhakrey
+category: "Documentation"
+tags: ["React", "TypeScript", "Web Development"]
 ---
 
 # Getting Started with React and TypeScript

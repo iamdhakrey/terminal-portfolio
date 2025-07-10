@@ -270,11 +270,112 @@ For automatic updates, you can set up a GitHub Action to run the update script a
 
 ## 📝 Blog Setup
 
-Add markdown files to `/public/blogs/` to create blog posts:
+Add markdown files to `/public/blogs/` and configure them in `profile.config.ts`:
 
-1. Create `.md` files in `/public/blogs/`
-2. Configure featured posts in `profile.config.ts`
-3. Posts are automatically available at `/blog/filename`
+### Blog Configuration
+
+```typescript
+blogs: {
+  enabled: true,                    // Enable/disable blog functionality
+  featuredPosts: [                  // Featured blog posts (shown prominently)
+    "react-typescript-guide",
+    "linux_commands", 
+    "sudoko"
+  ],
+  categories: [                      // Available blog categories
+    "React", "TypeScript", "Linux", "DevOps", "Tutorial"
+  ],
+  availableBlogs: [                  // List of available blog files
+    "linux_commands.md",
+    "react-typescript-guide.md", 
+    "sudoko.md"
+  ]
+}
+```
+
+### Blog Linking & Cross-References
+
+The blog system includes powerful linking capabilities to connect related posts:
+
+#### Inter-Blog Linking
+
+Reference other blogs in your markdown content using these methods:
+
+##### 1. Simple Blog Reference
+
+```markdown
+{{blog:react-typescript-guide}}
+```
+
+This creates a link with the blog's title as the link text.
+
+##### 2. Custom Link Text
+
+```markdown
+{{blog:linux_commands|Check out my Linux guide}}
+```
+
+This creates a link with custom text.
+
+##### 3. Manual Links
+
+```markdown
+[Custom Link Text](/blogs/react-typescript-guide)
+```
+
+Standard markdown links to blog posts.
+
+#### Automatic Features
+
+- **Related Posts**: Automatically suggests related content based on title/description similarities
+- **Navigation**: Previous/next post navigation at the bottom of each blog
+- **Featured Posts**: Highlight important posts in the blog list
+- **Smart Processing**: Blog references are automatically converted to proper links
+
+#### Blog Utilities
+
+The system provides several utility functions for advanced blog management:
+
+```javascript
+// Get related posts
+const related = await getRelatedBlogs('current-blog', 3);
+
+// Generate blog links
+const link = createBlogLink('react-guide', 'Custom Text');
+
+// Get navigation
+const nav = await getBlogNavigation('current-blog');
+
+// Get all available blog links
+const allLinks = await getAllBlogLinks();
+```
+
+### Adding New Blog Posts
+
+1. Create a `.md` file in `/public/blogs/`
+2. Add frontmatter to your markdown file:
+
+   ```markdown
+   ---
+   title: "Your Blog Post Title"
+   date: "2025-07-10"
+   description: "Brief description of your post"
+   author: "Your Name"
+   ---
+
+   # Your Content Here
+   ```
+
+3. Add the filename to `availableBlogs` in `profile.config.ts`
+4. Optionally add to `featuredPosts` for prominence
+
+### Blog Features
+
+- **Automatic Discovery**: Blogs are loaded from configuration
+- **Featured Posts**: Highlight important posts
+- **Markdown Support**: Full markdown with syntax highlighting
+- **Responsive Design**: Mobile-friendly blog layout
+- **Table of Contents**: Auto-generated for longer posts
 
 ## � Deployment
 

@@ -1,17 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getAllBlogs, BlogFile } from './utils/blogUtils';
+import { getAllBlogs, getFeaturedBlogPosts, areBlogsEnabled, BlogFile } from './utils/blogUtils';
 
 interface BlogListProps { }
 
 const BlogList: React.FC<BlogListProps> = () => {
   const [blogs, setBlogs] = useState<BlogFile[]>([]);
+  const [featuredBlogs, setFeaturedBlogs] = useState<BlogFile[]>([]);
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const fetchedBlogs = await getAllBlogs();
+        // Check if blogs are enabled in configuration
+        if (!areBlogsEnabled()) {
+          console.log('Blogs are disabled in configuration');
+          return;
+        }
+
+        const [fetchedBlogs, fetchedFeatured] = await Promise.all([
+          getAllBlogs(),
+          getFeaturedBlogPosts()
+        ]);
+        
         setBlogs(fetchedBlogs);
+        setFeaturedBlogs(fetchedFeatured);
       } catch (error) {
         console.error('Error fetching blogs:', error);
       }
@@ -23,7 +35,18 @@ const BlogList: React.FC<BlogListProps> = () => {
   // using tailwind css
   return (
     <div className="min-h-screen bg-black text-green-400 font-mono pb-16">
-      <div className="max-w-6xl mx-auto py-4 sm:py-8 px-2 sm:px-4">
+      {!areBlogsEnabled() ? (
+        <div className="max-w-6xl mx-auto py-4 sm:py-8 px-2 sm:px-4">
+          <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 sm:p-8 text-center">
+            <div className="text-yellow-400 mb-2">⚠ Blog feature is disabled</div>
+            <p className="text-gray-400 text-sm sm:text-base">
+              Blogs are currently disabled in the configuration. 
+              To enable them, set <code className="text-green-400">blogs.enabled: true</code> in <code className="text-blue-400">profile.config.ts</code>
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="max-w-6xl mx-auto py-4 sm:py-8 px-2 sm:px-4">
         {/* Terminal-style header */}
         <div className="mb-6 sm:mb-8">
           <div className="bg-gray-900 border border-gray-700 rounded-t-lg p-3 sm:p-4">
@@ -50,6 +73,30 @@ const BlogList: React.FC<BlogListProps> = () => {
             </p>
           </div>
         </div>
+
+        {/* Featured Blogs Section */}
+        {featuredBlogs.length > 0 && (
+          <div className="mb-8">
+            <div className="bg-gray-900 border border-gray-700 rounded-lg p-4 sm:p-6">
+              <h2 className="text-lg sm:text-xl font-bold mb-4 text-yellow-400">
+                <span className="text-gray-500">⭐ </span>Featured Posts
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {featuredBlogs.map((blog) => (
+                  <Link
+                    key={blog.filename}
+                    to={`/blog/${blog.filename.replace('.md', '')}`}
+                    className="bg-gray-800 border border-gray-600 rounded-lg p-4 hover:border-yellow-500 hover:bg-gray-700 transition-all duration-300"
+                  >
+                    <h3 className="text-white font-semibold mb-2 line-clamp-2">{blog.title}</h3>
+                    <p className="text-gray-400 text-sm mb-2 line-clamp-3">{blog.description || 'Click to read more...'}</p>
+                    <div className="text-xs text-yellow-400">{blog.date}</div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         {blogs.length === 0 ? (
           <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 sm:p-8 text-center">
@@ -134,7 +181,8 @@ const BlogList: React.FC<BlogListProps> = () => {
             <span className="text-green-400 animate-pulse">_</span>
           </div>
         </div>
-      </div>
+        </div>
+      )}
     </div>
   );
 };

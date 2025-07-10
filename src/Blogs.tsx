@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useParams, Link } from 'react-router-dom';
-import { getBlogByFilename } from './utils/blogUtils';
+import { 
+    getBlogByFilename, 
+    processBlogLinks, 
+    getRelatedBlogs, 
+    getBlogNavigation,
+    BlogFile 
+} from './utils/blogUtils';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
@@ -15,6 +21,11 @@ function Blogs() {
     const [title, setTitle] = useState<string>('Loading...');
     const [date, setDate] = useState<string>('Unknown Date');
     const [headings, setHeadings] = useState<Array<{ id: string; text: string; level: number }>>([]);
+    const [relatedPosts, setRelatedPosts] = useState<BlogFile[]>([]);
+    const [navigation, setNavigation] = useState<{ previous: BlogFile | null; next: BlogFile | null }>({
+        previous: null,
+        next: null
+    });
 
     // Extract headings from markdown content for table of contents
     const extractHeadings = (markdownContent: string) => {
@@ -48,13 +59,23 @@ function Blogs() {
                     return;
                 }
 
-                setContent(blogData.content);
+                // Process blog content for inter-blog links
+                const processedContent = await processBlogLinks(blogData.content);
+                setContent(processedContent);
                 setTitle(blogData.metadata.title);
                 setDate(blogData.metadata.date);
 
                 // Extract headings for table of contents
-                const extractedHeadings = extractHeadings(blogData.content);
+                const extractedHeadings = extractHeadings(processedContent);
                 setHeadings(extractedHeadings);
+
+                // Get related posts
+                const related = await getRelatedBlogs(filename, 3);
+                setRelatedPosts(related);
+
+                // Get navigation (previous/next posts)
+                const nav = await getBlogNavigation(filename);
+                setNavigation(nav);
             } catch (error) {
                 console.error('Error fetching blog:', error);
                 setTitle('Error Loading Blog');
@@ -290,6 +311,23 @@ function Blogs() {
                                     );
                                 },
                                 a: ({ href, children, ...props }: any) => {
+                                    // Check if it's an internal blog link
+                                    const isInternalBlogLink = href && href.startsWith('/blogs/');
+                                    
+                                    if (isInternalBlogLink) {
+                                        // Use React Router Link for internal blog links
+                                        return (
+                                            <Link
+                                                to={href}
+                                                className="text-blue-400 hover:text-blue-300 underline"
+                                                {...props}
+                                            >
+                                                {children}
+                                            </Link>
+                                        );
+                                    }
+                                    
+                                    // External links open in new tab
                                     return (
                                         <a
                                             href={href}
@@ -307,6 +345,86 @@ function Blogs() {
                             {content}
                         </ReactMarkdown>
                     </div>
+
+                    {/* Blog Navigation */}
+                    {(navigation.previous || navigation.next) && (
+                        <div className="mt-8 pt-6 border-t border-gray-800">
+                            <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
+                                <h3 className="text-green-400 text-lg font-semibold mb-4 flex items-center">
+                                    <span className="text-blue-400 mr-2">$</span>
+                                    Navigation
+                                </h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    {navigation.previous && (
+                                        <Link
+                                            to={`/blogs/${navigation.previous.filename.replace('.md', '')}`}
+                                            className="flex items-center space-x-2 p-3 bg-gray-800 border border-gray-600 rounded hover:bg-gray-700 transition-colors group"
+                                        >
+                                            <span className="text-gray-400">←</span>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="text-xs text-gray-500">Previous</div>
+                                                <div className="text-sm text-blue-400 group-hover:text-blue-300 truncate">
+                                                    {navigation.previous.title}
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    )}
+                                    {navigation.next && (
+                                        <Link
+                                            to={`/blogs/${navigation.next.filename.replace('.md', '')}`}
+                                            className="flex items-center space-x-2 p-3 bg-gray-800 border border-gray-600 rounded hover:bg-gray-700 transition-colors group text-right"
+                                        >
+                                            <div className="flex-1 min-w-0">
+                                                <div className="text-xs text-gray-500">Next</div>
+                                                <div className="text-sm text-blue-400 group-hover:text-blue-300 truncate">
+                                                    {navigation.next.title}
+                                                </div>
+                                            </div>
+                                            <span className="text-gray-400">→</span>
+                                        </Link>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Related Posts */}
+                    {relatedPosts.length > 0 && (
+                        <div className="mt-8 pt-6 border-t border-gray-800">
+                            <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
+                                <h3 className="text-green-400 text-lg font-semibold mb-4 flex items-center">
+                                    <span className="text-blue-400 mr-2">$</span>
+                                    Related Posts
+                                </h3>
+                                <div className="space-y-3">
+                                    {relatedPosts.map((post, index) => (
+                                        <Link
+                                            key={index}
+                                            to={`/blogs/${post.filename.replace('.md', '')}`}
+                                            className="block p-3 bg-gray-800 border border-gray-600 rounded hover:bg-gray-700 transition-colors group"
+                                        >
+                                            <div className="flex items-start space-x-3">
+                                                <span className="text-gray-400 text-sm mt-1">→</span>
+                                                <div className="flex-1">
+                                                    <div className="text-blue-400 group-hover:text-blue-300 font-medium">
+                                                        {post.title}
+                                                    </div>
+                                                    {post.description && (
+                                                        <div className="text-gray-400 text-sm mt-1 line-clamp-2">
+                                                            {post.description}
+                                                        </div>
+                                                    )}
+                                                    <div className="text-xs text-gray-500 mt-2">
+                                                        {post.date}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Terminal footer */}
                     <div className="mt-8 pt-4 border-t border-gray-800">

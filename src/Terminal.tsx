@@ -2,6 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import ParrotAnimation from "./DancingParrot";
+import { getTerminalConfig, getSystemInfo, getProfileData } from "./utils/configManager";
 
 const Terminal = () => {
     const [input, setInput] = useState("");
@@ -11,6 +12,22 @@ const Terminal = () => {
     const navigate = useNavigate();
     const inputRef = useRef<HTMLInputElement>(null);
     const terminalRef = useRef<HTMLDivElement>(null);
+
+    // Load configurations
+    const terminalConfig = getTerminalConfig();
+    const systemInfo = getSystemInfo();
+    const profileData = getProfileData();
+
+    useEffect(() => {
+        // Show welcome message on component mount
+        if (terminalConfig.welcomeMessage.length > 0) {
+            addToOutput({
+                type: "welcome",
+                command: "",
+                text: terminalConfig.welcomeMessage
+            });
+        }
+    }, []);
 
     const handleInputChange = (e: any) => {
         setInput(e.target.value);
@@ -47,8 +64,8 @@ const Terminal = () => {
             }
         } else if (e.key === "Tab") {
             e.preventDefault();
-            // Simple tab completion for common commands
-            const commands = ["help", "about", "whoami", "profile", "projects", "neofetch", "clear", "ls", "cd", "pwd", "fortune", "cowsay", "tree", "ps", "top", "grep", "cat", "man", "history", "date", "uptime", "uname", "parrot", "sl"];
+            // Use dynamic commands from configuration
+            const commands = terminalConfig.enabledCommands;
             const matches = commands.filter(cmd => cmd.startsWith(input.toLowerCase()));
             if (matches.length === 1) {
                 setInput(matches[0]);
@@ -78,7 +95,27 @@ const Terminal = () => {
         const params = args.slice(1);
 
         // Add command to output first
-        addToOutput({ type: "input", command, text: [`user@localhost:~$ ${command}`] });
+        const prompt = `${terminalConfig.username}@${terminalConfig.hostname}:~$ ${command}`;
+        addToOutput({ type: "input", command, text: [prompt] });
+
+        // Check for custom commands first
+        if (terminalConfig.customCommands[cmd]) {
+            const customCmd = terminalConfig.customCommands[cmd];
+            const output = typeof customCmd.output === 'function' ? customCmd.output() : customCmd.output;
+            addToOutput({
+                type: "command",
+                command: cmd,
+                text: output
+            });
+
+            // Handle actions
+            if (customCmd.action === 'navigate' && customCmd.target) {
+                setTimeout(() => navigate(customCmd.target!), 1000);
+            } else if (customCmd.action === 'external' && customCmd.target) {
+                setTimeout(() => window.open(customCmd.target!, '_blank'), 1000);
+            }
+            return;
+        }
 
         switch (cmd) {
             case "help":
@@ -122,30 +159,51 @@ const Terminal = () => {
                 break;
 
             case "neofetch":
+                const asciiArt = systemInfo.ascii || [
+                    "                   -`                    ",
+                    "                  .o+`                   ",
+                    "                 `ooo/                   ",
+                    "                `+oooo:                  ",
+                    "               `+oooooo:                 ",
+                    "               -+oooooo+:                ",
+                    "             `/:-:++oooo+:               ",
+                    "            `/++++/+++++++:              ",
+                    "           `/++++++++++++++:             ",
+                    "          `/+++ooooooooooooo/`           ",
+                    "         ./ooosssso++osssssso+`          ",
+                    "        .oossssso-````/ossssss+`         ",
+                    "       -osssssso.      :ssssssso.        ",
+                    "      :osssssss/        osssso+++.       ",
+                    "     /ossssssss/        +ssssooo/-       ",
+                    "   `/ossssso+/:-        -:/+osssso+-     ",
+                    "  `+sso+:-`                 `.-/+oso:    ",
+                    " `++:.                           `-/+/   ",
+                    " .`                                 `/   "
+                ];
+
+                const neofetchOutput = [
+                    `${asciiArt[0]}${terminalConfig.username}@${terminalConfig.hostname}`,
+                    `${asciiArt[1]}─────────────────`,
+                    `${asciiArt[2]}OS: ${systemInfo.os}`,
+                    `${asciiArt[3]}Host: ${systemInfo.host}`,
+                    `${asciiArt[4]}Kernel: ${systemInfo.kernel}`,
+                    `${asciiArt[5]}Uptime: ${systemInfo.uptime}`,
+                    `${asciiArt[6]}Packages: ${systemInfo.packages}`,
+                    `${asciiArt[7]}Shell: ${systemInfo.shell}`,
+                    `${asciiArt[8]}Resolution: ${systemInfo.resolution}`,
+                    `${asciiArt[9]}DE: ${systemInfo.de}`,
+                    `${asciiArt[10]}WM: ${systemInfo.wm}`,
+                    `${asciiArt[11]}Terminal: ${systemInfo.terminal}`,
+                    `${asciiArt[12]}CPU: ${systemInfo.cpu}`,
+                    `${asciiArt[13]}GPU: ${systemInfo.gpu}`,
+                    `${asciiArt[14]}Memory: ${systemInfo.memory}`,
+                    ...asciiArt.slice(15)
+                ];
+
                 addToOutput({
                     type: "neofetch",
                     command: cmd,
-                    text: [
-                        "                   -`                    user@localhost",
-                        "                  .o+`                   ─────────────────",
-                        "                 `ooo/                   OS: Arch Linux x86_64",
-                        "                `+oooo:                  Host: iamdhakrey.dev",
-                        "               `+oooooo:                 Kernel: 6.1.0-kali7-amd64",
-                        "               -+oooooo+:                Uptime: 2 hours, 34 mins",
-                        "             `/:-:++oooo+:               Packages: 1337 (pacman)",
-                        "            `/++++/+++++++:              Shell: zsh 5.9",
-                        "           `/++++++++++++++:             Resolution: 1920x1080",
-                        "          `/+++ooooooooooooo/`           DE: Awesome",
-                        "         ./ooosssso++osssssso+`          WM: Awesome",
-                        "        .oossssso-````/ossssss+`         Terminal: alacritty",
-                        "       -osssssso.      :ssssssso.        CPU: Intel i7-10750H (12) @ 2.6GHz",
-                        "      :osssssss/        osssso+++.       GPU: NVIDIA GeForce GTX 1650",
-                        "     /ossssssss/        +ssssooo/-       Memory: 3840MiB / 15951MiB",
-                        "   `/ossssso+/:-        -:/+osssso+-     ",
-                        "  `+sso+:-`                 `.-/+oso:    ",
-                        " `++:.                           `-/+/   ",
-                        " .`                                 `/   "
-                    ]
+                    text: neofetchOutput
                 });
                 break;
 
@@ -156,60 +214,26 @@ const Terminal = () => {
                     command: cmd,
                     text: [
                         "╭─────────────────────────────────────────────────────────────────╮",
-                        "│                    🚀 Hrithik Dhakrey (@iamdhakrey)                │",
+                        `│                    🚀 ${profileData.name} (@${profileData.username})${' '.repeat(Math.max(0, 35 - profileData.name.length - profileData.username.length))}│`,
                         "├─────────────────────────────────────────────────────────────────┤",
                         "│                                                                 │",
-                        "│  🎓 B.Tech Computer Science | � Linux Enthusiast              │",
-                        "│  �🚀 Python Developer & DevOps Engineer                         │",
-                        "│  🤖 Discord Bot Developer | ⚡ CLI Applications Creator        │",
-                        "│  🔧 API Development Specialist                                  │",
+                        `│  🎓 ${profileData.title}${' '.repeat(Math.max(0, 47 - profileData.title.length))}│`,
+                        `│  📍 ${profileData.location}${' '.repeat(Math.max(0, 58 - profileData.location.length))}│`,
                         "│                                                                 │",
                         "├─────────────────────────────────────────────────────────────────┤",
-                        "│  📊 GitHub Stats & Badges:                                     │",
-                        "│                                                                 │",
-                        "│  🌟 GitHub: github.com/iamdhakrey                              │",
-                        "│  � Profile Views: 1.2k+ | ⭐ Stars Earned: 150+              │",
-                        "│  🔥 Streak: 45 days | 💼 Public Repos: 25+                    │",
-                        "│                                                                 │",
-                        "│  🏆 Achievements:                                               │",
-                        "│  • � Top Python Developer (Local Community)                   │",
-                        "│  • 🎯 DevOps Automation Expert                                 │",
-                        "│  • 🌐 Full-Stack Web Developer                                 │",
-                        "│  • 🔧 Open Source Contributor                                  │",
+                        "│  � Bio:                                                        │",
+                        ...profileData.bio.match(/.{1,62}/g)?.map((line: string) => `│  ${line}${' '.repeat(63 - line.length)}│`) || [],
                         "│                                                                 │",
                         "├─────────────────────────────────────────────────────────────────┤",
-                        "│  💼 Tech Stack & Skills:                                       │",
+                        "│  🌐 Links:                                                      │",
                         "│                                                                 │",
-                        "│  🐍 Python: FastAPI, Django, Flask, SQLAlchemy               │",
-                        "│  🌐 Frontend: React, TypeScript, Tailwind CSS, HTML5         │",
-                        "│  🔧 DevOps: Docker, Kubernetes, CI/CD, AWS, Linux            │",
-                        "│  🛠️ Tools: Git, VS Code, Postman, Nginx, Redis              │",
-                        "│  � Databases: PostgreSQL, MongoDB, SQLite                   │",
-                        "│                                                                 │",
-                        "├─────────────────────────────────────────────────────────────────┤",
-                        "│  🎯 Current Focus:                                             │",
-                        "│  • Building scalable microservices architecture              │",
-                        "│  • DevOps automation and infrastructure as code              │",
-                        "│  • Contributing to open source projects                       │",
-                        "│  • Learning cloud-native technologies                         │",
-                        "│                                                                 │",
-                        "├─────────────────────────────────────────────────────────────────┤",
-                        "│  � Let's Connect:                                             │",
-                        "│                                                                 │",
-                        "│  📧 Telegram: t.me/iamdhakrey                                  │",
-                        "│  🌐 Website: iamdhakrey.dev                                    │",
-                        "│  💼 LinkedIn: linkedin.com/in/iamdhakrey                       │",
-                        "│  🐙 GitHub: github.com/iamdhakrey                              │",
+                        `│  🌐 Website: ${profileData.website}${' '.repeat(Math.max(0, 49 - profileData.website.length))}│`,
+                        `│  📧 Email: ${profileData.email || 'Contact via website'}${' '.repeat(Math.max(0, 51 - (profileData.email || 'Contact via website').length))}│`,
                         "│                                                                 │",
                         "╰─────────────────────────────────────────────────────────────────╯",
                         "",
-                        "💡 I'm a passionate developer who loves creating innovative",
-                        "   solutions and learning new technologies. Always excited",
-                        "   to work on interesting projects and collaborate with",
-                        "   fellow developers!",
-                        "",
-                        "🔍 Fun Fact: I can solve a Rubik's cube in under 2 minutes",
-                        "   and I maintain several active Discord bots used by 10k+ users!"
+                        "💡 Type 'profile' to view the full interactive profile page",
+                        "🔗 Type 'ls' to see available sections"
                     ]
                 });
                 break;
@@ -228,7 +252,7 @@ const Terminal = () => {
                         "• Shareable link format",
                         "• Professional presentation",
                         "",
-                        "🔗 Direct link: iamdhakrey.dev/profile"
+                        `🔗 Direct link: ${profileData.website}/profile`
                     ]
                 });
                 setTimeout(() => navigate("/profile"), 1000);
@@ -248,7 +272,7 @@ const Terminal = () => {
                         "• View project details and links",
                         "• See star counts and activity",
                         "",
-                        "🔗 Direct link: iamdhakrey.dev/projects"
+                        `🔗 Direct link: ${profileData.website}/projects`
                     ]
                 });
                 setTimeout(() => navigate("/projects"), 1000);
@@ -697,7 +721,8 @@ const Terminal = () => {
         >
             {/* Input line */}
             <div className="flex items-center text-green-400 pt-2 text-sm sm:text-base">
-                <span className="text-blue-400 hidden sm:inline">user@localhost</span>
+                {/* <span className="text-blue-400 hidden sm:inline">user@localhost</span> */}
+                <span className="text-blue-400 hidden sm:inline">user@{terminalConfig.hostname}</span>
                 <span className="text-white hidden sm:inline">:</span>
                 <span className="text-blue-600 hidden sm:inline">~</span>
                 <span className="text-white">$ </span>

@@ -4,6 +4,8 @@
 
 A modern, terminal-style portfolio website that's fully configurable through a single configuration file. Perfect for developers who want to showcase their skills and projects in a unique way.
 
+[![Demo](docs/demo.gif)](docs/demo.gif)
+
 ## ✨ Features
 
 - **🖥️ Interactive Terminal Interface** - Navigate through your portfolio using terminal commands

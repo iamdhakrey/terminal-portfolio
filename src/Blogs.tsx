@@ -132,10 +132,10 @@ function Blogs() {
                             <span className="text-blue-400">$ </span>
                             <span>cat {filename}.md</span>
                         </div>
-                        <h1 className="text-3xl font-bold mb-4 text-green-400">
+                        <h1 className="text-xl sm:text-3xl font-bold mb-4 text-green-400">
                             <span className="text-gray-600"># </span>{title}
                         </h1>
-                        <div className="flex items-center space-x-4 text-sm">
+                        <div className="flex items-center space-x-4 text-xs sm:text-sm">
                             <span className="text-blue-400">📅 {date}</span>
                             <span className="text-yellow-400">📝 Markdown</span>
                             <span className="text-gray-500">UTF-8</span>
@@ -145,7 +145,7 @@ function Blogs() {
                     {/* Table of Contents */}
                     {headings.length > 0 && (
                         <div className="mb-8 p-4 bg-gray-900 border border-gray-700 rounded-lg">
-                            <h2 className="text-lg font-semibold mb-3 text-green-400">
+                            <h2 className="text-base sm:text-lg font-semibold mb-3 text-green-400">
                                 <span className="text-gray-600">## </span>Table of Contents
                             </h2>
                             <ul className="space-y-1">
@@ -167,7 +167,7 @@ function Blogs() {
                     )}
 
                     {/* Markdown content with terminal styling */}
-                    <div className="prose prose-lg max-w-none prose-invert prose-headings:text-green-400 prose-p:text-gray-300 prose-strong:text-white prose-code:text-pink-400 prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-a:text-blue-400">
+                    <div className="prose prose-sm sm:prose-lg max-w-none prose-invert prose-headings:text-green-400 prose-p:text-gray-300 prose-strong:text-white prose-code:text-pink-400 prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-a:text-blue-400">
                         <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
                             rehypePlugins={[rehypeHighlight, rehypeRaw]}
@@ -176,11 +176,11 @@ function Blogs() {
                                     const match = /language-(\w+)/.exec(className || '');
                                     const isInline = !match;
                                     return isInline ? (
-                                        <code className="bg-gray-800 text-pink-400 px-1 py-0.5 rounded text-sm font-mono border border-gray-700" {...props}>
+                                        <code className="bg-gray-800 text-pink-400 px-1 py-0.5 rounded text-xs sm:text-sm font-mono border border-gray-700" {...props}>
                                             {children}
                                         </code>
                                     ) : (
-                                        <div className="my-6">
+                                        <div className="my-4 sm:my-6">
                                             <div className="bg-gray-800 border border-gray-600 rounded-t-lg p-2 flex items-center justify-between">
                                                 <div className="flex items-center space-x-2">
                                                     <div className="w-2 h-2 bg-red-500 rounded-full"></div>
@@ -189,8 +189,8 @@ function Blogs() {
                                                 </div>
                                                 <span className="text-gray-400 text-xs">{match ? match[1] : 'code'}</span>
                                             </div>
-                                            <pre className="bg-gray-900 text-gray-100 p-4 rounded-b-lg overflow-x-auto border-x border-b border-gray-600 m-0">
-                                                <code className={`${className} text-sm leading-relaxed`} {...props}>
+                                            <pre className="bg-gray-900 text-gray-100 p-3 sm:p-4 rounded-b-lg overflow-x-auto border-x border-b border-gray-600 m-0">
+                                                <code className={`${className} text-xs sm:text-sm leading-relaxed`} {...props}>
                                                     {children}
                                                 </code>
                                             </pre>
@@ -204,7 +204,7 @@ function Blogs() {
                                     const text = children?.toString() || '';
                                     const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                                     return (
-                                        <h1 id={id} className="text-2xl font-bold text-green-400 mt-8 mb-4 border-b border-gray-700 pb-2" {...props}>
+                                        <h1 id={id} className="text-lg sm:text-2xl font-bold text-green-400 mt-6 sm:mt-8 mb-3 sm:mb-4 border-b border-gray-700 pb-2" {...props}>
                                             <span className="text-gray-600"># </span>{children}
                                         </h1>
                                     );
@@ -213,7 +213,7 @@ function Blogs() {
                                     const text = children?.toString() || '';
                                     const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                                     return (
-                                        <h2 id={id} className="text-xl font-semibold text-green-400 mt-6 mb-3" {...props}>
+                                        <h2 id={id} className="text-base sm:text-xl font-semibold text-green-400 mt-4 sm:mt-6 mb-2 sm:mb-3" {...props}>
                                             <span className="text-gray-600">## </span>{children}
                                         </h2>
                                     );
@@ -222,7 +222,7 @@ function Blogs() {
                                     const text = children?.toString() || '';
                                     const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                                     return (
-                                        <h3 id={id} className="text-lg font-semibold text-green-400 mt-4 mb-2" {...props}>
+                                        <h3 id={id} className="text-sm sm:text-lg font-semibold text-green-400 mt-3 sm:mt-4 mb-2" {...props}>
                                             <span className="text-gray-600">### </span>{children}
                                         </h3>
                                     );
@@ -231,7 +231,7 @@ function Blogs() {
                                     const text = children?.toString() || '';
                                     const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                                     return (
-                                        <h4 id={id} className="text-base font-semibold text-green-400 mt-3 mb-2" {...props}>
+                                        <h4 id={id} className="text-sm sm:text-base font-semibold text-green-400 mt-3 mb-2" {...props}>
                                             <span className="text-gray-600">#### </span>{children}
                                         </h4>
                                     );
@@ -240,7 +240,7 @@ function Blogs() {
                                     const text = children?.toString() || '';
                                     const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                                     return (
-                                        <h5 id={id} className="text-sm font-semibold text-green-400 mt-3 mb-2" {...props}>
+                                        <h5 id={id} className="text-xs sm:text-sm font-semibold text-green-400 mt-3 mb-2" {...props}>
                                             <span className="text-gray-600">##### </span>{children}
                                         </h5>
                                     );
@@ -256,28 +256,28 @@ function Blogs() {
                                 },
                                 p: ({ children, ...props }: any) => {
                                     return (
-                                        <p className="text-gray-300 mb-4 leading-relaxed" {...props}>
+                                        <p className="text-gray-300 mb-3 sm:mb-4 text-xs sm:text-sm leading-relaxed" {...props}>
                                             {children}
                                         </p>
                                     );
                                 },
                                 ul: ({ children, ...props }: any) => {
                                     return (
-                                        <ul className="list-disc list-inside text-gray-300 mb-4 space-y-1 ml-4" {...props}>
+                                        <ul className="list-disc list-inside text-gray-300 mb-3 sm:mb-4 space-y-1 ml-2 sm:ml-4 text-xs sm:text-sm" {...props}>
                                             {children}
                                         </ul>
                                     );
                                 },
                                 ol: ({ children, ...props }: any) => {
                                     return (
-                                        <ol className="list-decimal list-inside text-gray-300 mb-4 space-y-1 ml-4" {...props}>
+                                        <ol className="list-decimal list-inside text-gray-300 mb-3 sm:mb-4 space-y-1 ml-2 sm:ml-4 text-xs sm:text-sm" {...props}>
                                             {children}
                                         </ol>
                                     );
                                 },
                                 li: ({ children, ...props }: any) => {
                                     return (
-                                        <li className="text-gray-300" {...props}>
+                                        <li className="text-gray-300 text-xs sm:text-sm" {...props}>
                                             {children}
                                         </li>
                                     );
@@ -350,7 +350,7 @@ function Blogs() {
                     {(navigation.previous || navigation.next) && (
                         <div className="mt-8 pt-6 border-t border-gray-800">
                             <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
-                                <h3 className="text-green-400 text-lg font-semibold mb-4 flex items-center">
+                                <h3 className="text-green-400 text-base sm:text-lg font-semibold mb-4 flex items-center">
                                     <span className="text-blue-400 mr-2">$</span>
                                     Navigation
                                 </h3>
@@ -363,7 +363,7 @@ function Blogs() {
                                             <span className="text-gray-400">←</span>
                                             <div className="flex-1 min-w-0">
                                                 <div className="text-xs text-gray-500">Previous</div>
-                                                <div className="text-sm text-blue-400 group-hover:text-blue-300 truncate">
+                                                <div className="text-xs sm:text-sm text-blue-400 group-hover:text-blue-300 truncate">
                                                     {navigation.previous.title}
                                                 </div>
                                             </div>
@@ -376,7 +376,7 @@ function Blogs() {
                                         >
                                             <div className="flex-1 min-w-0">
                                                 <div className="text-xs text-gray-500">Next</div>
-                                                <div className="text-sm text-blue-400 group-hover:text-blue-300 truncate">
+                                                <div className="text-xs sm:text-sm text-blue-400 group-hover:text-blue-300 truncate">
                                                     {navigation.next.title}
                                                 </div>
                                             </div>
@@ -392,7 +392,7 @@ function Blogs() {
                     {relatedPosts.length > 0 && (
                         <div className="mt-8 pt-6 border-t border-gray-800">
                             <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
-                                <h3 className="text-green-400 text-lg font-semibold mb-4 flex items-center">
+                                <h3 className="text-green-400 text-base sm:text-lg font-semibold mb-4 flex items-center">
                                     <span className="text-blue-400 mr-2">$</span>
                                     Related Posts
                                 </h3>
@@ -406,11 +406,11 @@ function Blogs() {
                                             <div className="flex items-start space-x-3">
                                                 <span className="text-gray-400 text-sm mt-1">→</span>
                                                 <div className="flex-1">
-                                                    <div className="text-blue-400 group-hover:text-blue-300 font-medium">
+                                                    <div className="text-blue-400 group-hover:text-blue-300 font-medium text-xs sm:text-sm">
                                                         {post.title}
                                                     </div>
                                                     {post.description && (
-                                                        <div className="text-gray-400 text-sm mt-1 line-clamp-2">
+                                                        <div className="text-gray-400 text-xs sm:text-sm mt-1 line-clamp-2">
                                                             {post.description}
                                                         </div>
                                                     )}

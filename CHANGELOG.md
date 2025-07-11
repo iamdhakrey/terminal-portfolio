@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.1] - 2025-07-11
+
+### 📝 Other Changes
+- Merge branch 'main' of github.com:iamdhakrey/Github-Profile
+- 🎨 style: improve typography and spacing in Blogs component - Adjusted heading sizes and spacing for better readability - Updated font sizes for various elements to enhance visual hierarchy
+- Update README.md
+- Merge branch 'main' of github.com:iamdhakrey/Github-Profile
+- Implement new feature X to enhance user experience and improve performance
+- 🗑️ chore: remove unused blog files and update profile configuration - Deleted linux_commands.md and sudoko.md - Updated availableBlogs in profile configuration to reflect changes - Added tags to blog-linking-guide.md and react-typescript-guide.md
+- Update node.js.yml
+- Create node.js.yml
+- Delete .github/workflows directory
+- Create webpack.yml
+
+
 ## [1.1.0] - 2025-07-10
 
 ### ✨ Features

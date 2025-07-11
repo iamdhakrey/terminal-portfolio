@@ -479,7 +479,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you have any questions or need help:
 
 1. Check the documentation above
-2. Search existing [Issues](https://github.com/yourusername/github-profile/issues)
+2. Search existing [Issues](https://github.com/iamdhakrey/github-profile/issues)
 3. Create a new issue if needed
 
 ## 🙏 Acknowledgments
@@ -492,6 +492,6 @@ If you have any questions or need help:
 
 ⭐ **Star this repository if you found it helpful!**
 
-🐛 **Found a bug?** [Open an issue](https://github.com/yourusername/github-profile/issues)
+🐛 **Found a bug?** [Open an issue](https://github.com/iamdhakrey/github-profile/issues)
 
-💡 **Have a feature request?** [Start a discussion](https://github.com/yourusername/github-profile/discussions)
+💡 **Have a feature request?** [Start a discussion](https://github.com/iamdhakrey/github-profile/discussions)

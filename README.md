@@ -8,7 +8,6 @@ A modern, terminal-style portfolio website that's fully configurable through a s
 
 ## ✨ Features
 
-
 - **🖥️ Interactive Terminal Interface** - Navigate through your portfolio using terminal commands
 - **📱 Fully Responsive** - Works perfectly on desktop, tablet, and mobile
 - **⚙️ Easy Configuration** - Everything configurable through `profile.config.ts`

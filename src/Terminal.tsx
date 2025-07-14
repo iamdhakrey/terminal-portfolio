@@ -6,6 +6,7 @@ import { getTerminalConfig, getSystemInfo, getProfileData } from "./utils/config
 import { analytics } from "./utils/analytics";
 import { useKeyboardShortcuts, getKeyboardShortcutsHelp } from "./utils/keyboardShortcuts";
 import { SafeCalculator } from "./utils/calculator";
+import { config } from "process";
 
 const Terminal = () => {
     const [input, setInput] = useState("");
@@ -1306,7 +1307,7 @@ const Terminal = () => {
                                                 line.startsWith("│") || line.startsWith("┌") || line.startsWith("╰") || line.startsWith("├") ? "text-cyan-400" :
                                                     ""
                                         }`}>
-                                        {line}
+                                        <pre>{line}</pre>
                                     </div>
                                 ))}
                             </div>
@@ -1344,7 +1345,7 @@ const Terminal = () => {
                         {item.type === "completion" && (
                             <div className="text-yellow-400 ml-2 sm:ml-4 text-sm sm:text-base">
                                 {item.text.map((line: string, i: number) => (
-                                    <div key={i} className="break-words">{line}</div>
+                                    <div key={i} className="break-words"><pre>{line}</pre></div>
                                 ))}
                             </div>
                         )}

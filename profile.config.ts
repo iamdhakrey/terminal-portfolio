@@ -403,7 +403,7 @@ export const profileConfig: ProfileConfig = {
     },
     systemStatus: {
       enabled: true,
-      message: "System OK"
+      message: "Linux 6.15.0 •  System OK"
     }
   }
 };

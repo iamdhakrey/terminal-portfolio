@@ -131,6 +131,7 @@ const Terminal = () => {
     };
 
     const addToOutput = (item: any) => {
+        console.log(item);
         setOutput(prev => [item, ...prev.slice(0, MAX_OUTPUT_ITEMS - 1)]); // Limit to MAX_OUTPUT_ITEMS
         // Scroll to input after adding output
         setTimeout(() => {
@@ -145,9 +146,9 @@ const Terminal = () => {
         const cmd = args[0].toLowerCase();
         const params = args.slice(1);
 
-        // Add command to output first
-        const prompt = `${terminalConfig.username}@${terminalConfig.hostname}:~$ ${command}`;
-        addToOutput({ type: "input", command, text: [prompt] });
+        // // Add command to output first
+        // const prompt = `${terminalConfig.username}@${terminalConfig.hostname}:~$ ${command}`;
+        // addToOutput({ type: "input", command, text: [prompt] });
 
         // Check for command aliases
         if (commandAliases[cmd]) {
@@ -1206,6 +1207,10 @@ const Terminal = () => {
                 });
                 break;
         }
+
+        // show last command in top
+        const prompts = `${terminalConfig.username}@${terminalConfig.hostname}:~$ ${command}`;
+        addToOutput({ type: "input", command, text: [prompts] });
     };
 
     // Favorites storage

@@ -5,6 +5,7 @@ import Terminal from "./Terminal";
 import BlogList from "./BlogList";
 import Profile from "./Profile";
 import Projects from "./Projects";
+import StatusBar from "./StatusBar";
 import { Routes, Route, BrowserRouter, Navigate, useParams } from "react-router-dom";
 import Blogs from "./Blogs";
 
@@ -19,7 +20,7 @@ function BlogRedirect() {
 function App() {
     return (
         <BrowserRouter>
-            <div className="min-h-screen flex flex-col bg-black pb-16"> {/* Added padding bottom for fixed footer */}
+            <div className="min-h-screen flex flex-col bg-black"> {/* Removed padding bottom for fixed footer */}
                 <Navbar />
                 <div className="flex-1">
                     <Routes>
@@ -32,6 +33,7 @@ function App() {
                         {/* Add more routes as needed */}
                     </Routes>
                 </div>
+                <StatusBar />
                 <Footer />
             </div>
         </BrowserRouter>

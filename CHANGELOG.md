@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2025-07-14
+
+### 📝 Other Changes
+- ✨ chore: update package version to 1.1.1 and remove deprecated fontawesome package
+- ✨ feat: enhance welcome message with interactive terminal branding and guidance
+- ✨ feat: integrate StatusBar component and adjust layout for fixed footer
+- ✨ feat: add StatusBar component for displaying system info and visitor stats
+- ✨ feat: enhance Terminal with command aliases, keyboard shortcuts, and analytics tracking
+- ✨ feat: add analytics utility for visitor tracking
+- ✨ feat: implement SafeCalculator utility for safe mathematical operations
+- ✨ feat: add keyboard shortcuts utility and help documentation
+- 🎨 style: add demo GIF to README and improve visibility
+
+
 ## [1.1.1] - 2025-07-11
 
 ### 📝 Other Changes

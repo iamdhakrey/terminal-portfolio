@@ -1314,7 +1314,7 @@ const Terminal = () => {
                         {item.type === "neofetch" && (
                             <div className="text-blue-400 ml-2 sm:ml-4 font-mono text-xs sm:text-sm overflow-x-auto">
                                 {item.text.map((line: string, i: number) => (
-                                    <div key={i} className="whitespace-nowrap">{line}</div>
+                                    <div key={i} className="whitespace-nowrap"><pre>{line}</pre></div>
                                 ))}
                             </div>
                         )}

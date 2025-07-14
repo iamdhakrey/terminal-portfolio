@@ -131,7 +131,7 @@ export interface ProfileConfig {
       color?: string;
     }>;
     systemInfo: {
-      os: string;
+      // os: string;
       shell: string;
       showDateTime: boolean;
     };
@@ -388,9 +388,9 @@ export const profileConfig: ProfileConfig = {
       { name: "gh", path: "https://github.com/iamdhakrey/", external: true, color: "text-yellow-400" }
     ],
     systemInfo: {
-      os: "Linux 6.1.0",
+      // os: "Linux 6.1.0",
       shell: "zsh",
-      showDateTime: true
+      showDateTime: false
     }
   },
 

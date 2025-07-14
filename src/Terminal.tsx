@@ -1361,7 +1361,7 @@ const Terminal = () => {
                                 ╭─────────────────────────────────────────────╮
                             </div>
                             <div className="text-xl sm:text-2xl font-bold text-green-400 mb-1">
-                                � Welcome to iamdhakrey.dev Terminal
+                                � Welcome to ${terminalConfig.hostname} Terminal
                             </div>
                             <div className="text-2xl sm:text-3xl mb-3">
                                 ╰─────────────────────────────────────────────╯

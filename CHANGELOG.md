@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2025-07-14
+
+### ✨ Features
+- feat: add NotFound route for handling undefined paths
+- feat: add interactive 404 Not Found page with terminal interface
+
+### 🐛 Bug Fixes
+- fix: comment out OS version in profile configuration
+- fix: update system status message to include OS version
+
+
 ## [1.2.2] - 2025-07-14
 
 ### 🐛 Bug Fixes

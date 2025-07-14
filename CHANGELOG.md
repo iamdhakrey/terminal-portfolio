@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2025-07-14
+
+### 📝 Other Changes
+- Merge pull request #5 from iamdhakrey/dependabot/npm_and_yarn/multi-a22fa6ddde
+- Update node.js.yml
+- chore(deps): bump esbuild, @vitejs/plugin-react-swc and vite
+- Merge pull request #4 from iamdhakrey/dependabot/npm_and_yarn/micromatch-4.0.8
+- chore(deps): bump micromatch from 4.0.5 to 4.0.8
+- Merge pull request #3 from iamdhakrey/dependabot/npm_and_yarn/vite-5.4.19
+- chore(deps-dev): bump vite from 5.0.9 to 5.4.19
+- Merge pull request #2 from iamdhakrey/dependabot/npm_and_yarn/rollup-4.45.0
+- chore(deps): bump rollup from 4.9.0 to 4.45.0
+
+
 ## [1.2.0] - 2025-07-14
 
 ### 📝 Other Changes

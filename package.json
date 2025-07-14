@@ -2,7 +2,7 @@
   "name": "iamdhakre-dev-react",
   "homepage": "https://iamdhakrey.github.io/iamdhakre-dev-react",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
   "scripts": {
     "dev": "vite",

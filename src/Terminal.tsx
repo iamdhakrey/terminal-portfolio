@@ -131,7 +131,6 @@ const Terminal = () => {
     };
 
     const addToOutput = (item: any) => {
-        console.log(item);
         setOutput(prev => [item, ...prev.slice(0, MAX_OUTPUT_ITEMS - 1)]); // Limit to MAX_OUTPUT_ITEMS
         // Scroll to input after adding output
         setTimeout(() => {

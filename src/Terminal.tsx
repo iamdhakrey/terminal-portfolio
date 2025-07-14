@@ -3,6 +3,9 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import ParrotAnimation from "./DancingParrot";
 import { getTerminalConfig, getSystemInfo, getProfileData } from "./utils/configManager";
+import { analytics } from "./utils/analytics";
+import { useKeyboardShortcuts, getKeyboardShortcutsHelp } from "./utils/keyboardShortcuts";
+import { SafeCalculator } from "./utils/calculator";
 
 const Terminal = () => {
     const [input, setInput] = useState("");
@@ -18,7 +21,27 @@ const Terminal = () => {
     const systemInfo = getSystemInfo();
     const profileData = getProfileData();
 
+    // Command aliases
+    const commandAliases: { [key: string]: string } = {
+        'll': 'ls -la',
+        '..': 'cd ..',
+        'cls': 'clear',
+        'h': 'help',
+        'q': 'exit',
+        'quit': 'exit',
+        '?': 'help',
+        'find': 'search',
+        'favourite': 'favorites',
+        'fave': 'favorites'
+    };
+
+    // Maximum output items to prevent memory issues
+    const MAX_OUTPUT_ITEMS = 500;
+
     useEffect(() => {
+        // Track visit on component mount
+        analytics.trackVisit();
+        
         // Show welcome message on component mount
         if (terminalConfig.welcomeMessage.length > 0) {
             addToOutput({
@@ -28,6 +51,34 @@ const Terminal = () => {
             });
         }
     }, []);
+
+    // Keyboard shortcuts
+    useKeyboardShortcuts([
+        {
+            key: 'l',
+            ctrl: true,
+            action: () => handleCommand('clear'),
+            description: 'Clear terminal'
+        },
+        {
+            key: 'h',
+            ctrl: true,
+            action: () => navigate('/'),
+            description: 'Go to home'
+        },
+        {
+            key: 'p',
+            ctrl: true,
+            action: () => navigate('/projects'),
+            description: 'Go to projects'
+        },
+        {
+            key: 'b',
+            ctrl: true,
+            action: () => navigate('/blogs'),
+            description: 'Go to blogs'
+        }
+    ]);
 
     const handleInputChange = (e: any) => {
         setInput(e.target.value);
@@ -80,7 +131,7 @@ const Terminal = () => {
     };
 
     const addToOutput = (item: any) => {
-        setOutput(prev => [item, ...prev]); // Add new items to the top
+        setOutput(prev => [item, ...prev.slice(0, MAX_OUTPUT_ITEMS - 1)]); // Limit to MAX_OUTPUT_ITEMS
         // Scroll to input after adding output
         setTimeout(() => {
             if (inputRef.current) {
@@ -97,6 +148,18 @@ const Terminal = () => {
         // Add command to output first
         const prompt = `${terminalConfig.username}@${terminalConfig.hostname}:~$ ${command}`;
         addToOutput({ type: "input", command, text: [prompt] });
+
+        // Check for command aliases
+        if (commandAliases[cmd]) {
+            const aliasCommand = commandAliases[cmd];
+            addToOutput({
+                type: "command",
+                command: cmd,
+                text: [`Alias '${cmd}' expanded to '${aliasCommand}'`, `Executing: ${aliasCommand}`]
+            });
+            setTimeout(() => handleCommand(aliasCommand), 1000);
+            return;
+        }
 
         // Check for custom commands first
         if (terminalConfig.customCommands[cmd]) {
@@ -123,37 +186,74 @@ const Terminal = () => {
                     type: "command",
                     command: cmd,
                     text: [
-                        "Available commands:",
                         "",
-                        "  System Information:",
-                        "    neofetch     - Display system information",
-                        "    whoami       - Current user information",
-                        "    about        - About me",
-                        "    profile      - View shareable profile",
-                        "    uname        - System information",
-                        "    uptime       - System uptime",
+                        "╔═══════════════════════════════════════════════════════════════════════════════╗",
+                        "║                    🎯 IAMDHAKREY.DEV TERMINAL v2.1                    ║",
+                        "╚═══════════════════════════════════════════════════════════════════════════════╝",
                         "",
-                        "  Navigation:",
-                        "    cd [dir]     - Change directory (cd blogs, cd profile, cd projects)",
-                        "    ls [options] - List directory contents",
-                        "    pwd          - Print working directory",
-                        "    tree         - Display directory tree",
+                        "╭─ 🔍 SYSTEM & INFORMATION ─────────────────┬─ 🧭 NAVIGATION & FILES ─────────────────╮",
+                        "│                                           │                                         │",
+                        "│  🖥️  neofetch     System overview w/ ASCII │  📁 cd [dir]      Change directory     │",
+                        "│  👤 whoami       Current user details     │  📋 ls [opts]     List directory       │",
+                        "│  ℹ️  about        Developer biography      │  📍 pwd           Current path         │",
+                        "│  🎯 profile      Shareable profile link   │  🌳 tree          Directory tree view   │",
+                        "│  🔧 uname        System architecture      │  🔍 grep [term]   Search in files      │",
+                        "│  ⏰ uptime       System uptime stats      │                                         │",
+                        "│                                           │  💡 Tip: Try 'cd projects' or 'cd blogs' │",
+                        "└───────────────────────────────────────────┴─────────────────────────────────────────┘",
                         "",
-                        "  Fun Stuff:",
-                        "    parrot       - Dancing parrot animation",
-                        "    fortune      - Random fortune cookie",
-                        "    cowsay [msg] - Cowsay with message",
-                        "    sl           - Steam locomotive",
+                        "╭─ 🎭 ENTERTAINMENT & FUN ──────────────────┬─ 🛠️  UTILITIES & PRODUCTIVITY ──────────╮",
+                        "│                                           │                                         │",
+                        "│  🦜 parrot       Animated dancing parrot  │  🧮 calc [expr]   Smart calculator      │",
+                        "│  🔮 fortune      Random wisdom quotes     │  🌤️  weather       Current weather info  │",
+                        "│  🐄 cowsay [msg] Talking cow messenger    │  🚀 skills        Technical skill tree  │",
+                        "│  🚂 sl           Steam locomotive fun     │  📊 analytics     Site visitor stats    │",
+                        "│  🟩 matrix       Enter the Matrix mode    │  📜 history       Command history view  │",
+                        "│  😂 joke         Programming humor        │  📅 date          Current date & time   │",
+                        "│                                           │  ⌨️  shortcuts     Keyboard hotkeys     │",
+                        "│  🎲 Try these for instant entertainment!   │  🎨 theme         Terminal themes       │",
+                        "└───────────────────────────────────────────┴─────────────────────────────────────────┘",
                         "",
-                        "  Utilities:",
-                        "    clear        - Clear terminal",
-                        "    history      - Command history",
-                        "    date         - Current date and time",
-                        "    ps           - Running processes",
-                        "    top          - System monitor",
-                        "    man [cmd]    - Manual for command",
+                        "╭─ ⚡ POWER USER ZONE ────────────────────────────────────────────────────────────────╮",
+                        "│                                                                                   │",
+                        "│  🏃‍♂️ Command Aliases (Super Fast):                                                  │",
+                        "│     ll → ls -la      ..  → cd ..       cls → clear      h → help                │",
+                        "│     q  → quit        exit → logout     esc → exit       ? → help                │",
+                        "│                                                                                   │",
+                        "│  ⌨️  Keyboard Shortcuts (Pro Mode):                                               │",
+                        "│     Ctrl+L → clear   Ctrl+H → home     Ctrl+C → cancel   Tab → complete         │",
+                        "│     ↑/↓ → history    Ctrl+U → clear    Ctrl+R → refresh  Enter → execute        │",
+                        "│                                                                                   │",
+                        "└───────────────────────────────────────────────────────────────────────────────────┘",
                         "",
-                        "Type any command to get started!"
+                        "╭─ 🎯 LEARNING PATH FOR NEWCOMERS ───────────────────────────────────────────────────╮",
+                        "│                                                                                   │",
+                        "│  🎓 Beginner's Journey (Follow this sequence):                                   │",
+                        "│                                                                                   │",
+                        "│    1️⃣  neofetch    →  See the system in style                                    │",
+                        "│    2️⃣  about       →  Learn about the developer                                  │",
+                        "│    3️⃣  skills      →  Explore technical abilities                               │",
+                        "│    4️⃣  cd projects →  Browse amazing projects                                    │",
+                        "│    5️⃣  fortune     →  Get some wisdom                                            │",
+                        "│    6️⃣  joke        →  Laugh a little                                             │",
+                        "│                                                                                   │",
+                        "│  🏆 Advanced Commands: matrix, parrot, analytics, calc, weather                  │",
+                        "│                                                                                   │",
+                        "└───────────────────────────────────────────────────────────────────────────────────┘",
+                        "",
+                        "╭─ 💡 HIDDEN FEATURES & EASTER EGGS ─────────────────────────────────────────────────╮",
+                        "│                                                                                   │",
+                        "│  🥚 Secret Commands: Try typing random things for surprises!                     │",
+                        "│  🎪 Interactive Elements: Some commands have different outputs each time         │",
+                        "│  🎨 Dynamic Content: Weather, jokes, and fortunes change regularly              │",
+                        "│  📊 Smart Analytics: Your usage is tracked (privacy-friendly)                   │",
+                        "│  🔄 Command Variations: Try 'cowsay hello' vs just 'cowsay'                     │",
+                        "│                                                                                   │",
+                        "└───────────────────────────────────────────────────────────────────────────────────┘",
+                        "",
+                        "🌟 Pro Tip: Type any command name followed by '--help' for detailed usage instructions!",
+                        "💫 Having fun? Share this terminal with friends: https://iamdhakrey.dev",
+                        ""
                     ]
                 });
                 break;
@@ -259,23 +359,51 @@ const Terminal = () => {
                 break;
 
             case "projects":
-                addToOutput({
-                    type: "command",
-                    command: cmd,
-                    text: [
-                        "🚀 Loading GitHub projects...",
-                        "📊 Fetching repository statistics...",
-                        "",
-                        "📈 Repository Overview:",
-                        "• Live data from GitHub CLI",
-                        "• Filter by programming language",
-                        "• View project details and links",
-                        "• See star counts and activity",
-                        "",
-                        `🔗 Direct link: ${profileData.website}/projects`
-                    ]
-                });
-                setTimeout(() => navigate("/projects"), 1000);
+                if (params[0] === "--local") {
+                    addToOutput({
+                        type: "command",
+                        command: cmd,
+                        text: [
+                            "📁 Local Projects Directory:",
+                            "═══════════════════════════════════════",
+                            "",
+                            "┌─ 🌐 portfolio-website/",
+                            "│  ├── README.md",
+                            "│  ├── package.json",
+                            "│  └── src/",
+                            "│",
+                            "┌─ 🤖 terminal-bot/",
+                            "│  ├── bot.py",
+                            "│  ├── config.json",
+                            "│  └── requirements.txt",
+                            "│",
+                            "┌─ 📱 react-native-app/",
+                            "│  ├── App.js",
+                            "│  ├── package.json",
+                            "│  └── components/",
+                            "",
+                            "💡 Use 'cd projects' to see GitHub projects"
+                        ]
+                    });
+                } else {
+                    addToOutput({
+                        type: "command",
+                        command: cmd,
+                        text: [
+                            "🚀 Loading GitHub projects...",
+                            "📊 Fetching repository statistics...",
+                            "",
+                            "📈 Repository Overview:",
+                            "• Live data from GitHub CLI",
+                            "• Filter by programming language",
+                            "• View project details and links",
+                            "• See star counts and activity",
+                            "",
+                            `🔗 Direct link: ${profileData.website}/projects`
+                        ]
+                    });
+                    setTimeout(() => navigate("/projects"), 1000);
+                }
                 break;
 
             case "clear":
@@ -656,6 +784,412 @@ const Terminal = () => {
                 }
                 break;
 
+            case "weather":
+                addToOutput({
+                    type: "command",
+                    command: cmd,
+                    text: [
+                        "🌤️  Current Weather for Developer's Workspace:",
+                        "╭──────────────────────────────────────────╮",
+                        "│ ☀️  Sunny with a chance of coding        │",
+                        "│ 🌡️  Temperature: Perfectly optimized    │",
+                        "│ 💨 Wind: Flowing like clean code        │",
+                        "│ 🌊 Humidity: Just enough for comfort    │",
+                        "│ ⚡ Conditions: Ideal for development     │",
+                        "╰──────────────────────────────────────────╯",
+                        "",
+                        "💡 Fun fact: Coding weather is always perfect!"
+                    ]
+                });
+                break;
+
+            case "joke":
+                const jokes = [
+                    "Why do programmers prefer dark mode? Because light attracts bugs! 🐛",
+                    "How many programmers does it take to change a light bulb? None. It's a hardware problem! 💡",
+                    "Why do Java developers wear glasses? Because they can't C# 👓",
+                    "What's a programmer's favorite hangout place? Foo Bar! 🍺",
+                    "Why did the programmer quit his job? He didn't get arrays! 📊",
+                    "What do you call a programmer from Finland? Nerdic! 🇫🇮",
+                    "Why do Python programmers prefer snake_case? Because they can't C camelCase! 🐍",
+                    "What's the object-oriented way to become wealthy? Inheritance! 💰"
+                ];
+                const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+                addToOutput({
+                    type: "command",
+                    command: cmd,
+                    text: [
+                        "😂 Programming Joke of the Day:",
+                        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                        randomJoke,
+                        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                        "",
+                        "💭 Type 'joke' again for another one!"
+                    ]
+                });
+                break;
+
+            case "calc":
+                if (params.length === 0) {
+                    addToOutput({
+                        type: "command",
+                        command: cmd,
+                        text: [
+                            "🧮 Terminal Calculator",
+                            "",
+                            "Usage: calc [expression]",
+                            "",
+                            "Examples:",
+                            "  calc 2 + 2",
+                            "  calc 10 * 5",
+                            "  calc 100 / 4",
+                            "  calc 2 ** 8",
+                            "",
+                            "Supported operations: +, -, *, /, **, %"
+                        ]
+                    });
+                } else {
+                    try {
+                        const expression = params.join(' ');
+                        
+                        // Validate expression using safe calculator
+                        if (!SafeCalculator.isValidExpression(expression)) {
+                            throw new Error("Invalid characters in expression");
+                        }
+                        
+                        const result = SafeCalculator.calculate(expression);
+                        addToOutput({
+                            type: "command",
+                            command: cmd,
+                            text: [
+                                `🧮 Calculator Result:`,
+                                `${expression} = ${result}`,
+                                "",
+                                `💡 Tip: Use 'calc' without arguments to see usage`
+                            ]
+                        });
+                    } catch (error) {
+                        addToOutput({
+                            type: "command",
+                            command: cmd,
+                            text: [
+                                "❌ Calculator Error:",
+                                "Invalid mathematical expression",
+                                "",
+                                "Examples of valid expressions:",
+                                "  calc 2 + 2",
+                                "  calc (10 * 5) / 2"
+                            ]
+                        });
+                    }
+                }
+                break;
+
+            case "matrix":
+                addToOutput({
+                    type: "command",
+                    command: cmd,
+                    text: [
+                        "🟩 Entering the Matrix...",
+                        "01001000 01100101 01101100 01101100 01101111",
+                        "01010111 01101111 01110010 01101100 01100100",
+                        "",
+                        "🕶️  Welcome to the digital world, Neo.",
+                        "    There is no spoon... only code.",
+                        "",
+                        "💊 Take the red pill: continue coding",
+                        "💊 Take the blue pill: exit terminal",
+                        "",
+                        "\"The Matrix is everywhere. It is all around us.\"",
+                        "         - Morpheus"
+                    ]
+                });
+                break;
+
+            case "skills":
+                const skillCategories = [
+                    {
+                        category: "Backend",
+                        skills: ["Rust", "Go", "Python","FastAPI", "REST APIs"],
+                        level: "████████░░ 80%"
+                    },
+                    {
+                        category: "Frontend",
+                        skills: ["React", "TypeScript", "JavaScript", "HTML/CSS", "Tailwind CSS"],
+                        level: "████████░░ 80%"
+                    },
+                    {
+                        category: "DevOps",
+                        skills: ["Docker", "Git", "Linux", "Firebase", "Vercel"],
+                        level: "███████░░░ 70%"
+                    },
+                    {
+                        category: "Database",
+                        skills: ["MongoDB", "PostgreSQL", "Redis"],
+                        level: "███████░░░ 70%"
+                    }
+                ];
+
+                const skillsOutput = [
+                    "🚀 Technical Skills Overview:",
+                    "═══════════════════════════════════════════════",
+                    ""
+                ];
+
+                skillCategories.forEach(cat => {
+                    skillsOutput.push(`📋 ${cat.category}:`);
+                    skillsOutput.push(`   Skills: ${cat.skills.join(", ")}`);
+                    skillsOutput.push(`   Level:  ${cat.level}`);
+                    skillsOutput.push("");
+                });
+
+                skillsOutput.push("💡 Always learning and improving!");
+
+                addToOutput({
+                    type: "command",
+                    command: cmd,
+                    text: skillsOutput
+                });
+                break;
+
+            case "analytics":
+            case "stats":
+                addToOutput({
+                    type: "command",
+                    command: cmd,
+                    text: analytics.getFormattedStats()
+                });
+                break;
+
+            case "exit":
+            case "logout":
+                addToOutput({
+                    type: "command",
+                    command: cmd,
+                    text: [
+                        "👋 Thanks for visiting!",
+                        "🔒 Logging out...",
+                        "",
+                        "💡 Tip: Just refresh the page to come back!"
+                    ]
+                });
+                setTimeout(() => {
+                    try {
+                        window.close();
+                    } catch {
+                        window.location.href = '/';
+                    }
+                }, 2000);
+                break;
+
+            case "theme":
+                if (params.length === 0) {
+                    addToOutput({
+                        type: "command",
+                        command: cmd,
+                        text: [
+                            "🎨 Terminal Theme Manager",
+                            "═══════════════════════════════════════",
+                            "",
+                            "Available themes:",
+                            "  • dark      - Default dark theme",
+                            "  • matrix    - Green Matrix style", 
+                            "  • retro     - Retro amber terminal",
+                            "  • cyberpunk - Neon cyberpunk style",
+                            "",
+                            "Usage: theme [theme-name]",
+                            "",
+                            "💡 Theme changes are not persistent yet!"
+                        ]
+                    });
+                } else {
+                    const themeName = params[0];
+                    addToOutput({
+                        type: "command",
+                        command: cmd,
+                        text: [
+                            `🎨 Switching to '${themeName}' theme...`,
+                            "⚠️  Theme switching coming soon!",
+                            "",
+                            "Currently available: dark theme only",
+                            "Future themes: matrix, retro, cyberpunk"
+                        ]
+                    });
+                }
+                break;
+
+            case "shortcuts":
+            case "hotkeys":
+                addToOutput({
+                    type: "command",
+                    command: cmd,
+                    text: getKeyboardShortcutsHelp()
+                });
+                break;
+
+            case "search":
+                const searchTerm = params[0];
+                if (!searchTerm) {
+                    addToOutput({
+                        type: "command",
+                        command: cmd,
+                        text: [
+                            "🔍 Command Search - Find commands by keyword",
+                            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                            "",
+                            "Usage: search [keyword]",
+                            "",
+                            "Examples:",
+                            "  search file     # Find file-related commands",
+                            "  search fun      # Find entertainment commands",
+                            "  search info     # Find information commands",
+                            "",
+                            "Available search categories:",
+                            "• file, directory, nav",
+                            "• fun, entertainment, game", 
+                            "• info, system, stats",
+                            "• calc, math, compute",
+                            "• help, guide, tutorial"
+                        ]
+                    });
+                } else {
+                    const searchResults = [];
+                    const term = searchTerm.toLowerCase();
+                    
+                    if (term.includes('file') || term.includes('dir') || term.includes('nav')) {
+                        searchResults.push("📁 Navigation & Files:", "  • ls, cd, pwd, tree, grep");
+                    }
+                    if (term.includes('fun') || term.includes('game') || term.includes('entertainment')) {
+                        searchResults.push("🎭 Fun & Entertainment:", "  • parrot, fortune, cowsay, sl, matrix, joke");
+                    }
+                    if (term.includes('info') || term.includes('system') || term.includes('stat')) {
+                        searchResults.push("🔍 System & Info:", "  • neofetch, whoami, about, uname, uptime, analytics");
+                    }
+                    if (term.includes('calc') || term.includes('math') || term.includes('compute')) {
+                        searchResults.push("🧮 Computing & Math:", "  • calc");
+                    }
+                    if (term.includes('help') || term.includes('guide') || term.includes('tutorial')) {
+                        searchResults.push("💡 Help & Guidance:", "  • help, shortcuts, about");
+                    }
+                    
+                    if (searchResults.length === 0) {
+                        searchResults.push(`❌ No commands found for "${searchTerm}"`, "", "💡 Try: file, fun, info, calc, or help");
+                    }
+                    
+                    addToOutput({
+                        type: "command",
+                        command: cmd,
+                        text: [
+                            `🔍 Search Results for "${searchTerm}":`,
+                            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                            "",
+                            ...searchResults
+                        ]
+                    });
+                }
+                break;
+
+            case "fav":
+            case "favorites":
+                const favAction = params[0];
+                const favCommand = params[1];
+                
+                if (favAction === "add" && favCommand) {
+                    if (!favorites.includes(favCommand)) {
+                        const newFavorites = [...favorites, favCommand];
+                        saveFavorites(newFavorites);
+                        addToOutput({
+                            type: "command",
+                            command: cmd,
+                            text: [
+                                `⭐ Added '${favCommand}' to favorites!`,
+                                "",
+                                `📋 Your favorites (${newFavorites.length}): ${newFavorites.join(", ")}`
+                            ]
+                        });
+                    } else {
+                        addToOutput({
+                            type: "command",
+                            command: cmd,
+                            text: [`💫 '${favCommand}' is already in your favorites!`]
+                        });
+                    }
+                } else if (favAction === "remove" && favCommand) {
+                    if (favorites.includes(favCommand)) {
+                        const newFavorites = favorites.filter(f => f !== favCommand);
+                        saveFavorites(newFavorites);
+                        addToOutput({
+                            type: "command",
+                            command: cmd,
+                            text: [
+                                `🗑️  Removed '${favCommand}' from favorites`,
+                                "",
+                                `📋 Your favorites (${newFavorites.length}): ${newFavorites.join(", ") || "None"}`
+                            ]
+                        });
+                    } else {
+                        addToOutput({
+                            type: "command",
+                            command: cmd,
+                            text: [`❌ '${favCommand}' is not in your favorites`]
+                        });
+                    }
+                } else if (favAction === "clear") {
+                    saveFavorites([]);
+                    addToOutput({
+                        type: "command",
+                        command: cmd,
+                        text: ["🧹 Cleared all favorites!", "", "💡 Use 'fav add [command]' to add new favorites"]
+                    });
+                } else {
+                    addToOutput({
+                        type: "command",
+                        command: cmd,
+                        text: [
+                            "⭐ Your Favorite Commands:",
+                            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                            "",
+                            favorites.length > 0 ? 
+                                favorites.map(fav => `💫 ${fav}`).join("\n") :
+                                "📝 No favorites yet! Add some with 'fav add [command]'",
+                            "",
+                            "Commands:",
+                            "  fav add [cmd]    # Add command to favorites",
+                            "  fav remove [cmd] # Remove from favorites", 
+                            "  fav clear        # Clear all favorites",
+                            "  fav              # Show this list"
+                        ]
+                    });
+                }
+                break;
+
+            case "wizard":
+                addToOutput({
+                    type: "command",
+                    command: cmd,
+                    text: [
+                        "🧙‍♂️ Terminal Command Wizard",
+                        "═══════════════════════════════════════════════════════════════",
+                        "",
+                        "What would you like to do? Choose a category:",
+                        "",
+                        "1️⃣  📊 Learn about this system        → Try: neofetch",
+                        "2️⃣  👤 Learn about the developer      → Try: about",
+                        "3️⃣  🚀 Explore technical skills       → Try: skills", 
+                        "4️⃣  📁 Browse projects                → Try: cd projects",
+                        "5️⃣  📝 Read blog posts               → Try: cd blogs",
+                        "6️⃣  🎮 Have some fun                 → Try: parrot, joke, matrix",
+                        "7️⃣  🧮 Do calculations               → Try: calc 2+2",
+                        "8️⃣  📈 View site analytics           → Try: analytics",
+                        "9️⃣  ⭐ Manage favorite commands      → Try: fav",
+                        "🔟 🔍 Search for commands           → Try: search [keyword]",
+                        "",
+                        "💡 Pro tip: Type the suggested command to try it out!",
+                        "🎯 Need more help? Type 'help' for the complete guide."
+                    ]
+                });
+                break;
+
             default:
                 addToOutput({
                     type: "command",
@@ -672,6 +1206,21 @@ const Terminal = () => {
                 });
                 break;
         }
+    };
+
+    // Favorites storage
+    const [favorites, setFavorites] = useState<string[]>(() => {
+        try {
+            const saved = localStorage.getItem('terminal-favorites');
+            return saved ? JSON.parse(saved) : ['neofetch', 'skills', 'about'];
+        } catch {
+            return ['neofetch', 'skills', 'about'];
+        }
+    });
+
+    const saveFavorites = (newFavorites: string[]) => {
+        setFavorites(newFavorites);
+        localStorage.setItem('terminal-favorites', JSON.stringify(newFavorites));
     };
 
     const placeholders = [
@@ -806,14 +1355,53 @@ const Terminal = () => {
             {/* Welcome message */}
             {output.length === 0 && (
                 <div className="mb-4 sm:mb-6 text-green-400">
-                    <div className="border border-gray-700 rounded-lg p-3 sm:p-4 bg-gray-900">
-                        <h2 className="text-lg sm:text-xl mb-2">🐧 Welcome to iamdhakrey.dev terminal!</h2>
-                        <p className="text-gray-400 mb-2 text-sm sm:text-base">
-                            This is an interactive Linux-style terminal. Type <span className="text-green-400">'help'</span> to see available commands.
-                        </p>
-                        <p className="text-gray-500 text-xs sm:text-sm">
-                            💡 Pro tip: Use arrow keys for command history, Tab for completion
-                        </p>
+                    <div className="border-2 border-green-400 rounded-lg p-4 sm:p-6 bg-gray-900 shadow-lg">
+                        <div className="text-center mb-4">
+                            <div className="text-2xl sm:text-3xl mb-2">
+                                ╭─────────────────────────────────────────────╮
+                            </div>
+                            <div className="text-xl sm:text-2xl font-bold text-green-400 mb-1">
+                                � Welcome to iamdhakrey.dev Terminal
+                            </div>
+                            <div className="text-2xl sm:text-3xl mb-3">
+                                ╰─────────────────────────────────────────────╯
+                            </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                            <div className="bg-gray-800 border border-gray-600 rounded p-3">
+                                <h3 className="text-yellow-400 font-semibold mb-2 flex items-center">
+                                    🎯 Quick Start
+                                </h3>
+                                <ul className="text-gray-300 text-sm space-y-1">
+                                    <li>• Type <span className="text-green-400 font-mono">help</span> for commands</li>
+                                    <li>• Try <span className="text-blue-400 font-mono">neofetch</span> for system info</li>
+                                    <li>• Use <span className="text-purple-400 font-mono">skills</span> to see my expertise</li>
+                                    <li>• Run <span className="text-orange-400 font-mono">joke</span> for some fun!</li>
+                                </ul>
+                            </div>
+                            
+                            <div className="bg-gray-800 border border-gray-600 rounded p-3">
+                                <h3 className="text-cyan-400 font-semibold mb-2 flex items-center">
+                                    ⌨️  Pro Tips
+                                </h3>
+                                <ul className="text-gray-300 text-sm space-y-1">
+                                    <li>• ↑/↓ arrows: Command history</li>
+                                    <li>• Tab: Auto-complete commands</li>
+                                    <li>• Ctrl+L: Clear terminal</li>
+                                    <li>• Try aliases: <span className="text-green-400 font-mono">ll</span>, <span className="text-green-400 font-mono">..</span>, <span className="text-green-400 font-mono">h</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div className="text-center">
+                            <p className="text-gray-400 text-sm mb-2">
+                                🎮 Interactive Linux-style terminal with <span className="text-green-400 font-semibold">30+ commands</span>
+                            </p>
+                            <p className="text-gray-500 text-xs">
+                                Navigate: <span className="text-blue-400">cd projects</span> | <span className="text-purple-400">cd blogs</span> | <span className="text-orange-400">cd profile</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
             )}

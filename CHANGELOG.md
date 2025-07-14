@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 ## [1.2.0] - 2025-07-14
 
 ### 📝 Other Changes
+- Merge branch 'main' of github.com:iamdhakrey/Github-Profile
+- chore: release v1.2.0
+- ✨ chore: update package version to 1.1.1 and remove deprecated fontawesome package
+- ✨ feat: enhance welcome message with interactive terminal branding and guidance
+- ✨ feat: integrate StatusBar component and adjust layout for fixed footer
+- ✨ feat: add StatusBar component for displaying system info and visitor stats
+- ✨ feat: enhance Terminal with command aliases, keyboard shortcuts, and analytics tracking
+- ✨ feat: add analytics utility for visitor tracking
+- ✨ feat: implement SafeCalculator utility for safe mathematical operations
+- ✨ feat: add keyboard shortcuts utility and help documentation
+- Update README.md
+- Update README.md
+- Merge pull request #1 from iamdhakrey/dependabot/npm_and_yarn/braces-3.0.3
+- chore(deps): bump braces from 3.0.2 to 3.0.3
+- Update issue templates
+- Create codeql.yml
+- 🎨 style: add demo GIF to README and improve visibility
+
+
+## [1.2.0] - 2025-07-14
+
+### 📝 Other Changes
 - ✨ chore: update package version to 1.1.1 and remove deprecated fontawesome package
 - ✨ feat: enhance welcome message with interactive terminal branding and guidance
 - ✨ feat: integrate StatusBar component and adjust layout for fixed footer

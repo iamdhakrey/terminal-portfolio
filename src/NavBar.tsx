@@ -28,8 +28,8 @@ function Navbar() {
                     {/* Center - System info */}
                     {navigation.systemInfo.showDateTime && (
                         <div className="hidden lg:flex items-center space-x-4 text-xs text-gray-400">
-                            <span>{navigation.systemInfo.os}</span>
-                            <span>•</span>
+                            {/* <span>{navigation.systemInfo.os}</span> */}
+                            {/* <span>•</span> */}
                             <span>{navigation.systemInfo.shell}</span>
                             <span>•</span>
                             <span className="text-green-400">{date.date} {date.time}</span>

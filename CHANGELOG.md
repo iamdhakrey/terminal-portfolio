@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.2] - 2025-07-14
+
+### 🐛 Bug Fixes
+- fix: remove console log from addToOutput function
+- fix: log output item and display last command in terminal
+- fix: update welcome message to display dynamic hostname
+- fix: improve output formatting for neofetch items in Terminal component
+- fix: adjust terminal header alignment for improved readability
+- fix: update terminal header and links to use dynamic hostname
+- fix: improve output formatting in Terminal component
+
+### 📝 Other Changes
+- Merge branch 'main' of github.com:iamdhakrey/Github-Profile
+- Merge pull request #6 from iamdhakrey/dependabot/npm_and_yarn/brace-expansion-1.1.12
+- chore(deps): bump brace-expansion from 1.1.11 to 1.1.12
+
+
 ## [1.2.1] - 2025-07-14
 
 ### 📝 Other Changes

@@ -111,6 +111,45 @@ The linking system:
 - Falls back gracefully if referenced blogs don't exist
 - Works with both `.md` extensions and clean filenames
 
+## Adding Images to Your Blog Posts
+
+You can include images in your blog posts using standard Markdown syntax or HTML. Images should be placed in a directory with the same name as your blog post (without the `.md` extension).
+
+### Directory Structure
+
+For a blog post named `blog-linking-guide.md`, create a directory `blog-linking-guide/` in the `public/images/` folder and place your images there:
+
+```text
+public/blogs/
+├── blog-linking-guide.md
+public/images/
+├── blog-linking-guide/
+│   ├── sample-image.svg
+│   └── other-image.png
+```
+
+### Using Images in Markdown
+
+```markdown
+![Alt text](sample-image.svg)
+```
+
+This will automatically resolve to the correct path: `/images/blog-linking-guide/sample-image.svg`
+
+### Example Image
+
+Here's a sample image included in this blog post:
+
+![Sample Blog Image](sample-image.svg)
+
+### Using HTML for More Control
+
+You can also use HTML img tags for more control:
+
+```html
+<img src="sample-image.svg" alt="Sample" width="200" height="150" />
+```
+
 ## Future Enhancements
 
 Planned features include:
@@ -119,6 +158,7 @@ Planned features include:
 - Tag-based recommendations
 - Search functionality
 - Comment system integration
+- Image optimization and lazy loading
 
 ---
 

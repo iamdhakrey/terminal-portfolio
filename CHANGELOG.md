@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.2] - 2025-07-15
+
+### ✨ Features
+- feat: add image inclusion guidelines to blog linking guide
+- feat: add sample images for blog linking and React TypeScript guides
+- feat: update processBlogLinks to handle image paths
+- feat: enhance processBlogLinks to handle image paths
+
+### 🐛 Bug Fixes
+- fix: correct author formatting in React TypeScript guide
+
+
 ## [1.3.1] - 2025-07-14
 
 ### 🐛 Bug Fixes

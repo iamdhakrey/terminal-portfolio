@@ -247,11 +247,12 @@ export async function getAllBlogLinks(): Promise<Record<string, { title: string;
 }
 
 /**
- * Processes blog content to convert blog references to links
+ * Processes blog content to convert blog references to links and handle images
  * @param content - Raw blog content
- * @returns Content with blog references converted to proper links
+ * @param currentBlogFilename - Current blog filename for image path resolution
+ * @returns Content with blog references converted to proper links and images processed
  */
-export async function processBlogLinks(content: string): Promise<string> {
+export async function processBlogLinks(content: string, currentBlogFilename?: string): Promise<string> {
     const blogLinks = await getAllBlogLinks();
     let processedContent = content;
     
@@ -274,6 +275,26 @@ export async function processBlogLinks(content: string): Promise<string> {
         }
         return match; // Keep original if blog not found
     });
+    
+    // Process images - convert relative image paths to absolute paths
+    if (currentBlogFilename) {
+        const blogName = currentBlogFilename.replace('.md', '');
+        
+        // Handle markdown images with relative paths
+        const imagePattern = /!\[([^\]]*)\]\((?!http|https|\/)(.*?)\)/g;
+        processedContent = processedContent.replace(imagePattern, (_, alt, src) => {
+            // Convert relative image path to absolute path in blog directory
+            const imagePath = `/images/${blogName}/${src}`;
+            return `![${alt}](${imagePath})`;
+        });
+        
+        // Handle HTML img tags with relative paths
+        const htmlImagePattern = /<img([^>]*?)src="(?!http|https|\/)(.*?)"([^>]*?)>/g;
+        processedContent = processedContent.replace(htmlImagePattern, (_, beforeSrc, src, afterSrc) => {
+            const imagePath = `/images/${blogName}/${src}`;
+            return `<img${beforeSrc}src="${imagePath}"${afterSrc}>`;
+        });
+    }
     
     return processedContent;
 }

@@ -59,8 +59,8 @@ function Blogs() {
                     return;
                 }
 
-                // Process blog content for inter-blog links
-                const processedContent = await processBlogLinks(blogData.content);
+                // Process blog content for inter-blog links and images
+                const processedContent = await processBlogLinks(blogData.content, filename);
                 setContent(processedContent);
                 setTitle(blogData.metadata.title);
                 setDate(blogData.metadata.date);

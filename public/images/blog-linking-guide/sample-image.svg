@@ -1,0 +1,7 @@
+<!-- This is a placeholder image for demonstration -->
+<svg width="200" height="150" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="150" fill="#f0f0f0" stroke="#ccc" stroke-width="2"/>
+  <text x="100" y="75" font-family="Arial, sans-serif" font-size="14" fill="#666" text-anchor="middle" dominant-baseline="middle">
+    Sample Blog Image
+  </text>
+</svg>

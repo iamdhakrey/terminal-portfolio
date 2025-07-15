@@ -1,0 +1,8 @@
+<!-- React TypeScript Guide sample image -->
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="200" fill="#61dafb" stroke="#21232a" stroke-width="2"/>
+  <circle cx="150" cy="100" r="40" fill="#21232a"/>
+  <text x="150" y="160" font-family="Arial, sans-serif" font-size="16" fill="#21232a" text-anchor="middle" dominant-baseline="middle">
+    React + TypeScript
+  </text>
+</svg>

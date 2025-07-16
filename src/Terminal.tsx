@@ -42,14 +42,14 @@ const Terminal = () => {
         // Track visit on component mount
         analytics.trackVisit();
         
-        // Show welcome message on component mount
-        if (terminalConfig.welcomeMessage.length > 0) {
-            addToOutput({
-                type: "welcome",
-                command: "",
-                text: terminalConfig.welcomeMessage
-            });
-        }
+        // Don't show the ASCII welcome message, use the interactive guide instead
+        // if (terminalConfig.welcomeMessage.length > 0) {
+        //     addToOutput({
+        //         type: "welcome",
+        //         command: "",
+        //         text: terminalConfig.welcomeMessage
+        //     });
+        // }
     }, []);
 
     // Keyboard shortcuts
@@ -1301,6 +1301,15 @@ const Terminal = () => {
                                 ))}
                             </div>
                         )}
+                        {item.type === "welcome" && (
+                            <div className="text-green-400 text-sm sm:text-base">
+                                {item.text.map((line: string, i: number) => (
+                                    <div key={i} className="break-all">
+                                        <pre>{line}</pre>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                         {item.type === "command" && (
                             <div className="text-gray-200 ml-2 sm:ml-4 text-sm sm:text-base">
                                 {item.text.map((line: string, i: number) => (
@@ -1355,8 +1364,9 @@ const Terminal = () => {
                     </div>
                 ))}
             </div>
+
             {/* Welcome message */}
-            {output.length === 2 && (
+            {output.length === 0 && (
                 <div className="mb-4 sm:mb-6 text-green-400">
                     <div className="border-2 border-green-400 rounded-lg p-4 sm:p-6 bg-gray-900 shadow-lg">
                         <div className="text-center mb-4">

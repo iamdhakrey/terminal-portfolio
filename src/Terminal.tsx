@@ -1355,9 +1355,8 @@ const Terminal = () => {
                     </div>
                 ))}
             </div>
-
             {/* Welcome message */}
-            {output.length === 0 && (
+            {output.length === 2 && (
                 <div className="mb-4 sm:mb-6 text-green-400">
                     <div className="border-2 border-green-400 rounded-lg p-4 sm:p-6 bg-gray-900 shadow-lg">
                         <div className="text-center mb-4">
@@ -1365,7 +1364,7 @@ const Terminal = () => {
                                 ╭─────────────────────────────────────────────╮
                             </div>
                             <div className="text-xl sm:text-2xl font-bold text-green-400 mb-1">
-                                � Welcome to ${terminalConfig.hostname} Terminal
+                                🚀 Welcome to {terminalConfig.hostname} Terminal
                             </div>
                             <div className="text-2xl sm:text-3xl mb-3">
                                 ╰─────────────────────────────────────────────╯

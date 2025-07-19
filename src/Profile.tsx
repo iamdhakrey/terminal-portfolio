@@ -115,10 +115,14 @@ function Profile() {
 
     if (!profileData) {
         return (
-            <div className="min-h-screen bg-black text-green-400 font-mono pb-16 flex items-center justify-center">
+            <div className="min-h-screen font-mono pb-16 flex items-center justify-center"
+                 style={{ 
+                     backgroundColor: 'var(--theme-background)', 
+                     color: 'var(--theme-text)' 
+                 }}>
                 <div className="text-center">
-                    <div className="text-green-400 text-xl mb-4">🔄 Loading profile...</div>
-                    <div className="text-gray-400">Please wait while we load your shareable profile</div>
+                    <div className="text-xl mb-4" style={{ color: 'var(--theme-primary)' }}>🔄 Loading profile...</div>
+                    <div style={{ color: 'var(--theme-muted)' }}>Please wait while we load your shareable profile</div>
                 </div>
             </div>
         );
@@ -137,11 +141,19 @@ function Profile() {
             ];
 
     return (
-        <div className="min-h-screen bg-black text-green-400 font-mono pb-16">
+        <div className="min-h-screen font-mono pb-16"
+             style={{ 
+                 backgroundColor: 'var(--theme-background)', 
+                 color: 'var(--theme-text)' 
+             }}>
             <div className="max-w-4xl mx-auto py-4 sm:py-8 px-2 sm:px-4">
                 {/* Terminal navigation */}
                 <div className="mb-4 sm:mb-6">
-                    <div className="bg-gray-900 border border-gray-700 rounded-lg p-3 sm:p-4">
+                    <div className="border rounded-lg p-3 sm:p-4"
+                         style={{ 
+                             backgroundColor: 'var(--theme-background)', 
+                             borderColor: 'var(--theme-border)' 
+                         }}>
                         <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
                             <div className="flex items-center space-x-1 text-xs sm:text-sm">
                                 <span className="text-blue-400 hidden sm:inline">user@localhost</span>

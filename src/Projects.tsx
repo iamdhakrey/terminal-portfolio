@@ -122,10 +122,14 @@ function Projects() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-black text-green-400 font-mono pb-16 flex items-center justify-center">
+            <div className="min-h-screen font-mono pb-16 flex items-center justify-center"
+                 style={{ 
+                     backgroundColor: 'var(--theme-background)', 
+                     color: 'var(--theme-text)' 
+                 }}>
                 <div className="text-center">
-                    <div className="text-green-400 text-xl mb-4">🔄 Loading projects...</div>
-                    <div className="text-gray-400">Fetching repositories from GitHub</div>
+                    <div className="text-xl mb-4" style={{ color: 'var(--theme-primary)' }}>🔄 Loading projects...</div>
+                    <div style={{ color: 'var(--theme-muted)' }}>Fetching repositories from GitHub</div>
                 </div>
             </div>
         );
@@ -133,17 +137,25 @@ function Projects() {
 
     if (!githubData) {
         return (
-            <div className="min-h-screen bg-black text-green-400 font-mono pb-16 flex items-center justify-center">
+            <div className="min-h-screen font-mono pb-16 flex items-center justify-center"
+                 style={{ 
+                     backgroundColor: 'var(--theme-background)', 
+                     color: 'var(--theme-text)' 
+                 }}>
                 <div className="text-center">
-                    <div className="text-red-400 text-xl mb-4">❌ Failed to load projects</div>
-                    <div className="text-gray-400">Please try again later</div>
+                    <div className="text-xl mb-4" style={{ color: 'var(--theme-error)' }}>❌ Failed to load projects</div>
+                    <div style={{ color: 'var(--theme-muted)' }}>Please try again later</div>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-black text-green-400 font-mono pb-16">
+        <div className="min-h-screen font-mono pb-16"
+             style={{ 
+                 backgroundColor: 'var(--theme-background)', 
+                 color: 'var(--theme-text)' 
+             }}>
             <div className="max-w-6xl mx-auto py-4 sm:py-8 px-2 sm:px-4">
                 {/* Terminal navigation */}
                 <div className="mb-4 sm:mb-6">

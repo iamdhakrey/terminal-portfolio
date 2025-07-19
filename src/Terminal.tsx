@@ -6,6 +6,8 @@ import { getTerminalConfig, getSystemInfo, getProfileData } from "./utils/config
 import { analytics } from "./utils/analytics";
 import { useKeyboardShortcuts, getKeyboardShortcutsHelp } from "./utils/keyboardShortcuts";
 import { SafeCalculator } from "./utils/calculator";
+import { useTheme } from "./utils/themeContext";
+import { getThemeDisplayNames, getTheme } from "./utils/themes";
 
 const Terminal = () => {
     const [input, setInput] = useState("");
@@ -20,6 +22,10 @@ const Terminal = () => {
     const terminalConfig = getTerminalConfig();
     const systemInfo = getSystemInfo();
     const profileData = getProfileData();
+    
+    // Theme management
+    const { currentTheme, setTheme, availableThemes, toggleTheme } = useTheme();
+    const themeDisplayNames = getThemeDisplayNames();
 
     // Command aliases
     const commandAliases: { [key: string]: string } = {
@@ -991,30 +997,90 @@ const Terminal = () => {
                             "🎨 Terminal Theme Manager",
                             "═══════════════════════════════════════",
                             "",
+                            `Current theme: ${themeDisplayNames[currentTheme]} (${currentTheme})`,
+                            "",
                             "Available themes:",
-                            "  • dark      - Default dark theme",
-                            "  • matrix    - Green Matrix style", 
-                            "  • retro     - Retro amber terminal",
-                            "  • cyberpunk - Neon cyberpunk style",
+                            ...availableThemes.map(theme => 
+                                `  • ${theme.padEnd(12)} - ${themeDisplayNames[theme]}${theme === currentTheme ? ' (current)' : ''}`
+                            ),
                             "",
-                            "Usage: theme [theme-name]",
+                            "Commands:",
+                            "  theme [name]     # Switch to specific theme",
+                            "  theme toggle     # Cycle through themes",
+                            "  theme list       # Show this list",
                             "",
-                            "💡 Theme changes are not persistent yet!"
+                            "Examples:",
+                            "  theme matrix     # Switch to Matrix theme",
+                            "  theme cyberpunk  # Switch to Cyberpunk theme",
+                            "  theme toggle     # Switch to next theme"
                         ]
                     });
-                } else {
-                    const themeName = params[0];
+                } else if (params[0] === "toggle") {
+                    const oldTheme = currentTheme;
+                    toggleTheme();
                     addToOutput({
                         type: "command",
                         command: cmd,
                         text: [
-                            `🎨 Switching to '${themeName}' theme...`,
-                            "⚠️  Theme switching coming soon!",
+                            `🎨 Theme switched from '${themeDisplayNames[oldTheme]}' to '${themeDisplayNames[currentTheme]}'`,
                             "",
-                            "Currently available: dark theme only",
-                            "Future themes: matrix, retro, cyberpunk"
+                            "✨ Theme change applied instantly!",
+                            "💾 Your preference has been saved."
                         ]
                     });
+                } else if (params[0] === "list") {
+                    addToOutput({
+                        type: "command",
+                        command: cmd,
+                        text: [
+                            "🎨 Available Themes:",
+                            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                            "",
+                            ...availableThemes.map(theme => {
+                                const config = getTheme(theme);
+                                return [
+                                    `${theme === currentTheme ? '→' : ' '} ${theme.padEnd(12)} - ${themeDisplayNames[theme]}`,
+                                    `   Colors: ${config.colors.primary}, ${config.colors.secondary}, ${config.colors.accent}`,
+                                    ""
+                                ].join('\n');
+                            }).join('').split('\n').filter(line => line !== ''),
+                            "💡 Use 'theme [name]' to switch themes"
+                        ]
+                    });
+                } else {
+                    const themeName = params[0];
+                    if (availableThemes.includes(themeName)) {
+                        const oldTheme = currentTheme;
+                        setTheme(themeName);
+                        addToOutput({
+                            type: "command",
+                            command: cmd,
+                            text: [
+                                `🎨 Theme switched to '${themeDisplayNames[themeName]}'`,
+                                "",
+                                `Previous: ${themeDisplayNames[oldTheme]}`,
+                                `Current:  ${themeDisplayNames[themeName]}`,
+                                "",
+                                "✨ Theme applied successfully!",
+                                "💾 Your preference has been saved.",
+                                "",
+                                "💡 Try 'theme toggle' to cycle through themes"
+                            ]
+                        });
+                    } else {
+                        addToOutput({
+                            type: "command",
+                            command: cmd,
+                            text: [
+                                `❌ Theme '${themeName}' not found`,
+                                "",
+                                "Available themes:",
+                                ...availableThemes.map(theme => `  • ${theme} - ${themeDisplayNames[theme]}`),
+                                "",
+                                "💡 Use 'theme list' to see all available themes"
+                            ]
+                        });
+                    }
                 }
                 break;
 
@@ -1269,20 +1335,25 @@ const Terminal = () => {
     return (
         <div
             ref={terminalRef}
-            className="pt-0 font-mono space-y-1 overflow-y-auto h-[calc(100vh-160px)] max-w-screen-xl mx-auto text-white p-2 sm:p-4 bg-black"
+            className="pt-0 font-mono space-y-1 overflow-y-auto h-[calc(100vh-160px)] max-w-screen-xl mx-auto p-2 sm:p-4"
+            style={{ 
+                backgroundColor: 'var(--theme-background)', 
+                color: 'var(--theme-text)',
+                fontFamily: 'var(--theme-fontFamily)'
+            }}
             onClick={() => inputRef.current?.focus()}
         >
             {/* Input line */}
-            <div className="flex items-center text-green-400 pt-2 text-sm sm:text-base">
-                {/* <span className="text-blue-400 hidden sm:inline">user@localhost</span> */}
-                <span className="text-blue-400 hidden sm:inline">user@{terminalConfig.hostname}</span>
-                <span className="text-white hidden sm:inline">:</span>
-                <span className="text-blue-600 hidden sm:inline">~</span>
-                <span className="text-white">$ </span>
+            <div className="flex items-center pt-2 text-sm sm:text-base" style={{ color: 'var(--theme-commandText)' }}>
+                <span className="hidden sm:inline" style={{ color: 'var(--theme-promptUser)' }}>user@{terminalConfig.hostname}</span>
+                <span className="hidden sm:inline" style={{ color: 'var(--theme-text)' }}>:</span>
+                <span className="hidden sm:inline" style={{ color: 'var(--theme-promptPath)' }}>~</span>
+                <span style={{ color: 'var(--theme-promptSymbol)' }}>$ </span>
                 <input
                     ref={inputRef}
                     type="text"
-                    className="bg-transparent text-white border-none outline-none flex-1 font-mono text-sm sm:text-base"
+                    className="bg-transparent border-none outline-none flex-1 font-mono text-sm sm:text-base"
+                    style={{ color: 'var(--theme-text)' }}
                     value={input}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
@@ -1295,14 +1366,14 @@ const Terminal = () => {
                 {output.map((item, index) => (
                     <div key={index}>
                         {item.type === "input" && (
-                            <div className="text-green-400 text-sm sm:text-base">
+                            <div className="text-sm sm:text-base" style={{ color: 'var(--theme-commandText)' }}>
                                 {item.text.map((line: string, i: number) => (
                                     <div key={i} className="break-all">{line}</div>
                                 ))}
                             </div>
                         )}
                         {item.type === "welcome" && (
-                            <div className="text-green-400 text-sm sm:text-base">
+                            <div className="text-sm sm:text-base" style={{ color: 'var(--theme-primary)' }}>
                                 {item.text.map((line: string, i: number) => (
                                     <div key={i} className="break-all">
                                         <pre>{line}</pre>
@@ -1311,38 +1382,47 @@ const Terminal = () => {
                             </div>
                         )}
                         {item.type === "command" && (
-                            <div className="text-gray-200 ml-2 sm:ml-4 text-sm sm:text-base">
+                            <div className="ml-2 sm:ml-4 text-sm sm:text-base" style={{ color: 'var(--theme-outputText)' }}>
                                 {item.text.map((line: string, i: number) => (
-                                    <div key={i} className={`break-words ${line.startsWith("❌") ? "text-red-400" :
-                                        line.startsWith("✨") || line.startsWith("📁") ? "text-blue-400" :
-                                            line.startsWith("💡") ? "text-yellow-400" :
-                                                line.startsWith("│") || line.startsWith("┌") || line.startsWith("╰") || line.startsWith("├") ? "text-cyan-400" :
+                                    <div key={i} className={`break-words ${line.startsWith("❌") ? "" : 
+                                        line.startsWith("✨") || line.startsWith("📁") ? "" :
+                                            line.startsWith("💡") ? "" :
+                                                line.startsWith("│") || line.startsWith("┌") || line.startsWith("╰") || line.startsWith("├") ? "" :
                                                     ""
-                                        }`}>
+                                        }`}
+                                        style={{
+                                            color: line.startsWith("❌") ? 'var(--theme-error)' :
+                                                line.startsWith("✨") || line.startsWith("📁") ? 'var(--theme-info)' :
+                                                    line.startsWith("💡") ? 'var(--theme-warning)' :
+                                                        line.startsWith("│") || line.startsWith("┌") || line.startsWith("╰") || line.startsWith("├") ? 'var(--theme-accent)' :
+                                                            'var(--theme-outputText)'
+                                        }}>
                                         <pre>{line}</pre>
                                     </div>
                                 ))}
                             </div>
                         )}
                         {item.type === "neofetch" && (
-                            <div className="text-blue-400 ml-2 sm:ml-4 font-mono text-xs sm:text-sm overflow-x-auto">
+                            <div className="ml-2 sm:ml-4 font-mono text-xs sm:text-sm overflow-x-auto" style={{ color: 'var(--theme-info)' }}>
                                 {item.text.map((line: string, i: number) => (
                                     <div key={i} className="whitespace-nowrap"><pre>{line}</pre></div>
                                 ))}
                             </div>
                         )}
                         {item.type === "profile" && (
-                            <div className="text-cyan-400 ml-2 sm:ml-4 font-mono text-xs sm:text-sm overflow-x-auto">
+                            <div className="ml-2 sm:ml-4 font-mono text-xs sm:text-sm overflow-x-auto" style={{ color: 'var(--theme-accent)' }}>
                                 {item.text.map((line: string, i: number) => (
-                                    <div key={i} className={`whitespace-nowrap ${line.includes("🎓") || line.includes("🚀") || line.includes("🐧") || line.includes("🤖") || line.includes("⚡") || line.includes("🔧") ? "text-green-400" :
-                                        line.includes("📊") || line.includes("💼") || line.includes("🎯") || line.includes("📞") ? "text-yellow-400" :
-                                            line.includes("🌟") || line.includes("📈") || line.includes("🔥") || line.includes("💼") ? "text-blue-400" :
-                                                line.includes("🏆") || line.includes("🥇") || line.includes("🎯") || line.includes("🌐") || line.includes("🔧") ? "text-purple-400" :
-                                                    line.includes("🐍") || line.includes("🌐") || line.includes("🔧") || line.includes("🛠️") || line.includes("📊") ? "text-orange-400" :
-                                                        line.includes("💡") || line.includes("🔍") ? "text-yellow-300" :
-                                                            line.includes("╭") || line.includes("├") || line.includes("╰") || line.includes("│") ? "text-cyan-400" :
-                                                                "text-gray-200"
-                                        }`}>
+                                    <div key={i} className="whitespace-nowrap"
+                                        style={{
+                                            color: line.includes("🎓") || line.includes("🚀") || line.includes("🐧") || line.includes("🤖") || line.includes("⚡") || line.includes("🔧") ? 'var(--theme-primary)' :
+                                                line.includes("📊") || line.includes("💼") || line.includes("🎯") || line.includes("📞") ? 'var(--theme-warning)' :
+                                                    line.includes("🌟") || line.includes("📈") || line.includes("🔥") || line.includes("💼") ? 'var(--theme-info)' :
+                                                        line.includes("🏆") || line.includes("🥇") || line.includes("🎯") || line.includes("🌐") || line.includes("🔧") ? 'var(--theme-secondary)' :
+                                                            line.includes("🐍") || line.includes("🌐") || line.includes("🔧") || line.includes("🛠️") || line.includes("📊") ? 'var(--theme-accent)' :
+                                                                line.includes("💡") || line.includes("🔍") ? 'var(--theme-warning)' :
+                                                                    line.includes("╭") || line.includes("├") || line.includes("╰") || line.includes("│") ? 'var(--theme-accent)' :
+                                                                        'var(--theme-outputText)'
+                                        }}>
                                         {line}
                                     </div>
                                 ))}
@@ -1350,12 +1430,12 @@ const Terminal = () => {
                         )}
                         {item.type === "parrot" && (
                             <div className="ml-2 sm:ml-4">
-                                <div className="text-yellow-400 mb-2 text-sm sm:text-base">{item.text[0]}</div>
+                                <div className="mb-2 text-sm sm:text-base" style={{ color: 'var(--theme-warning)' }}>{item.text[0]}</div>
                                 {item.parrot}
                             </div>
                         )}
                         {item.type === "completion" && (
-                            <div className="text-yellow-400 ml-2 sm:ml-4 text-sm sm:text-base">
+                            <div className="ml-2 sm:ml-4 text-sm sm:text-base" style={{ color: 'var(--theme-warning)' }}>
                                 {item.text.map((line: string, i: number) => (
                                     <div key={i} className="break-words"><pre>{line}</pre></div>
                                 ))}
@@ -1367,13 +1447,17 @@ const Terminal = () => {
 
             {/* Welcome message */}
             {output.length === 0 && (
-                <div className="mb-4 sm:mb-6 text-green-400">
-                    <div className="border-2 border-green-400 rounded-lg p-4 sm:p-6 bg-gray-900 shadow-lg">
+                <div className="mb-4 sm:mb-6" style={{ color: 'var(--theme-primary)' }}>
+                    <div className="rounded-lg p-4 sm:p-6 shadow-lg" 
+                         style={{ 
+                             border: `2px solid var(--theme-welcomeBoxBorder)`, 
+                             backgroundColor: 'var(--theme-welcomeBoxBg)' 
+                         }}>
                         <div className="text-center mb-4">
                             <div className="text-2xl sm:text-3xl mb-2">
                                 ╭─────────────────────────────────────────────╮
                             </div>
-                            <div className="text-xl sm:text-2xl font-bold text-green-400 mb-1">
+                            <div className="text-xl sm:text-2xl font-bold mb-1" style={{ color: 'var(--theme-primary)' }}>
                                 🚀 Welcome to {terminalConfig.hostname} Terminal
                             </div>
                             <div className="text-2xl sm:text-3xl mb-3">
@@ -1382,37 +1466,45 @@ const Terminal = () => {
                         </div>
                         
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                            <div className="bg-gray-800 border border-gray-600 rounded p-3">
-                                <h3 className="text-yellow-400 font-semibold mb-2 flex items-center">
+                            <div className="rounded p-3" 
+                                 style={{ 
+                                     backgroundColor: 'var(--theme-background)', 
+                                     border: `1px solid var(--theme-border)` 
+                                 }}>
+                                <h3 className="font-semibold mb-2 flex items-center" style={{ color: 'var(--theme-warning)' }}>
                                     🎯 Quick Start
                                 </h3>
-                                <ul className="text-gray-300 text-sm space-y-1">
-                                    <li>• Type <span className="text-green-400 font-mono">help</span> for commands</li>
-                                    <li>• Try <span className="text-blue-400 font-mono">neofetch</span> for system info</li>
-                                    <li>• Use <span className="text-purple-400 font-mono">skills</span> to see my expertise</li>
-                                    <li>• Run <span className="text-orange-400 font-mono">joke</span> for some fun!</li>
+                                <ul className="text-sm space-y-1" style={{ color: 'var(--theme-muted)' }}>
+                                    <li>• Type <span className="font-mono" style={{ color: 'var(--theme-primary)' }}>help</span> for commands</li>
+                                    <li>• Try <span className="font-mono" style={{ color: 'var(--theme-info)' }}>neofetch</span> for system info</li>
+                                    <li>• Use <span className="font-mono" style={{ color: 'var(--theme-secondary)' }}>skills</span> to see my expertise</li>
+                                    <li>• Run <span className="font-mono" style={{ color: 'var(--theme-accent)' }}>joke</span> for some fun!</li>
                                 </ul>
                             </div>
                             
-                            <div className="bg-gray-800 border border-gray-600 rounded p-3">
-                                <h3 className="text-cyan-400 font-semibold mb-2 flex items-center">
+                            <div className="rounded p-3" 
+                                 style={{ 
+                                     backgroundColor: 'var(--theme-background)', 
+                                     border: `1px solid var(--theme-border)` 
+                                 }}>
+                                <h3 className="font-semibold mb-2 flex items-center" style={{ color: 'var(--theme-info)' }}>
                                     ⌨️  Pro Tips
                                 </h3>
-                                <ul className="text-gray-300 text-sm space-y-1">
+                                <ul className="text-sm space-y-1" style={{ color: 'var(--theme-muted)' }}>
                                     <li>• ↑/↓ arrows: Command history</li>
                                     <li>• Tab: Auto-complete commands</li>
                                     <li>• Ctrl+L: Clear terminal</li>
-                                    <li>• Try aliases: <span className="text-green-400 font-mono">ll</span>, <span className="text-green-400 font-mono">..</span>, <span className="text-green-400 font-mono">h</span></li>
+                                    <li>• Try aliases: <span className="font-mono" style={{ color: 'var(--theme-primary)' }}>ll</span>, <span className="font-mono" style={{ color: 'var(--theme-primary)' }}>..</span>, <span className="font-mono" style={{ color: 'var(--theme-primary)' }}>h</span></li>
                                 </ul>
                             </div>
                         </div>
                         
                         <div className="text-center">
-                            <p className="text-gray-400 text-sm mb-2">
-                                🎮 Interactive Linux-style terminal with <span className="text-green-400 font-semibold">30+ commands</span>
+                            <p className="text-sm mb-2" style={{ color: 'var(--theme-muted)' }}>
+                                🎮 Interactive Linux-style terminal with <span className="font-semibold" style={{ color: 'var(--theme-primary)' }}>30+ commands</span>
                             </p>
-                            <p className="text-gray-500 text-xs">
-                                Navigate: <span className="text-blue-400">cd projects</span> | <span className="text-purple-400">cd blogs</span> | <span className="text-orange-400">cd profile</span>
+                            <p className="text-xs" style={{ color: 'var(--theme-muted)' }}>
+                                Navigate: <span style={{ color: 'var(--theme-info)' }}>cd projects</span> | <span style={{ color: 'var(--theme-secondary)' }}>cd blogs</span> | <span style={{ color: 'var(--theme-accent)' }}>cd profile</span>
                             </p>
                         </div>
                     </div>

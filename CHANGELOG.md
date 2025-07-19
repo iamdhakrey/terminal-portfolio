@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0] - 2025-07-19
+
+### ✨ Features
+- feat: implement theme support across Blogs, Footer, Profile, and Projects components
+- feat: enhance Navbar component with theme support and toggle functionality
+- feat: update BlogList component for theme integration
+- feat: update StatusBar styling for theme integration
+- feat: enhance terminal theme management and commands
+- feat: implement theme context and provider for theme management
+- feat: integrate theme provider and configure terminal theme
+- feat: add theme configuration for terminal portfolio
+- feat: update welcome message handling to use interactive guide instead of ASCII message
+- feat: update welcome message display condition and enhance greeting emoji
+
+### 📝 Other Changes
+- Merge pull request #7 from iamdhakrey/multi-theme-support
+
+
 ## [1.3.2] - 2025-07-15
 
 ### ✨ Features

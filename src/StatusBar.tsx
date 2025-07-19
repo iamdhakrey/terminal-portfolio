@@ -45,12 +45,16 @@ const StatusBar: React.FC<StatusBarProps> = ({ className = "" }) => {
   };
 
   return (
-    <div className={`bg-gray-900 border-t border-gray-700 px-4 py-2 text-xs font-mono ${className}`}>
-      <div className="flex justify-between items-center text-gray-400">
+    <div className={`border-t px-4 py-2 text-xs font-mono ${className}`}
+         style={{ 
+           backgroundColor: 'var(--theme-background)', 
+           borderColor: 'var(--theme-border)' 
+         }}>
+      <div className="flex justify-between items-center" style={{ color: 'var(--theme-muted)' }}>
         {/* Left side - System info */}
         <div className="flex items-center space-x-4">
           <span className="flex items-center space-x-1">
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+            <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--theme-primary)' }}></span>
             <span>Online</span>
           </span>
           <span>Uptime: {getUptime()}</span>
@@ -60,7 +64,7 @@ const StatusBar: React.FC<StatusBarProps> = ({ className = "" }) => {
         {/* Right side - Time and date */}
         <div className="flex items-center space-x-4">
           <span>{currentTime.toLocaleDateString()}</span>
-          <span className="text-green-400">{formatTime(currentTime)}</span>
+          <span style={{ color: 'var(--theme-primary)' }}>{formatTime(currentTime)}</span>
         </div>
       </div>
     </div>

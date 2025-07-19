@@ -87,75 +87,98 @@ function Blogs() {
     }, [filename]);
 
     return (
-        <div className="min-h-screen bg-black text-green-400 font-mono pb-16">
+        <div className="min-h-screen font-mono pb-16"
+             style={{ 
+                 backgroundColor: 'var(--theme-background)', 
+                 color: 'var(--theme-text)' 
+             }}>
             <div className="max-w-6xl mx-auto py-4 sm:py-8 px-2 sm:px-4">
                 {/* Terminal navigation */}
                 <div className="mb-4 sm:mb-6">
-                    <div className="bg-gray-900 border border-gray-700 rounded-lg p-3 sm:p-4">
+                    <div className="border rounded-lg p-3 sm:p-4"
+                         style={{ 
+                             backgroundColor: 'var(--theme-background)', 
+                             borderColor: 'var(--theme-border)' 
+                         }}>
                         <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
                             <div className="flex items-center space-x-1 text-xs sm:text-sm">
-                                <span className="text-blue-400 hidden sm:inline">user@localhost</span>
-                                <span className="text-white hidden sm:inline">:</span>
-                                <span className="text-blue-600 hidden sm:inline">~/blogs</span>
-                                <span className="text-white">$ </span>
+                                <span className="hidden sm:inline" style={{ color: 'var(--theme-info)' }}>user@localhost</span>
+                                <span className="hidden sm:inline" style={{ color: 'var(--theme-text)' }}>:</span>
+                                <span className="hidden sm:inline" style={{ color: 'var(--theme-info)' }}>~/blogs</span>
+                                <span style={{ color: 'var(--theme-text)' }}>$ </span>
                                 <Link
                                     to="/blogs"
-                                    className="text-green-400 hover:text-green-300 underline"
+                                    className="hover:opacity-75 underline"
+                                    style={{ color: 'var(--theme-primary)' }}
                                 >
                                     cd ..
                                 </Link>
                             </div>
-                            <span className="text-gray-500 text-xs sm:text-sm"># Back to blog list</span>
+                            <span className="text-xs sm:text-sm" style={{ color: 'var(--theme-muted)' }}># Back to blog list</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Terminal window */}
-                <div className="bg-gray-900 border border-gray-700 rounded-t-lg">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border-b border-gray-700 space-y-2 sm:space-y-0">
+                <div className="border rounded-t-lg"
+                     style={{ 
+                         backgroundColor: 'var(--theme-background)', 
+                         borderColor: 'var(--theme-border)' 
+                     }}>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border-b space-y-2 sm:space-y-0"
+                         style={{ borderColor: 'var(--theme-border)' }}>
                         <div className="flex items-center space-x-2">
                             <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                             <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                            <span className="text-gray-400 text-xs sm:text-sm ml-4 break-all">~/blogs/{filename}.md</span>
+                            <span className="text-xs sm:text-sm ml-4 break-all" style={{ color: 'var(--theme-muted)' }}>~/blogs/{filename}.md</span>
                         </div>
-                        <div className="text-gray-500 text-xs">
+                        <div className="text-xs" style={{ color: 'var(--theme-muted)' }}>
                             vim {filename}.md
                         </div>
                     </div>
                 </div>
 
-                <div className="bg-black border-x border-b border-gray-700 rounded-b-lg p-8">
+                <div className="border-x border-b rounded-b-lg p-8"
+                     style={{ 
+                         backgroundColor: 'var(--theme-background)', 
+                         borderColor: 'var(--theme-border)' 
+                     }}>
                     {/* File header */}
-                    <div className="mb-6 border-b border-gray-800 pb-4">
-                        <div className="text-gray-500 text-sm mb-2">
-                            <span className="text-blue-400">$ </span>
+                    <div className="mb-6 border-b pb-4" style={{ borderColor: 'var(--theme-border)' }}>
+                        <div className="text-sm mb-2" style={{ color: 'var(--theme-muted)' }}>
+                            <span style={{ color: 'var(--theme-info)' }}>$ </span>
                             <span>cat {filename}.md</span>
                         </div>
-                        <h1 className="text-xl sm:text-3xl font-bold mb-4 text-green-400">
-                            <span className="text-gray-600"># </span>{title}
+                        <h1 className="text-xl sm:text-3xl font-bold mb-4" style={{ color: 'var(--theme-primary)' }}>
+                            <span style={{ color: 'var(--theme-muted)' }}># </span>{title}
                         </h1>
                         <div className="flex items-center space-x-4 text-xs sm:text-sm">
-                            <span className="text-blue-400">📅 {date}</span>
-                            <span className="text-yellow-400">📝 Markdown</span>
-                            <span className="text-gray-500">UTF-8</span>
+                            <span style={{ color: 'var(--theme-info)' }}>📅 {date}</span>
+                            <span style={{ color: 'var(--theme-warning)' }}>📝 Markdown</span>
+                            <span style={{ color: 'var(--theme-muted)' }}>UTF-8</span>
                         </div>
                     </div>
 
                     {/* Table of Contents */}
                     {headings.length > 0 && (
-                        <div className="mb-8 p-4 bg-gray-900 border border-gray-700 rounded-lg">
-                            <h2 className="text-base sm:text-lg font-semibold mb-3 text-green-400">
-                                <span className="text-gray-600">## </span>Table of Contents
+                        <div className="mb-8 p-4 border rounded-lg"
+                             style={{ 
+                                 backgroundColor: 'var(--theme-welcomeBoxBg)', 
+                                 borderColor: 'var(--theme-border)' 
+                             }}>
+                            <h2 className="text-base sm:text-lg font-semibold mb-3" style={{ color: 'var(--theme-primary)' }}>
+                                <span style={{ color: 'var(--theme-muted)' }}>## </span>Table of Contents
                             </h2>
                             <ul className="space-y-1">
                                 {headings.map((heading, index) => (
                                     <li key={index} style={{ marginLeft: `${(heading.level - 1) * 16}px` }}>
                                         <a
                                             href={`#${heading.id}`}
-                                            className="text-blue-400 hover:text-blue-300 text-sm hover:underline"
+                                            className="hover:underline text-sm"
+                                            style={{ color: 'var(--theme-secondary)' }}
                                         >
-                                            <span className="text-gray-600">
+                                            <span style={{ color: 'var(--theme-muted)' }}>
                                                 {'#'.repeat(heading.level)}
                                             </span>
                                             <span className="ml-1">{heading.text}</span>
@@ -167,7 +190,7 @@ function Blogs() {
                     )}
 
                     {/* Markdown content with terminal styling */}
-                    <div className="prose prose-sm sm:prose-lg max-w-none prose-invert prose-headings:text-green-400 prose-p:text-gray-300 prose-strong:text-white prose-code:text-pink-400 prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-a:text-blue-400">
+                    <div className="prose prose-sm sm:prose-lg max-w-none">
                         <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
                             rehypePlugins={[rehypeHighlight, rehypeRaw]}
@@ -176,20 +199,37 @@ function Blogs() {
                                     const match = /language-(\w+)/.exec(className || '');
                                     const isInline = !match;
                                     return isInline ? (
-                                        <code className="bg-gray-800 text-pink-400 px-1 py-0.5 rounded text-xs sm:text-sm font-mono border border-gray-700" {...props}>
+                                        <code className="px-1 py-0.5 rounded text-xs sm:text-sm font-mono border" 
+                                              style={{ 
+                                                  backgroundColor: 'var(--theme-welcomeBoxBg)',
+                                                  color: 'var(--theme-accent)',
+                                                  borderColor: 'var(--theme-border)'
+                                              }}
+                                              {...props}>
                                             {children}
                                         </code>
                                     ) : (
                                         <div className="my-4 sm:my-6">
-                                            <div className="bg-gray-800 border border-gray-600 rounded-t-lg p-2 flex items-center justify-between">
+                                            <div className="border rounded-t-lg p-2 flex items-center justify-between"
+                                                 style={{ 
+                                                     backgroundColor: 'var(--theme-welcomeBoxBg)',
+                                                     borderColor: 'var(--theme-border)'
+                                                 }}>
                                                 <div className="flex items-center space-x-2">
                                                     <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                                                     <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                                                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                                                 </div>
-                                                <span className="text-gray-400 text-xs">{match ? match[1] : 'code'}</span>
+                                                <span className="text-xs" style={{ color: 'var(--theme-muted)' }}>
+                                                    {match ? match[1] : 'code'}
+                                                </span>
                                             </div>
-                                            <pre className="bg-gray-900 text-gray-100 p-3 sm:p-4 rounded-b-lg overflow-x-auto border-x border-b border-gray-600 m-0">
+                                            <pre className="p-3 sm:p-4 rounded-b-lg overflow-x-auto border-x border-b m-0"
+                                                 style={{ 
+                                                     backgroundColor: 'var(--theme-background)',
+                                                     color: 'var(--theme-outputText)',
+                                                     borderColor: 'var(--theme-border)'
+                                                 }}>
                                                 <code className={`${className} text-xs sm:text-sm leading-relaxed`} {...props}>
                                                     {children}
                                                 </code>
@@ -204,8 +244,13 @@ function Blogs() {
                                     const text = children?.toString() || '';
                                     const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                                     return (
-                                        <h1 id={id} className="text-lg sm:text-2xl font-bold text-green-400 mt-6 sm:mt-8 mb-3 sm:mb-4 border-b border-gray-700 pb-2" {...props}>
-                                            <span className="text-gray-600"># </span>{children}
+                                        <h1 id={id} className="text-lg sm:text-2xl font-bold mt-6 sm:mt-8 mb-3 sm:mb-4 border-b pb-2" 
+                                            style={{ 
+                                                color: 'var(--theme-primary)',
+                                                borderColor: 'var(--theme-border)'
+                                            }} 
+                                            {...props}>
+                                            <span style={{ color: 'var(--theme-muted)' }}># </span>{children}
                                         </h1>
                                     );
                                 },
@@ -213,8 +258,10 @@ function Blogs() {
                                     const text = children?.toString() || '';
                                     const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                                     return (
-                                        <h2 id={id} className="text-base sm:text-xl font-semibold text-green-400 mt-4 sm:mt-6 mb-2 sm:mb-3" {...props}>
-                                            <span className="text-gray-600">## </span>{children}
+                                        <h2 id={id} className="text-base sm:text-xl font-semibold mt-4 sm:mt-6 mb-2 sm:mb-3" 
+                                            style={{ color: 'var(--theme-primary)' }} 
+                                            {...props}>
+                                            <span style={{ color: 'var(--theme-muted)' }}>## </span>{children}
                                         </h2>
                                     );
                                 },
@@ -222,8 +269,10 @@ function Blogs() {
                                     const text = children?.toString() || '';
                                     const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                                     return (
-                                        <h3 id={id} className="text-sm sm:text-lg font-semibold text-green-400 mt-3 sm:mt-4 mb-2" {...props}>
-                                            <span className="text-gray-600">### </span>{children}
+                                        <h3 id={id} className="text-sm sm:text-lg font-semibold mt-3 sm:mt-4 mb-2" 
+                                            style={{ color: 'var(--theme-primary)' }} 
+                                            {...props}>
+                                            <span style={{ color: 'var(--theme-muted)' }}>### </span>{children}
                                         </h3>
                                     );
                                 },
@@ -231,8 +280,10 @@ function Blogs() {
                                     const text = children?.toString() || '';
                                     const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                                     return (
-                                        <h4 id={id} className="text-sm sm:text-base font-semibold text-green-400 mt-3 mb-2" {...props}>
-                                            <span className="text-gray-600">#### </span>{children}
+                                        <h4 id={id} className="text-sm sm:text-base font-semibold mt-3 mb-2" 
+                                            style={{ color: 'var(--theme-primary)' }} 
+                                            {...props}>
+                                            <span style={{ color: 'var(--theme-muted)' }}>#### </span>{children}
                                         </h4>
                                     );
                                 },
@@ -240,8 +291,10 @@ function Blogs() {
                                     const text = children?.toString() || '';
                                     const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                                     return (
-                                        <h5 id={id} className="text-xs sm:text-sm font-semibold text-green-400 mt-3 mb-2" {...props}>
-                                            <span className="text-gray-600">##### </span>{children}
+                                        <h5 id={id} className="text-xs sm:text-sm font-semibold mt-3 mb-2" 
+                                            style={{ color: 'var(--theme-primary)' }} 
+                                            {...props}>
+                                            <span style={{ color: 'var(--theme-muted)' }}>##### </span>{children}
                                         </h5>
                                     );
                                 },
@@ -249,61 +302,82 @@ function Blogs() {
                                     const text = children?.toString() || '';
                                     const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                                     return (
-                                        <h6 id={id} className="text-xs font-semibold text-green-400 mt-3 mb-2" {...props}>
-                                            <span className="text-gray-600">###### </span>{children}
+                                        <h6 id={id} className="text-xs font-semibold mt-3 mb-2" 
+                                            style={{ color: 'var(--theme-primary)' }} 
+                                            {...props}>
+                                            <span style={{ color: 'var(--theme-muted)' }}>###### </span>{children}
                                         </h6>
                                     );
                                 },
                                 p: ({ children, ...props }: any) => {
                                     return (
-                                        <p className="text-gray-300 mb-3 sm:mb-4 text-xs sm:text-sm leading-relaxed" {...props}>
+                                        <p className="mb-3 sm:mb-4 text-xs sm:text-sm leading-relaxed" 
+                                           style={{ color: 'var(--theme-text)' }} 
+                                           {...props}>
                                             {children}
                                         </p>
                                     );
                                 },
                                 ul: ({ children, ...props }: any) => {
                                     return (
-                                        <ul className="list-disc list-inside text-gray-300 mb-3 sm:mb-4 space-y-1 ml-2 sm:ml-4 text-xs sm:text-sm" {...props}>
+                                        <ul className="list-disc list-inside mb-3 sm:mb-4 space-y-1 ml-2 sm:ml-4 text-xs sm:text-sm" 
+                                            style={{ color: 'var(--theme-text)' }} 
+                                            {...props}>
                                             {children}
                                         </ul>
                                     );
                                 },
                                 ol: ({ children, ...props }: any) => {
                                     return (
-                                        <ol className="list-decimal list-inside text-gray-300 mb-3 sm:mb-4 space-y-1 ml-2 sm:ml-4 text-xs sm:text-sm" {...props}>
+                                        <ol className="list-decimal list-inside mb-3 sm:mb-4 space-y-1 ml-2 sm:ml-4 text-xs sm:text-sm" 
+                                            style={{ color: 'var(--theme-text)' }} 
+                                            {...props}>
                                             {children}
                                         </ol>
                                     );
                                 },
                                 li: ({ children, ...props }: any) => {
                                     return (
-                                        <li className="text-gray-300 text-xs sm:text-sm" {...props}>
+                                        <li className="text-xs sm:text-sm" 
+                                            style={{ color: 'var(--theme-text)' }} 
+                                            {...props}>
                                             {children}
                                         </li>
                                     );
                                 },
                                 blockquote: ({ children, ...props }: any) => {
                                     return (
-                                        <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-400 my-4 bg-gray-900 py-2" {...props}>
+                                        <blockquote className="border-l-4 pl-4 italic my-4 py-2" 
+                                                    style={{ 
+                                                        borderColor: 'var(--theme-secondary)',
+                                                        backgroundColor: 'var(--theme-welcomeBoxBg)',
+                                                        color: 'var(--theme-muted)'
+                                                    }} 
+                                                    {...props}>
                                             {children}
                                         </blockquote>
                                     );
                                 },
                                 img: ({ src, alt, ...props }: any) => {
                                     return (
-                                        <div className="my-6 p-4 bg-gray-900 border border-gray-700 rounded-lg">
-                                            <div className="mb-2 text-sm text-gray-500">
-                                                <span className="text-blue-400">$ </span>
+                                        <div className="my-6 p-4 border rounded-lg"
+                                             style={{ 
+                                                 backgroundColor: 'var(--theme-welcomeBoxBg)',
+                                                 borderColor: 'var(--theme-border)'
+                                             }}>
+                                            <div className="mb-2 text-sm" style={{ color: 'var(--theme-muted)' }}>
+                                                <span style={{ color: 'var(--theme-secondary)' }}>$ </span>
                                                 <span>display {alt || 'image'}</span>
                                             </div>
                                             <img
                                                 src={src}
                                                 alt={alt}
-                                                className="max-w-full h-auto rounded border border-gray-600"
+                                                className="max-w-full h-auto rounded border"
+                                                style={{ borderColor: 'var(--theme-border)' }}
                                                 {...props}
                                             />
                                             {alt && (
-                                                <div className="mt-2 text-xs text-gray-400 text-center">
+                                                <div className="mt-2 text-xs text-center" style={{ color: 'var(--theme-muted)' }}>
                                                     {alt}
                                                 </div>
                                             )}
@@ -319,7 +393,8 @@ function Blogs() {
                                         return (
                                             <Link
                                                 to={href}
-                                                className="text-blue-400 hover:text-blue-300 underline"
+                                                className="underline hover:opacity-75"
+                                                style={{ color: 'var(--theme-secondary)' }}
                                                 {...props}
                                             >
                                                 {children}
@@ -331,7 +406,8 @@ function Blogs() {
                                     return (
                                         <a
                                             href={href}
-                                            className="text-blue-400 hover:text-blue-300 underline"
+                                            className="underline hover:opacity-75"
+                                            style={{ color: 'var(--theme-secondary)' }}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             {...props}
@@ -348,22 +424,32 @@ function Blogs() {
 
                     {/* Blog Navigation */}
                     {(navigation.previous || navigation.next) && (
-                        <div className="mt-8 pt-6 border-t border-gray-800">
-                            <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
-                                <h3 className="text-green-400 text-base sm:text-lg font-semibold mb-4 flex items-center">
-                                    <span className="text-blue-400 mr-2">$</span>
+                        <div className="mt-8 pt-6 border-t" style={{ borderColor: 'var(--theme-border)' }}>
+                            <div className="border rounded-lg p-4"
+                                 style={{ 
+                                     backgroundColor: 'var(--theme-welcomeBoxBg)',
+                                     borderColor: 'var(--theme-border)'
+                                 }}>
+                                <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center" 
+                                    style={{ color: 'var(--theme-primary)' }}>
+                                    <span className="mr-2" style={{ color: 'var(--theme-secondary)' }}>$</span>
                                     Navigation
                                 </h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     {navigation.previous && (
                                         <Link
                                             to={`/blogs/${navigation.previous.filename.replace('.md', '')}`}
-                                            className="flex items-center space-x-2 p-3 bg-gray-800 border border-gray-600 rounded hover:bg-gray-700 transition-colors group"
+                                            className="flex items-center space-x-2 p-3 border rounded hover:opacity-75 transition-colors group"
+                                            style={{ 
+                                                backgroundColor: 'var(--theme-background)',
+                                                borderColor: 'var(--theme-border)'
+                                            }}
                                         >
-                                            <span className="text-gray-400">←</span>
+                                            <span style={{ color: 'var(--theme-muted)' }}>←</span>
                                             <div className="flex-1 min-w-0">
-                                                <div className="text-xs text-gray-500">Previous</div>
-                                                <div className="text-xs sm:text-sm text-blue-400 group-hover:text-blue-300 truncate">
+                                                <div className="text-xs" style={{ color: 'var(--theme-muted)' }}>Previous</div>
+                                                <div className="text-xs sm:text-sm truncate" 
+                                                     style={{ color: 'var(--theme-secondary)' }}>
                                                     {navigation.previous.title}
                                                 </div>
                                             </div>
@@ -372,15 +458,20 @@ function Blogs() {
                                     {navigation.next && (
                                         <Link
                                             to={`/blogs/${navigation.next.filename.replace('.md', '')}`}
-                                            className="flex items-center space-x-2 p-3 bg-gray-800 border border-gray-600 rounded hover:bg-gray-700 transition-colors group text-right"
+                                            className="flex items-center space-x-2 p-3 border rounded hover:opacity-75 transition-colors group text-right"
+                                            style={{ 
+                                                backgroundColor: 'var(--theme-background)',
+                                                borderColor: 'var(--theme-border)'
+                                            }}
                                         >
                                             <div className="flex-1 min-w-0">
-                                                <div className="text-xs text-gray-500">Next</div>
-                                                <div className="text-xs sm:text-sm text-blue-400 group-hover:text-blue-300 truncate">
+                                                <div className="text-xs" style={{ color: 'var(--theme-muted)' }}>Next</div>
+                                                <div className="text-xs sm:text-sm truncate" 
+                                                     style={{ color: 'var(--theme-secondary)' }}>
                                                     {navigation.next.title}
                                                 </div>
                                             </div>
-                                            <span className="text-gray-400">→</span>
+                                            <span style={{ color: 'var(--theme-muted)' }}>→</span>
                                         </Link>
                                     )}
                                 </div>
@@ -390,10 +481,15 @@ function Blogs() {
 
                     {/* Related Posts */}
                     {relatedPosts.length > 0 && (
-                        <div className="mt-8 pt-6 border-t border-gray-800">
-                            <div className="bg-gray-900 border border-gray-700 rounded-lg p-4">
-                                <h3 className="text-green-400 text-base sm:text-lg font-semibold mb-4 flex items-center">
-                                    <span className="text-blue-400 mr-2">$</span>
+                        <div className="mt-8 pt-6 border-t" style={{ borderColor: 'var(--theme-border)' }}>
+                            <div className="border rounded-lg p-4"
+                                 style={{ 
+                                     backgroundColor: 'var(--theme-welcomeBoxBg)',
+                                     borderColor: 'var(--theme-border)'
+                                 }}>
+                                <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center" 
+                                    style={{ color: 'var(--theme-primary)' }}>
+                                    <span className="mr-2" style={{ color: 'var(--theme-secondary)' }}>$</span>
                                     Related Posts
                                 </h3>
                                 <div className="space-y-3">
@@ -401,20 +497,26 @@ function Blogs() {
                                         <Link
                                             key={index}
                                             to={`/blogs/${post.filename.replace('.md', '')}`}
-                                            className="block p-3 bg-gray-800 border border-gray-600 rounded hover:bg-gray-700 transition-colors group"
+                                            className="block p-3 border rounded hover:opacity-75 transition-colors group"
+                                            style={{ 
+                                                backgroundColor: 'var(--theme-background)',
+                                                borderColor: 'var(--theme-border)'
+                                            }}
                                         >
                                             <div className="flex items-start space-x-3">
-                                                <span className="text-gray-400 text-sm mt-1">→</span>
+                                                <span className="text-sm mt-1" style={{ color: 'var(--theme-muted)' }}>→</span>
                                                 <div className="flex-1">
-                                                    <div className="text-blue-400 group-hover:text-blue-300 font-medium text-xs sm:text-sm">
+                                                    <div className="font-medium text-xs sm:text-sm" 
+                                                         style={{ color: 'var(--theme-secondary)' }}>
                                                         {post.title}
                                                     </div>
                                                     {post.description && (
-                                                        <div className="text-gray-400 text-xs sm:text-sm mt-1 line-clamp-2">
+                                                        <div className="text-xs sm:text-sm mt-1 line-clamp-2" 
+                                                             style={{ color: 'var(--theme-muted)' }}>
                                                             {post.description}
                                                         </div>
                                                     )}
-                                                    <div className="text-xs text-gray-500 mt-2">
+                                                    <div className="text-xs mt-2" style={{ color: 'var(--theme-muted)' }}>
                                                         {post.date}
                                                     </div>
                                                 </div>
@@ -427,13 +529,13 @@ function Blogs() {
                     )}
 
                     {/* Terminal footer */}
-                    <div className="mt-8 pt-4 border-t border-gray-800">
-                        <div className="flex items-center space-x-4 text-sm text-gray-500">
-                            <span className="text-blue-400">user@localhost</span>
+                    <div className="mt-8 pt-4 border-t" style={{ borderColor: 'var(--theme-border)' }}>
+                        <div className="flex items-center space-x-4 text-sm" style={{ color: 'var(--theme-muted)' }}>
+                            <span style={{ color: 'var(--theme-secondary)' }}>user@localhost</span>
                             <span>:</span>
-                            <span className="text-blue-600">~/blogs/{filename}.md</span>
+                            <span style={{ color: 'var(--theme-info)' }}>~/blogs/{filename}.md</span>
                             <span>$ </span>
-                            <span className="text-green-400">cat --end-of-file</span>
+                            <span style={{ color: 'var(--theme-primary)' }}>cat --end-of-file</span>
                         </div>
                     </div>
                 </div>

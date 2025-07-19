@@ -34,14 +34,22 @@ const BlogList: React.FC<BlogListProps> = () => {
 
   // using tailwind css
   return (
-    <div className="min-h-screen bg-black text-green-400 font-mono pb-16">
+    <div className="min-h-screen font-mono pb-16"
+         style={{ 
+           backgroundColor: 'var(--theme-background)', 
+           color: 'var(--theme-text)' 
+         }}>
       {!areBlogsEnabled() ? (
         <div className="max-w-6xl mx-auto py-4 sm:py-8 px-2 sm:px-4">
-          <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 sm:p-8 text-center">
-            <div className="text-yellow-400 mb-2">⚠ Blog feature is disabled</div>
-            <p className="text-gray-400 text-sm sm:text-base">
+          <div className="border rounded-lg p-6 sm:p-8 text-center"
+               style={{ 
+                 backgroundColor: 'var(--theme-background)', 
+                 borderColor: 'var(--theme-border)' 
+               }}>
+            <div className="mb-2" style={{ color: 'var(--theme-warning)' }}>⚠ Blog feature is disabled</div>
+            <p className="text-sm sm:text-base" style={{ color: 'var(--theme-muted)' }}>
               Blogs are currently disabled in the configuration. 
-              To enable them, set <code className="text-green-400">blogs.enabled: true</code> in <code className="text-blue-400">profile.config.ts</code>
+              To enable them, set <code style={{ color: 'var(--theme-primary)' }}>blogs.enabled: true</code> in <code style={{ color: 'var(--theme-info)' }}>profile.config.ts</code>
             </p>
           </div>
         </div>

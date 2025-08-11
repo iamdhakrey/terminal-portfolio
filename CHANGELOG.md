@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0] - 2025-08-11
+
+### ✨ Features
+- feat: update routing to use ModernBlogs component and add HelmetProvider for SEO
+- feat: Add modern blog components including BlogHeader, BlogContent, BlogNavigation, CodeBlock, and TableOfContents
+- feat: add Linux Mastery Series utility functions
+- feat: implement Blogs component with markdown rendering and navigation
+
+### 📝 Other Changes
+- chore: add react-helmet-async dependency to package.json
+
+
 ## [1.4.0] - 2025-07-19
 
 ### ✨ Features

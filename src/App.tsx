@@ -8,9 +8,10 @@ import Projects from "./Projects";
 import StatusBar from "./StatusBar";
 import NotFound from "./NotFound";
 import { Routes, Route, BrowserRouter, Navigate, useParams } from "react-router-dom";
-import Blogs from "./Blogs";
 import { ThemeProvider } from "./utils/themeContext";
 import { getTerminalConfig } from "./utils/configManager";
+import { HelmetProvider } from "react-helmet-async";
+import ModernBlogs from "./ModernBlogs";
 
 // Redirect component for old blog URLs
 function BlogRedirect() {
@@ -22,28 +23,30 @@ function BlogRedirect() {
 
 function App() {
     const terminalConfig = getTerminalConfig();
-    
+
     return (
-        <ThemeProvider defaultTheme={terminalConfig.theme}>
-            <BrowserRouter>
-                <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--theme-background)', color: 'var(--theme-text)' }}>
-                    <Navbar />
-                    <div className="flex-1">
-                        <Routes>
-                            <Route path="/" element={<Terminal />} />
-                            <Route path="/blogs" element={<BlogList />} />
-                            <Route path="/blogs/:filename" element={<Blogs />} />
-                            <Route path="/blog/:filename" element={<BlogRedirect />} />
-                            <Route path="/profile" element={<Profile />} />
-                            <Route path="/projects" element={<Projects />} />
-                            <Route path="*" element={<NotFound />} />
-                        </Routes>
+        <HelmetProvider>
+            <ThemeProvider defaultTheme={terminalConfig.theme}>
+                <BrowserRouter>
+                    <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--theme-background)', color: 'var(--theme-text)' }}>
+                        <Navbar />
+                        <div className="flex-1">
+                            <Routes>
+                                <Route path="/" element={<Terminal />} />
+                                <Route path="/blogs" element={<BlogList />} />
+                                <Route path="/blogs/:filename" element={<ModernBlogs />} />
+                                <Route path="/blog/:filename" element={<BlogRedirect />} />
+                                <Route path="/profile" element={<Profile />} />
+                                <Route path="/projects" element={<Projects />} />
+                                <Route path="*" element={<NotFound />} />
+                            </Routes>
+                        </div>
+                        <StatusBar />
+                        <Footer />
                     </div>
-                    <StatusBar />
-                    <Footer />
-                </div>
-            </BrowserRouter>
-        </ThemeProvider>
+                </BrowserRouter>
+            </ThemeProvider>
+        </HelmetProvider>
     );
 }
 

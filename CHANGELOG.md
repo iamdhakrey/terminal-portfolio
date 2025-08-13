@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.1] - 2025-08-13
+
+### ✨ Features
+- feat: enhance blog listing with likes and featured posts functionality
+- feat: add blog likes functionality and enhance blog metadata
+
+### 📝 Other Changes
+- Implement code changes to enhance functionality and improve performance
+- Implement code changes to enhance functionality and improve performance
+- chore: update Node.js version in CI workflow to 24.x
+
+
 ## [1.5.0] - 2025-08-11
 
 ### ✨ Features

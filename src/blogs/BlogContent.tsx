@@ -113,7 +113,7 @@ export const BlogContent: React.FC<BlogContentProps> = ({ content, onHeadingClic
                         key={index}
                         id={section.id}
                         className={headingClasses[Math.min(section.level, 6) as keyof typeof headingClasses]}
-                        style={{ color: 'var(--theme-text)' }}
+                        style={{ color: `var(--theme-h${section.level})` }}
                         onClick={() => onHeadingClick?.(section.id)}
                     >
                         {section.content}

@@ -5,6 +5,12 @@ export interface ThemeConfig {
   colors: {
     background: string;
     text: string;
+    h1: string;
+    h2: string;
+    h3: string;
+    h4: string;
+    h5: string;
+    h6: string;
     primary: string;
     secondary: string;
     accent: string;
@@ -39,6 +45,12 @@ export const themes: Record<string, ThemeConfig> = {
     colors: {
       background: "#000000",
       text: "#ffffff",
+      h1: "#22c55e",
+      h2: "#3b82f6",
+      h3: "#eab308",
+      h4: "#10b981",
+      h5: "#f59e0b",
+      h6: "#ef4444",
       primary: "#22c55e",
       secondary: "#3b82f6",
       accent: "#eab308",
@@ -69,25 +81,31 @@ export const themes: Record<string, ThemeConfig> = {
     name: "light",
     displayName: "Light Terminal",
     colors: {
-      background: "#F0F4FF",
-      text: "#1a202c",
-      primary: "#2d3748",
-      secondary: "#4a5568",
-      accent: "#3182ce",
-      success: "#38a169",
-      warning: "#d69e2e",
-      error: "#e53e3e",
-      info: "#3182ce",
-      muted: "#718096",
-      border: "#cbd5e0",
-      promptUser: "#2d3748",
-      promptHost: "#4a5568",
-      promptPath: "#3182ce",
-      promptSymbol: "#1a202c",
-      commandText: "#38a169",
-      outputText: "#2d3748",
-      welcomeBoxBg: "#edf2f7",
-      welcomeBoxBorder: "#cbd5e0",
+      background: "#ffffff",
+      text: "#1a1a1a",
+      h1: "#2563eb",
+      h2: "#4f46e5",
+      h3: "#7c3aed",
+      h4: "#059669",
+      h5: "#d97706",
+      h6: "#dc2626",
+      primary: "#2563eb",
+      secondary: "#4f46e5",
+      accent: "#7c3aed",
+      success: "#059669",
+      warning: "#d97706",
+      error: "#dc2626",
+      info: "#0891b2",
+      muted: "#6b7280",
+      border: "#d1d5db",
+      promptUser: "#2563eb",
+      promptHost: "#4f46e5",
+      promptPath: "#7c3aed",
+      promptSymbol: "#1a1a1a",
+      commandText: "#059669",
+      outputText: "#374151",
+      welcomeBoxBg: "#f8fafc",
+      welcomeBoxBorder: "#e5e7eb",
     },
     styles: {
       fontFamily: "ui-monospace, SFMono-Regular, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo, monospace",
@@ -103,6 +121,12 @@ export const themes: Record<string, ThemeConfig> = {
     colors: {
       background: "#0d1117",
       text: "#00ff41",
+      h1: "#00ff41",
+      h2: "#00cc33",
+      h3: "#39ff14",
+      h4: "#00ff41",
+      h5: "#00ff41",
+      h6: "#00cc33",
       primary: "#00ff41",
       secondary: "#00cc33",
       accent: "#39ff14",
@@ -136,6 +160,12 @@ export const themes: Record<string, ThemeConfig> = {
     colors: {
       background: "#0f0f23",
       text: "#ff00ff",
+      h1: "#ff00ff",
+      h2: "#00ffff",
+      h3: "#ffff00",
+      h4: "#00ff00",
+      h5: "#ff8800",
+      h6: "#ff00ff",
       primary: "#ff00ff",
       secondary: "#00ffff",
       accent: "#ffff00",
@@ -168,6 +198,12 @@ export const themes: Record<string, ThemeConfig> = {
     colors: {
       background: "#2e1065",
       text: "#ffb000",
+      h1: "#ffb000",
+      h2: "#ffd700",
+      h3: "#ff8c00",
+      h4: "#90ee90",
+      h5: "#ffeb3b",
+      h6: "#ff6b6b",
       primary: "#ffb000",
       secondary: "#ffd700",
       accent: "#ff8c00",
@@ -200,6 +236,12 @@ export const themes: Record<string, ThemeConfig> = {
     colors: {
       background: "#0c1821",
       text: "#7dd3fc",
+      h1: "#0ea5e9",
+      h2: "#38bdf8",
+      h3: "#06b6d4",
+      h4: "#10b981",
+      h5: "#f59e0b",
+      h6: "#ef4444",
       primary: "#0ea5e9",
       secondary: "#38bdf8",
       accent: "#06b6d4",
@@ -217,6 +259,44 @@ export const themes: Record<string, ThemeConfig> = {
       outputText: "#7dd3fc",
       welcomeBoxBg: "#082f49",
       welcomeBoxBorder: "#0ea5e9",
+    },
+    styles: {
+      fontFamily: "ui-monospace, SFMono-Regular, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo, monospace",
+      terminalGlow: false,
+      cursorBlink: true,
+      borderStyle: "solid",
+    },
+  },
+
+  bluloco: {
+    name: "bluloco",
+    displayName: "Bluloco",
+    colors: {
+      background: "#282c34", // dark background
+      text: "#abb2bf", // light text
+      h1: "#61afef", // blue
+      h2: "#e06c75", // red
+      h3: "#c678dd", // purple
+      h4: "#98c379", // green
+      h5: "#d19a66", // orange
+      h6: "#56b6c2", // cyan
+      primary: "#61afef", // blue
+      secondary: "#e06c75", // red
+      accent: "#c678dd", // purple
+      success: "#98c379", // green
+      warning: "#d19a66", // orange
+      error: "#e06c75", // red
+      info: "#56b6c2", // cyan
+      muted: "#5c6370", // gray
+      border: "#3e4451", // border color
+      promptUser: "#61afef", // blue
+      promptHost: "#e06c75", // red
+      promptPath: "#c678dd", // purple  
+      promptSymbol: "#abb2bf", // light text
+      commandText: "#98c379", // green
+      outputText: "#abb2bf", // light text
+      welcomeBoxBg: "#21252b", // slightly lighter dark background
+      welcomeBoxBorder: "#61afef", // blue border
     },
     styles: {
       fontFamily: "ui-monospace, SFMono-Regular, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo, monospace",

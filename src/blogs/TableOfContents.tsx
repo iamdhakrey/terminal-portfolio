@@ -49,7 +49,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
                                     }`}
                                 style={{
                                     paddingLeft: `${Math.min(heading.level * 12, 48)}px`,
-                                    color: activeHeading === heading.id ? 'var(--theme-primary)' : 'var(--theme-muted)',
+                                    color: activeHeading === heading.id ? `var(--theme-h${heading.level})` : 'var(--theme-muted)',
                                     backgroundColor: activeHeading === heading.id ? 'var(--theme-background)' : 'transparent'
                                 }}
                             >

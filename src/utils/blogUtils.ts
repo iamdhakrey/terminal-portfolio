@@ -14,6 +14,9 @@ export interface BlogFile {
     author?: string;
     tags?: string[];
     image?: string;
+    categories?: string[];
+    next?: string;
+    prev?: string;
 }
 
 /**
@@ -75,6 +78,11 @@ export async function getAllBlogs(): Promise<BlogFile[]> {
                 date: data.date || new Date().toISOString().split('T')[0],
                 description: data.description,
                 author: data.author,
+                tags: data.tags || [],
+                image: data.image || '',
+                categories: data.categories || [],
+                next: data.next || '',
+                prev: data.prev || '',
             };
         } catch (error) {
             console.error(`Error fetching blog ${filename}:`, error);

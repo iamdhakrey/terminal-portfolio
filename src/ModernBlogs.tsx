@@ -13,7 +13,7 @@ function ModernBlogs() {
     const { filename } = useParams<{ filename: string }>();
     const navigate = useNavigate();
     const [blog, setBlog] = useState<BlogPost | null>(null);
-    const [allBlogs, setAllBlogs] = useState<Array<{ slug: string; title: string; date: string }>>([]);
+    const [allBlogs, setAllBlogs] = useState<Array<{ slug: string; title: string; date: string; image: string; next: string; prev: string; }>>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -42,7 +42,10 @@ function ModernBlogs() {
                         return {
                             slug: file.filename.replace('.md', ''),
                             title: file.title,
-                            date: file.date || 'Unknown Date'
+                            date: file.date || 'Unknown Date',
+                            image: file.image || '',
+                            next: file.next || '',
+                            prev: file.prev || ''
                         };
                     } catch (err) {
                         console.error(`Error loading blog ${file.filename}:`, err);

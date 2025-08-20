@@ -5,6 +5,9 @@ description: "Learn how to create powerful connections between your blog posts u
 author: "Portfolio Author"
 category: "Documentation"
 tags: ["Blogging", "Documentation", "Content Management"]
+image: "/images/blog-linking-guide/sample-image.svg"
+next: "blog-linking-guide"
+prev: "react-typescript-guide"
 ---
 
 # Blog Linking Guide - Connect Your Content

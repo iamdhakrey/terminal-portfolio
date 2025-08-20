@@ -8,6 +8,9 @@ interface BlogNavigationProps {
         slug: string;
         title: string;
         date: string;
+        image: string;
+        next: string;
+        prev: string;
     }>;
     onBlogChange: (slug: string) => void;
 }
@@ -19,9 +22,11 @@ export const BlogNavigation: React.FC<BlogNavigationProps> = ({
 }) => {
     console.log(allBlogs)
     const currentIndex = allBlogs.findIndex(blog => blog.slug === currentBlog);
-    const prevBlog = currentIndex > 0 ? allBlogs[currentIndex - 1] : null;
-    const nextBlog = currentIndex < allBlogs.length - 1 ? allBlogs[currentIndex + 1] : null;
+    const prevBlog = allBlogs[currentIndex].prev;
+    const nextBlog = allBlogs[currentIndex].next;
 
+    const prevBlogDetails = allBlogs.find(blog => blog.slug === prevBlog);
+    const nextBlogDetails = allBlogs.find(blog => blog.slug === nextBlog);
     // Get series information
     const seriesInfo = getSeriesInfo(currentBlog, allBlogs);
 
@@ -41,9 +46,9 @@ export const BlogNavigation: React.FC<BlogNavigationProps> = ({
             )}
             {/* Previous/Next Navigation */}
             <div className="flex justify-between items-center mb-8">
-                {prevBlog ? (
+                {prevBlog && prevBlogDetails ? (
                     <button
-                        onClick={() => onBlogChange(prevBlog.slug)}
+                        onClick={() => onBlogChange(prevBlogDetails.slug)}
                         className="group flex items-center space-x-3 p-4 border rounded-lg hover:shadow-md transition-all duration-200 max-w-xs"
                         style={{
                             backgroundColor: 'var(--theme-welcomeBoxBg)',
@@ -58,7 +63,7 @@ export const BlogNavigation: React.FC<BlogNavigationProps> = ({
                         <div className="text-left min-w-0">
                             <p className="text-xs mb-1" style={{ color: 'var(--theme-muted)' }}>Previous</p>
                             <p className="text-sm font-medium truncate group-hover:opacity-75" style={{ color: 'var(--theme-text)' }}>
-                                {prevBlog.title}
+                                {prevBlogDetails.title}
                             </p>
                         </div>
                     </button>
@@ -66,9 +71,9 @@ export const BlogNavigation: React.FC<BlogNavigationProps> = ({
                     <div></div>
                 )}
 
-                {nextBlog ? (
+                {nextBlog && nextBlogDetails ? (
                     <button
-                        onClick={() => onBlogChange(nextBlog.slug)}
+                        onClick={() => onBlogChange(nextBlogDetails.slug)}
                         className="group flex items-center space-x-3 p-4 border rounded-lg hover:shadow-md transition-all duration-200 max-w-xs"
                         style={{
                             backgroundColor: 'var(--theme-welcomeBoxBg)',
@@ -78,7 +83,7 @@ export const BlogNavigation: React.FC<BlogNavigationProps> = ({
                         <div className="text-right min-w-0">
                             <p className="text-xs mb-1" style={{ color: 'var(--theme-muted)' }}>Next</p>
                             <p className="text-sm font-medium truncate group-hover:opacity-75" style={{ color: 'var(--theme-text)' }}>
-                                {nextBlog.title}
+                                {nextBlogDetails.title}
                             </p>
                         </div>
                         <div className="flex-shrink-0">

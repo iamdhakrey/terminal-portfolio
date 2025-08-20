@@ -30,7 +30,7 @@ A modern, terminal-style portfolio website that's fully configurable through a s
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/github-profile.git
+   git clone https://github.com/iamdhakrey/terminal-portfolio.git
    cd github-profile
    ```
 

@@ -27,6 +27,9 @@ interface ModernBlogViewProps {
         slug: string;
         title: string;
         date: string;
+        image: string;
+        next: string;
+        prev: string;
     }>;
     onBlogChange: (slug: string) => void;
     onBack: () => void;

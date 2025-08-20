@@ -5,6 +5,7 @@ description: "Learn how to set up a React project with TypeScript for better dev
 author: "Hrithik Dhakrey"
 category: "Documentation"
 tags: ["React", "TypeScript", "Web Development"]
+next: blog-linking-guide
 ---
 
 # Getting Started with React and TypeScript

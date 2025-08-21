@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0] - 2025-08-21
+
+### ✨ Features
+- feat: update BlogNavigation to use prev and next properties for navigation
+- feat: extend blog data structure with image, next, and prev properties
+- feat: add navigation properties to blog linking guide and react typescript guide
+- feat: extend BlogFile interface with categories, next, and prev properties
+- feat: update heading colors in Table of Contents based on level
+- feat: update heading styles to use theme-specific colors
+- feat: add heading color configurations to theme settings
+
+### 🐛 Bug Fixes
+- fix: handle case where current blog is not found in BlogNavigation
+
+### 📝 Other Changes
+- Merge pull request #10 from iamdhakrey/blog-navigation-prev-next
+- Update src/blogs/BlogNavigation.tsx
+- Update README.md
+- Merge pull request #8 from iamdhakrey/blog-navigation-prev-next
+
+
 ## [1.5.1] - 2025-08-13
 
 ### ✨ Features

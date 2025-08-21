@@ -20,8 +20,13 @@ export const BlogNavigation: React.FC<BlogNavigationProps> = ({
     allBlogs,
     onBlogChange
 }) => {
-    console.log(allBlogs)
     const currentIndex = allBlogs.findIndex(blog => blog.slug === currentBlog);
+    
+    if (currentIndex === -1) {
+        // Handle case where current blog is not found
+        return null;
+    }
+    
     const prevBlog = allBlogs[currentIndex].prev;
     const nextBlog = allBlogs[currentIndex].next;
 

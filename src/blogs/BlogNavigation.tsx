@@ -24,7 +24,7 @@ export const BlogNavigation: React.FC<BlogNavigationProps> = ({
     
     if (currentIndex === -1) {
         // Handle case where current blog is not found
-        return null;
+        return <></>;
     }
     
     const prevBlog = allBlogs[currentIndex].prev;

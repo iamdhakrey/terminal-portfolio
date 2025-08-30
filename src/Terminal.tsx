@@ -1455,13 +1455,13 @@ const Terminal = () => {
                          }}>
                         <div className="text-center mb-4">
                             <div className="text-2xl sm:text-3xl mb-2">
-                                ╭─────────────────────────────────────────────╮
+                                ╭────────────────────────────╮
                             </div>
-                            <div className="text-xl sm:text-2xl font-bold mb-1" style={{ color: 'var(--theme-primary)' }}>
+                            <div className="text-l sm:text-xl font-bold mb-1" style={{ color: 'var(--theme-primary)' }}>
                                 🚀 Welcome to {terminalConfig.hostname} Terminal
                             </div>
                             <div className="text-2xl sm:text-3xl mb-3">
-                                ╰─────────────────────────────────────────────╯
+                                ╰────────────────────────────╯
                             </div>
                         </div>
                         

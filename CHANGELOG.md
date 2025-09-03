@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.1] - 2025-09-03
+
+### 🐛 Bug Fixes
+- fix: update terminal header styling for improved appearance
+
+
 ## [1.6.0] - 2025-08-21
 
 ### ✨ Features

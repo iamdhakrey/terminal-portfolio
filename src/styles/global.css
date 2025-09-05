@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+--root {
+	--theme-background: #000000;
+	--theme-text: #ffffff;
+	--theme-h1: #22c55e;
+	--theme-h2: #3b82f6;
+	--theme-h3: #eab308;
+	--theme-h4: #10b981;
+	--theme-h5: #f59e0b;
+	--theme-h6: #ef4444;
+	--theme-primary: #67ad80;
+	--theme-secondary: #3b82f6;
+	--theme-accent: #eab308;
+	--theme-success: #10b981;
+	--theme-warning: #f59e0b;
+	--theme-error: #ef4444;
+	--theme-info: #06b6d4;
+	--theme-muted: #6b7280;
+	--theme-border: #374151;
+	--theme-promptUser: #3b82f6;
+	--theme-promptHost: #3b82f6;
+	--theme-promptPath: #1d4ed8;
+	--theme-promptSymbol: #ffffff;
+	--theme-commandText: #22c55e;
+	--theme-outputText: #d1d5db;
+	--theme-welcomeBoxBg: #111827;
+	--theme-welcomeBoxBorder: #22c55e;
+	font-family: "ui-monospace, SFMono-Regular, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo, monospace";
+}
+
+/* dark theme */
+[data-theme="dark"] {
+	--theme-background: #000000;
+	--theme-text: #ffffff;
+	--theme-h1: #22c55e;
+	--theme-h2: #3b82f6;
+	--theme-h3: #eab308;
+	--theme-h4: #10b981;
+	--theme-h5: #f59e0b;
+	--theme-h6: #ef4444;
+	--theme-primary: #22c55e;
+	--theme-secondary: #3b82f6;
+	--theme-accent: #eab308;
+	--theme-success: #10b981;
+	--theme-warning: #f59e0b;
+	--theme-error: #ef4444;
+	--theme-info: #06b6d4;
+	--theme-muted: #6b7280;
+	--theme-border: #374151;
+	--theme-promptUser: #3b82f6;
+	--theme-promptHost: #3b82f6;
+	--theme-promptPath: #1d4ed8;
+	--theme-promptSymbol: #ffffff;
+	--theme-commandText: #22c55e;
+	--theme-outputText: #d1d5db;
+	--theme-welcomeBoxBg: #111827;
+	--theme-welcomeBoxBorder: #22c55e;
+	font-family: "ui-monospace, SFMono-Regular, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo, monospace";
+
+}
+
+
+/* light theme */
+[data-theme="light"] {
+	--theme-background: #ffffff;
+	--theme-text: #1a1a1a;
+	--theme-h1: #2563eb;
+	--theme-h2: #4f46e5;
+	--theme-h3: #7c3aed;
+	--theme-h4: #059669;
+	--theme-h5: #d97706;
+	--theme-h6: #dc2626;
+	--theme-primary: #2563eb;
+	--theme-secondary: #4f46e5;
+	--theme-accent: #7c3aed;
+	--theme-success: #059669;
+	--theme-warning: #d97706;
+	--theme-error: #dc2626;
+	--theme-info: #0891b2;
+	--theme-muted: #6b7280;
+	--theme-border: #d1d5db;
+	--theme-promptUser: #2563eb;
+	--theme-promptHost: #4f46e5;
+	--theme-promptPath: #7c3aed;
+	--theme-promptSymbol: #1a1a1a;
+	--theme-commandText: #059669;
+	--theme-outputText: #374151;
+	--theme-welcomeBoxBg: #f8fafc;
+	--theme-welcomeBoxBorder: #e5e7eb;
+	font-family: "ui-monospace, SFMono-Regular, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo, monospace";
+
+}
+
+
+/* cyberpunk theme */
+[data-theme="cyberpunk"] {
+	--theme-background: #0f0f23;
+	--theme-text: #ff00ff;
+	--theme-h1: #ff00ff;
+	--theme-h2: #00ffff;
+	--theme-h3: #ffff00;
+	--theme-h4: #00ff00;
+	--theme-h5: #ff8800;
+	--theme-h6: #ff00ff;
+	--theme-primary: #ff00ff;
+	--theme-secondary: #00ffff;
+	--theme-accent: #ffff00;
+	--theme-success: #00ff00;
+	--theme-warning: #ff8800;
+	--theme-error: #ff0088;
+	--theme-info: #00ffff;
+	--theme-muted: #8800ff;
+	--theme-border: #ff00ff;
+	--theme-promptUser: #ff00ff;
+	--theme-promptHost: #00ffff;
+	--theme-promptPath: #ffff00;
+	--theme-promptSymbol: #ff00ff;
+	--theme-commandText: #ff00ff;
+	--theme-outputText: #00ffff;
+	--theme-welcomeBoxBg: #1a0a2e;
+	--theme-welcomeBoxBorder: #ff00ff;
+	font-family: "ui-monospace, SFMono-Regular, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo, monospace";
+}
+
+
+/* bluloco theme */
+[data-theme="bluloco"] {
+	--theme-background: #0c1821;
+	--theme-text: #7dd3fc;
+	--theme-h1: #0ea5e9;
+	--theme-h2: #38bdf8;
+	--theme-h3: #06b6d4;
+	--theme-h4: #10b981;
+	--theme-h5: #f59e0b;
+	--theme-h6: #ef4444;
+	--theme-primary: #0ea5e9;
+	--theme-secondary: #38bdf8;
+	--theme-accent: #06b6d4;
+	--theme-success: #10b981;
+	--theme-warning: #f59e0b;
+	--theme-error: #ef4444;
+	--theme-info: #7dd3fc;
+	--theme-muted: #475569;
+	--theme-border: #0ea5e9;
+	--theme-promptUser: #0ea5e9;
+	--theme-promptHost: #38bdf8;
+	--theme-promptPath: #06b6d4;
+	--theme-promptSymbol: #7dd3fc;
+	--theme-commandText: #0ea5e9;
+	--theme-outputText: #7dd3fc;
+	--theme-welcomeBoxBg: #082f49;
+	--theme-welcomeBoxBorder: #0ea5e9;
+	font-family: "ui-monospace, SFMono-Regular, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo, monospace", ;
+
+}

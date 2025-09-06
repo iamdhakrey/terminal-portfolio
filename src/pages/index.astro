@@ -1,0 +1,281 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import CommandOutput from "../components/CommandOutput.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<div
+			class="min-h-screen flex flex-col"
+			style={{
+				backgroundColor: "var(--theme-background)",
+				color: "var(--theme-text)",
+			}}
+		>
+			<Header />
+			<div id="command-output" class="flex-grow" , style="display: none;">
+				<CommandOutput
+					output={[
+						{
+							type: "command",
+							text: [
+								"$ help",
+								"Available commands:",
+								" - help: Show this help message",
+								" - neofetch: Display system information",
+								" - skills: List my skills",
+								" - joke: Tell a joke",
+								" - clear: Clear the terminal",
+							],
+						},
+					]}
+				/>
+			</div>
+			<main>
+				<div
+					class="pt-0 font-mono space-y-1 overflow-y-auto h-[calc(100vh-160px)] max-w-screen-xl mx-auto p-2 sm:p-4"
+					style={{
+						backgroundColor: "var(--theme-background)",
+						color: "var(--theme-text)",
+						fontFamily: "var(--theme-fontFamily)",
+					}}
+				>
+					<!-- Terminal Prompt -->
+					<div
+						class="flex items-center pt-2 text-sm sm:text-base"
+						style={{ color: "var(--theme-commandText)" }}
+					>
+						<span
+							class="hidden sm:inline"
+							style={{ color: "var(--theme-promptUser)" }}
+							>user@{terminalConfig.hostname}</span
+						>
+						<span
+							class="hidden sm:inline"
+							style={{ color: "var(--theme-text)" }}>:</span
+						>
+						<span
+							class="hidden sm:inline"
+							style={{ color: "var(--theme-promptPath)" }}>~</span
+						>
+						<span style={{ color: "var(--theme-promptSymbol)" }}
+							>$
+						</span>
+						<input
+							type="text"
+							class="bg-transparent border-none outline-none flex-1 font-mono text-sm sm:text-base"
+							style={{ color: "var(--theme-text)" }}
+						/>
+					</div>
+
+					<!-- Welcome Page -->
+					<div
+						id="welcome-box"
+						class="mb-4 sm:mb-6"
+						style={{ color: "var(--theme-primary)" }}
+					>
+						<div
+							class="rounded-lg p-4 sm:p-6 shadow-lg"
+							style={{
+								border: `2px solid var(--theme-welcomeBoxBorder)`,
+								backgroundColor: "var(--theme-welcomeBoxBg)",
+							}}
+						>
+							<div class="text-center mb-4">
+								<div class="text-2xl sm:text-3xl mb-2">
+									╭────────────────────────────╮
+								</div>
+								<div
+									class="text-l sm:text-xl font-bold mb-1"
+									style={{ color: "var(--theme-primary)" }}
+								>
+									🚀 Welcome to {terminalConfig.hostname} Terminal
+								</div>
+								<div class="text-2xl sm:text-3xl mb-3">
+									╰────────────────────────────╯
+								</div>
+							</div>
+
+							<div
+								class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4"
+							>
+								<div
+									class="rounded p-3"
+									style={{
+										backgroundColor:
+											"var(--theme-background)",
+										border: `1px solid var(--theme-border)`,
+									}}
+								>
+									<h3
+										class="font-semibold mb-2 flex items-center"
+										style={{
+											color: "var(--theme-warning)",
+										}}
+									>
+										🎯 Quick Start
+									</h3>
+									<ul
+										class="text-sm space-y-1"
+										style={{ color: "var(--theme-muted)" }}
+									>
+										<li>
+											• Type <span
+												class="font-mono"
+												style={{
+													color: "var(--theme-primary)",
+												}}>help</span
+											> for commands
+										</li>
+										<li>
+											• Try <span
+												class="font-mono"
+												style={{
+													color: "var(--theme-info)",
+												}}>neofetch</span
+											> for system info
+										</li>
+										<li>
+											• Use <span
+												class="font-mono"
+												style={{
+													color: "var(--theme-secondary)",
+												}}>skills</span
+											> to see my expertise
+										</li>
+										<li>
+											• Run <span
+												class="font-mono"
+												style={{
+													color: "var(--theme-accent)",
+												}}>joke</span
+											> for some fun!
+										</li>
+									</ul>
+								</div>
+
+								<div
+									class="rounded p-3"
+									style={{
+										backgroundColor:
+											"var(--theme-background)",
+										border: `1px solid var(--theme-border)`,
+									}}
+								>
+									<h3
+										class="font-semibold mb-2 flex items-center"
+										style={{ color: "var(--theme-info)" }}
+									>
+										⌨️ Pro Tips
+									</h3>
+									<ul
+										class="text-sm space-y-1"
+										style={{ color: "var(--theme-muted)" }}
+									>
+										<li>• ↑/↓ arrows: Command history</li>
+										<li>• Tab: Auto-complete commands</li>
+										<li>• Ctrl+L: Clear terminal</li>
+										<li>
+											• Try aliases: <span
+												class="font-mono"
+												style={{
+													color: "var(--theme-primary)",
+												}}>ll</span
+											>, <span
+												class="font-mono"
+												style={{
+													color: "var(--theme-primary)",
+												}}>..</span
+											>, <span
+												class="font-mono"
+												style={{
+													color: "var(--theme-primary)",
+												}}>h</span
+											>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="text-center">
+								<p
+									class="text-sm mb-2"
+									style={{ color: "var(--theme-muted)" }}
+								>
+									🎮 Interactive Linux-style terminal with <span
+										class="font-semibold"
+										style={{
+											color: "var(--theme-primary)",
+										}}>30+ commands</span
+									>
+								</p>
+								<p
+									class="text-xs"
+									style={{ color: "var(--theme-muted)" }}
+								>
+									Navigate: <span
+										style={{ color: "var(--theme-info)" }}
+										>cd projects</span
+									> | <span
+										style={{
+											color: "var(--theme-secondary)",
+										}}>cd blogs</span
+									> | <span
+										style={{ color: "var(--theme-accent)" }}
+										>cd profile</span
+									>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			<Footer />
+		</div>
+	</body>
+</html>
+
+<script>
+	const inputCapture = document.querySelector("input");
+	if (inputCapture) {
+		// disable welcome box input
+		inputCapture.focus();
+		inputCapture.addEventListener("keydown", (e) => {
+			if (e.key === "Enter") {
+				const welcomeBox = document.getElementById("welcome-box");
+				console.log(welcomeBox);
+				if (welcomeBox) {
+					welcomeBox.style.display = "none";
+				}
+				e.preventDefault();
+				// Here you can handle the command input
+				const command = inputCapture.value.trim();
+				if (command) {
+					console.log("Command entered:", command);
+					// Clear input after processing
+					if (command === "help") {
+						// Show help commands
+						const commandOutput =
+							document.getElementById("command-output");
+						if (commandOutput) {
+							commandOutput.style.display = "block";
+						}
+					} else if (command === "clear") {
+						// Clear terminal (for simplicity, just reload)
+						location.reload();
+					} else {
+						alert(`Command not found: ${command}`);
+					}
+					inputCapture.value = "";
+				}
+			}
+		});
+	}
+</script>

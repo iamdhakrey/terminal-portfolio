@@ -26,7 +26,8 @@
 	--theme-outputText: #d1d5db;
 	--theme-welcomeBoxBg: #111827;
 	--theme-welcomeBoxBorder: #22c55e;
-	font-family: "ui-monospace, SFMono-Regular, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo, monospace";
+	--theme-fontFamily: "Cascadia Code", "Cascadia Mono", "Monaco", "Consolas", monospace;
+
 }
 
 /* dark theme */
@@ -56,7 +57,7 @@
 	--theme-outputText: #d1d5db;
 	--theme-welcomeBoxBg: #111827;
 	--theme-welcomeBoxBorder: #22c55e;
-	font-family: "ui-monospace, SFMono-Regular, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo, monospace";
+	--theme-fontFamily: "Cascadia Code", "Cascadia Mono", "Monaco", "Consolas", monospace;
 
 }
 
@@ -88,8 +89,7 @@
 	--theme-outputText: #374151;
 	--theme-welcomeBoxBg: #f8fafc;
 	--theme-welcomeBoxBorder: #e5e7eb;
-	font-family: "ui-monospace, SFMono-Regular, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo, monospace";
-
+	--theme-fontFamily: "'Cascadia Code'";
 }
 
 
@@ -120,7 +120,7 @@
 	--theme-outputText: #00ffff;
 	--theme-welcomeBoxBg: #1a0a2e;
 	--theme-welcomeBoxBorder: #ff00ff;
-	font-family: "ui-monospace, SFMono-Regular, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo, monospace";
+	--theme-fontFamily: "'Cascadia Code'";
 }
 
 
@@ -151,6 +151,6 @@
 	--theme-outputText: #7dd3fc;
 	--theme-welcomeBoxBg: #082f49;
 	--theme-welcomeBoxBorder: #0ea5e9;
-	font-family: "ui-monospace, SFMono-Regular, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo, monospace", ;
-
+	--theme-fontFamily: "Cascadia Code", "Cascadia Mono", "Monaco", "Consolas", monospace;
+	/* --theme-fontFamily: "'Cascadia Code'"; */
 }

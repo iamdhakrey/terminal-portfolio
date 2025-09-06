@@ -1,0 +1,250 @@
+---
+import BlogCode from "./BlogCode.astro";
+
+const { ...post } = Astro.props;
+
+const parseContent = (markdown: string) => {
+    const sections: Array<{
+        type: "text" | "code" | "heading" | "image" | "list";
+        content: string;
+        language?: string;
+        level?: number;
+        id?: string;
+    }> = [];
+
+    const lines = markdown.split("\n");
+    let currentSection = "";
+    let inCodeBlock = false;
+    let codeLanguage = "";
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+
+        // Code block detection
+        if (line.startsWith("```")) {
+            if (inCodeBlock) {
+                // End of code block
+                sections.push({
+                    type: "code",
+                    content: currentSection.trim(),
+                    language: codeLanguage,
+                });
+                currentSection = "";
+                inCodeBlock = false;
+                codeLanguage = "";
+            } else {
+                // Start of code block
+                if (currentSection.trim()) {
+                    sections.push({
+                        type: "text",
+                        content: currentSection.trim(),
+                    });
+                    currentSection = "";
+                }
+                inCodeBlock = true;
+                codeLanguage = line.slice(3).trim();
+            }
+            continue;
+        }
+
+        if (inCodeBlock) {
+            currentSection += line + "\n";
+            continue;
+        }
+
+        // Heading detection
+        if (line.startsWith("#")) {
+            if (currentSection.trim()) {
+                sections.push({
+                    type: "text",
+                    content: currentSection.trim(),
+                });
+                currentSection = "";
+            }
+
+            const level = line.match(/^#+/)?.[0].length || 1;
+            const text = line.replace(/^#+\s*/, "");
+            const id = text
+                .toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, "")
+                .replace(/\s+/g, "-");
+
+            sections.push({
+                type: "heading",
+                content: text,
+                level,
+                id,
+            });
+            continue;
+        }
+
+        // Regular content
+        currentSection += line + "\n";
+    }
+
+    // Add remaining content
+    if (currentSection.trim()) {
+        sections.push({
+            type: "text",
+            content: currentSection.trim(),
+        });
+    }
+
+    return sections;
+};
+
+const formatText = (text: string) => {
+    return (
+        text
+            // Bold text
+            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+            // Italic text
+            .replace(/\*(.*?)\*/g, "<em>$1</em>")
+            // Inline code with theme colors
+            .replace(
+                /`([^`]+)`/g,
+                '<code class="px-1 py-0.5 text-sm rounded" style="background-color: var(--theme-welcomeBoxBg); color: var(--theme-accent);">$1</code>',
+            )
+            // Images - PROCESS BEFORE LINKS to avoid conflict
+            .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, src) => {
+                let imageSrc = src;
+
+                // Handle different image path patterns
+                if (src.startsWith("../../assets/")) {
+                    // Convert ../../assets/ to /src/assets/ for Astro
+                    imageSrc = src.replace("../../assets/", "/src/assets/");
+                } else if (src.startsWith("../assets/")) {
+                    // Convert ../assets/ to /src/assets/ for Astro
+                    imageSrc = src.replace("../assets/", "/src/assets/");
+                } else if (src.startsWith("./assets/")) {
+                    // Convert ./assets/ to /src/assets/ for Astro
+                    imageSrc = src.replace("./assets/", "/src/assets/");
+                } else if (!src.startsWith("http") && !src.startsWith("/")) {
+                    // For relative paths without specific patterns, assume they're in /images/blogs/
+                    imageSrc = `/images/blogs/${src}`;
+                }
+
+                return `<img src="${imageSrc}" alt="${alt}" class="max-w-full h-auto rounded-lg shadow-md my-4 mx-auto block" loading="lazy" style="border: 1px solid var(--theme-border);" />`;
+            })
+            // Links with theme colors - PROCESS AFTER IMAGES
+            .replace(
+                /\[([^\]]+)\]\(([^)]+)\)/g,
+                '<a href="$2" class="hover:underline" style="color: var(--theme-primary);" target="_blank" rel="noopener noreferrer">$1</a>',
+            )
+            // Line breaks
+            .replace(
+                /\n\n/g,
+                '</p><p class="mb-4" style="color: var(--theme-text);">',
+            )
+            // Wrap in paragraph
+            .replace(/^/, '<p class="mb-4" style="color: var(--theme-text);">')
+            .replace(/$/, "</p>")
+            // Lists
+            .replace(/^\s*[-*+]\s+(.+)$/gm, '<li class="ml-4 mb-1">$1</li>')
+    );
+};
+
+// remove --- from start and end of markdown_content if present
+const cleanedContent = post.body.replace(/^---\n/, "").replace(/\n---$/, "");
+const sections = parseContent(cleanedContent);
+---
+
+<div
+    class="prose prose-lg max-w-none"
+    style={{
+        backgroundColor: "var(--theme-background)",
+        color: "var(--theme-text)",
+    }}
+>
+    <div
+        class="space-y-6"
+        style={{
+            color: "var(--theme-text)",
+            backgroundColor: "var(--theme-background)",
+        }}
+    >
+        {
+            sections.map((section, _) => {
+                {
+                    console.log(section.type, "blog content section");
+                }
+                if (section.type === "heading") {
+                    if (section.level === 1) {
+                        return (
+                            <h1
+                                id={section.id}
+                                class="text-3xl font-bold mt-8 mb-4"
+                                style={{
+                                    color: "var(--theme-primary)",
+                                    backgroundColor: "var(--theme-background)",
+                                    borderColor: "var(--theme-border)",
+                                }}
+                            >
+                                {section.content}
+                            </h1>
+                        );
+                    } else if (section.level === 2) {
+                        return (
+                            <h2
+                                id={section.id}
+                                class="text-2xl font-semibold mt-6 mb-3"
+                                style="color: var(--theme-primary)"
+                            >
+                                {section.content}
+                            </h2>
+                        );
+                    } else if (section.level === 3) {
+                        return (
+                            <h3
+                                id={section.id}
+                                class="text-xl font-semibold mt-5 mb-3"
+                                style="color: var(--theme-primary)"
+                            >
+                                {section.content}
+                            </h3>
+                        );
+                    } else if (section.level === 4) {
+                        return (
+                            <h4
+                                id={section.id}
+                                class="text-lg font-medium mt-4 mb-2"
+                                style="color: var(--theme-primary)"
+                            >
+                                {section.content}
+                            </h4>
+                        );
+                    } else if (section.level === 5) {
+                        return (
+                            <h5
+                                id={section.id}
+                                class="text-base font-medium mt-4 mb-2"
+                                style="color: var(--theme-primary)"
+                            >
+                                {section.content}
+                            </h5>
+                        );
+                    } else if (section.level === 6) {
+                        return (
+                            <h6
+                                id={section.id}
+                                class="text-sm font-medium mt-3 mb-2"
+                                style="color: var(--theme-primary)"
+                            >
+                                {section.content}
+                            </h6>
+                        );
+                    }
+                } else if (section.type === "code") {
+                    return (
+                        <BlogCode
+                            code={section.content}
+                            language={section.language || "plaintext"}
+                        />
+                    );
+                } else {
+                    return <div set:html={formatText(section.content)} />;
+                }
+            })
+        }
+    </div>
+</div>

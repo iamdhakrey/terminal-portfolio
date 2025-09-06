@@ -1,0 +1,101 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "./FormattedDate.astro";
+
+const { ...post } = Astro.props;
+// console.log(Astro.props);
+---
+
+<div
+    class="shadow-sm border-b"
+    style={{
+        backgroundColor: "var(--theme-welcomeBoxBg)",
+        borderColor: "var(--theme-border)",
+    }}
+>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="py-8">
+            {/* Breadcrumb */}
+            <nav class="mb-6">
+                <div class="flex items-center space-x-2 text-sm">
+                    <button
+                        class="hover:opacity-75 transition-colors"
+                        style={{ color: "var(--theme-primary)" }}
+                    >
+                        ← Back to blogs
+                    </button>
+                </div>
+            </nav>
+
+            {/* Title */}
+            <h1
+                class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight"
+                style={{
+                    color: "var(--theme-text)",
+                }}
+            >
+                {post.data.title}
+            </h1>
+
+            {/* Featured Image */}
+            {
+                post.data.heroImage && (
+                    <div class="mb-8">
+                        <Image
+                            class="w-full object-cover rounded-lg shadow-lg"
+                            style={{ maxWidth: "100%" }}
+                            src={post.data.heroImage}
+                            alt={post.data.title}
+                        />
+                    </div>
+                )
+            }
+            {/* Meta information */}
+            <div class="flex flex-wrap items-center gap-6 mb-6">
+                <div
+                    class="flex items-center text-sm"
+                    style={{ color: "var(--theme-muted)" }}
+                >
+                    <svg
+                        class="w-4 h-4 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linejoin="round"
+                            stroke-width={2}
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        ></path>
+                    </svg>
+                    <FormattedDate date={post.data.pubDate} />
+                </div>
+
+                <div
+                    class="flex items-center text-sm"
+                    style={{ color: "var(--theme-muted)" }}
+                >
+                    <svg
+                        class="w-4 h-4 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width={2}
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path>
+                    </svg>
+                    {post.data.read_time} min read
+                </div>
+            </div>
+
+            {/* Actions */}
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4"></div>
+            </div>
+        </div>
+    </div>
+</div>

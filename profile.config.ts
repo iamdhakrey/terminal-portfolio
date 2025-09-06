@@ -182,7 +182,7 @@ export const profileConfig: ProfileConfig = {
   skills: [
     "Rust",
     "TypeScript",
-    "JavaScript", 
+    "JavaScript",
     "Go",
     "Python",
     "React",
@@ -314,8 +314,8 @@ export const profileConfig: ProfileConfig = {
       }
     },
     enabledCommands: [
-      "help", "about", "whoami", "profile", "projects", "neofetch", "clear", 
-      "ls", "cd", "pwd", "fortune", "cowsay", "tree", "ps", "top", "grep", 
+      "help", "about", "whoami", "profile", "projects", "neofetch", "clear",
+      "ls", "cd", "pwd", "fortune", "cowsay", "tree", "ps", "top", "grep",
       "cat", "man", "history", "date", "uptime", "uname", "parrot", "sl",
       "hire-me", "coffee", "joke"
     ],
@@ -354,7 +354,7 @@ export const profileConfig: ProfileConfig = {
     categories: ["React", "TypeScript", "Linux", "DevOps", "Tutorial", "Programming", "Documentation"],
     availableBlogs: [
       "blog-linking-guide.md",
-      "react-typescript-guide.md", 
+      "react-typescript-guide.md",
     ]
   },
 
@@ -381,11 +381,11 @@ export const profileConfig: ProfileConfig = {
     brandName: "iamdhakrey.dev",
     brandUrl: "/",
     links: [
-      { name: "blogs", path: "/blogs", color: "text-green-400" },
-      { name: "projects", path: "/projects", color: "text-orange-400" },
-      { name: "profile", path: "/profile", color: "text-purple-400" },
-      { name: "tg", path: "https://t.me/iamdhakrey", external: true, color: "text-blue-400" },
-      { name: "gh", path: "https://github.com/iamdhakrey/", external: true, color: "text-yellow-400" }
+      { name: "blogs", path: "/blogs", color: "var(--theme-primary)" },
+      { name: "projects", path: "/projects", color: "var(--theme-secondary)" },
+      { name: "profile", path: "/profile", color: "var(--theme-accent)" },
+      { name: "tg", path: "https://t.me/iamdhakrey", external: true, color: "var(--theme-muted)" },
+      { name: "gh", path: "https://github.com/iamdhakrey/", external: true, color: "var(--theme-muted)" }
     ],
     systemInfo: {
       // os: "Linux 6.1.0",

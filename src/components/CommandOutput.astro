@@ -1,0 +1,57 @@
+---
+import { CommandOutputType } from "../types";
+
+const { output } = Astro.props;
+---
+
+<div class="space-y-1">
+    {
+        output.map((item: CommandOutputType, index: number) => (
+            <div id={`line-${index}`}>
+                {item.type === "command" && (
+                    <div
+                        class="ml-2 sm:ml-4 text-sm sm:text-base"
+                        style={{ color: "var(--theme-outputText)" }}
+                    >
+                        {item.text.map((line: string, _: number) => (
+                            <div
+                                class={`break-words ${
+                                    line.startsWith("❌")
+                                        ? ""
+                                        : line.startsWith("✨") ||
+                                            line.startsWith("📁")
+                                          ? ""
+                                          : line.startsWith("💡")
+                                            ? ""
+                                            : line.startsWith("│") ||
+                                                line.startsWith("┌") ||
+                                                line.startsWith("╰") ||
+                                                line.startsWith("├")
+                                              ? ""
+                                              : ""
+                                }`}
+                                style={{
+                                    color: line.startsWith("❌")
+                                        ? "var(--theme-error)"
+                                        : line.startsWith("✨") ||
+                                            line.startsWith("📁")
+                                          ? "var(--theme-info)"
+                                          : line.startsWith("💡")
+                                            ? "var(--theme-warning)"
+                                            : line.startsWith("│") ||
+                                                line.startsWith("┌") ||
+                                                line.startsWith("╰") ||
+                                                line.startsWith("├")
+                                              ? "var(--theme-accent)"
+                                              : "var(--theme-outputText)",
+                                }}
+                            >
+                                <pre>{line}</pre>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        ))
+    }
+</div>

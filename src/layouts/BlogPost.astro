@@ -1,0 +1,88 @@
+---
+// import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+// import FormattedDate from "../components/FormattedDate.astro";
+import Header from "../components/Header.astro";
+import BlogHeader from "../components/BlogHeader.astro";
+import BlogContent from "../components/BlogContent.astro";
+
+type Props = CollectionEntry<"blog">;
+
+const { ...post } = Astro.props;
+---
+
+<html lang="en" data-theme="dark">
+	<head>
+		<BaseHead title={post.data.title} description={post.data.description} />
+		<style>
+			main {
+				width: calc(100% - 2em);
+				max-width: 100%;
+				margin: 0;
+			}
+			.hero-image {
+				width: 100%;
+			}
+			.hero-image img {
+				display: block;
+				margin: 0 auto;
+				border-radius: 12px;
+				box-shadow: var(--box-shadow);
+			}
+			.prose {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 1em;
+				color: rgb(var(--gray-dark));
+			}
+			.title {
+				margin-bottom: 1em;
+				padding: 1em 0;
+				text-align: center;
+				line-height: 1;
+			}
+			.title h1 {
+				margin: 0 0 0.5em 0;
+			}
+			.date {
+				margin-bottom: 0.5em;
+				color: rgb(var(--gray));
+			}
+			.last-updated-on {
+				font-style: italic;
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<div
+			class="min-h-screen font-mono"
+			style={{
+				backgroundColor: "var(--theme-background)",
+				color: "var(--theme-text)",
+			}}
+		>
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+				<div class="lg:flex lg:gap-8">
+					{/* Main content */}
+					<div class="lg:flex-1 lg:max-w-4xl">
+						<BlogHeader {...Astro.props} />
+						<div
+							class="rounded-lg shadow-sm border p-8 mb-8"
+							style={{
+								borderColor: "var(--theme-border)",
+							}}
+						>
+							<BlogContent {...Astro.props} />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<Footer />
+	</body>
+</html>

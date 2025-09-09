@@ -61,6 +61,8 @@ class GitHubDataFetcher:
         
         enhanced_repos = []
         for repo in repos:
+            if repo.get('isFork', False):
+                continue
             enhanced_repo = repo.copy()
             
             # Get language data from the languages field
@@ -191,7 +193,7 @@ class GitHubDataFetcher:
         """Save the data to JSON file."""
         self.create_output_directory()
         
-        with open('public/github-projects.json', 'w', encoding='utf-8') as f:
+        with open('src/data/github-projects.json', 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
 
     def display_stats(self, stats: Dict[str, Any]):
@@ -200,7 +202,7 @@ class GitHubDataFetcher:
         print(f"   • Total Public Repos: {stats['totalRepos']}")
         print(f"   • Total Stars: {stats['totalStars']}")
         print(f"   • Total Forks: {stats['totalForks']}")
-        print(f"\n🚀 You can now use this data in your React application!")
+        print(f"\n🚀 You can now use this data in your Astro application!")
 
     def run(self):
         """Main execution method."""
@@ -218,13 +220,18 @@ class GitHubDataFetcher:
         # Calculate statistics and organize data
         stats = self.calculate_stats(enhanced_repos)
         featured = self.get_featured_repos(enhanced_repos)
-        by_language = self.group_by_language(enhanced_repos)
+        
+        # Remove featured repos from the main repositories list to avoid duplication
+        featured_repo_names = {repo['name'] for repo in featured}
+        non_featured_repos = [repo for repo in enhanced_repos if repo.get('name') not in featured_repo_names]
+        
+        by_language = self.group_by_language(non_featured_repos)
         
         # Create final data structure
         final_data = {
             'lastUpdated': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
             'user': user_data,
-            'repositories': enhanced_repos,
+            'repositories': non_featured_repos,
             'stats': stats,
             'featured': featured,
             'byLanguage': by_language
@@ -234,7 +241,7 @@ class GitHubDataFetcher:
         self.save_data(final_data)
         
         print("✅ GitHub data fetched successfully!")
-        print("📄 Generated: public/github-projects.json")
+        print("📄 Generated: src/data/github-projects.json")
         
         # Display stats
         self.display_stats(stats)

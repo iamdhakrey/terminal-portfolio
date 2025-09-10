@@ -134,7 +134,7 @@ public/images/
 ### Using Images in Markdown
 
 ```markdown
-![Alt text](/public/images/sample-image.svg)
+![Alt text](/images/sample-image.svg)
 ```
 
 This will automatically resolve to the correct path: `/images/blog-linking-guide/sample-image.svg`
@@ -143,7 +143,7 @@ This will automatically resolve to the correct path: `/images/blog-linking-guide
 
 Here's a sample image included in this blog post:
 
-![Sample Blog Image](/public/images/sample-image.svg)
+![Sample Blog Image](/images/sample-image.svg)
 
 ### Using HTML for More Control
 

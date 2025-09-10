@@ -1,0 +1,101 @@
+---
+import { GitHubRepo } from "../types";
+import { getLanguageColor } from "../utils/theme";
+
+const { featuredRepo } = Astro.props;
+---
+
+<div class="mb-8">
+    <h2 class="text-lg font-semibold text-green-400 mb-4">
+        <span class="text-gray-600">## </span>"Featured Projects"
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {
+            featuredRepo.map((repo: GitHubRepo, index: number) => (
+                <div
+                    id={`project-${index}`}
+                    class="bg-gray-800 border border-gray-600 rounded-lg p-4 hover:bg-gray-750 transition-colors"
+                >
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-blue-400 font-semibold text-lg hover:text-blue-300">
+                            <a
+                                href={repo.html_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="hover:underline"
+                            >
+                                {repo.name}
+                            </a>
+                        </h3>
+                        <div class="flex items-center space-x-2 text-sm">
+                            {repo.stargazers_count > 0 && (
+                                <span class="text-yellow-400">
+                                    ⭐ {repo.stargazers_count}
+                                </span>
+                            )}
+                            {repo.forks_count > 0 && (
+                                <span class="text-purple-400">
+                                    🍴 {repo.forks_count}
+                                </span>
+                            )}
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-sm mb-5 line-clamp-5">
+                        {repo.description || "No description available"}
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            {repo.primaryLanguages &&
+                            repo.primaryLanguages.length > 0 ? (
+                                <div class="flex items-center space-x-2">
+                                    {repo.primaryLanguages.map(
+                                        (lang, langIndex) => (
+                                            <div
+                                                id={`lang-${langIndex}`}
+                                                class="flex items-center space-x-1"
+                                            >
+                                                <div
+                                                    class="w-3 h-3 rounded-full"
+                                                    style={{
+                                                        backgroundColor:
+                                                            getLanguageColor(
+                                                                lang,
+                                                            ),
+                                                    }}
+                                                />
+                                                <span class="text-gray-400 text-sm">
+                                                    {lang}
+                                                </span>
+                                            </div>
+                                        ),
+                                    )}
+                                </div>
+                            ) : (
+                                repo.primaryLanguages && (
+                                    <div class="flex items-center space-x-1">
+                                        <div
+                                            class="w-3 h-3 rounded-full"
+                                            style={{
+                                                backgroundColor:
+                                                    getLanguageColor(
+                                                        repo
+                                                            .primaryLanguages[0],
+                                                    ),
+                                            }}
+                                        />
+                                        <span class="text-gray-400 text-sm">
+                                            {repo.primaryLanguages[0]}
+                                        </span>
+                                    </div>
+                                )
+                            )}
+                        </div>
+                        <span class="text-gray-500 text-xs">
+                            {repo.updated_at}
+                        </span>
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+</div>

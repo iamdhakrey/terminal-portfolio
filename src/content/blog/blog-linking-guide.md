@@ -5,7 +5,7 @@ description: "Learn how to create powerful connections between your blog posts u
 author: "Portfolio Author"
 category: "Documentation"
 tags: ["Blogging", "Documentation", "Content Management"]
-heroImage: "../../assets/sample-image.svg"
+heroImage: "/public/images/sample-image.svg"
 next: "blog-linking-guide"
 prev: "react-typescript-guide"
 ---
@@ -134,7 +134,7 @@ public/images/
 ### Using Images in Markdown
 
 ```markdown
-![Alt text](../../assets/sample-image.svg)
+![Alt text](/public/images/sample-image.svg)
 ```
 
 This will automatically resolve to the correct path: `/images/blog-linking-guide/sample-image.svg`
@@ -143,7 +143,7 @@ This will automatically resolve to the correct path: `/images/blog-linking-guide
 
 Here's a sample image included in this blog post:
 
-![Sample Blog Image](../../assets/sample-image.svg)
+![Sample Blog Image](/public/images/sample-image.svg)
 
 ### Using HTML for More Control
 

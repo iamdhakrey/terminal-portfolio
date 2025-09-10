@@ -108,6 +108,7 @@ const formatText = (text: string) => {
             // Images - PROCESS BEFORE LINKS to avoid conflict
             .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, src) => {
                 let imageSrc = src;
+                console.log(src, "image src in blog content");
 
                 // Handle different image path patterns
                 if (src.startsWith("../../assets/")) {
@@ -242,6 +243,7 @@ const sections = parseContent(cleanedContent);
                         />
                     );
                 } else {
+                    console.log(section.content, "blog content section");
                     return <div set:html={formatText(section.content)} />;
                 }
             })

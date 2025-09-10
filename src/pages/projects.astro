@@ -1,0 +1,235 @@
+---
+import { getLanguageColor } from "../utils/theme";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import githubData from "../data/github-projects.json" assert { type: "json" };
+import FeatureRepo from "../components/FeatureRepo.astro";
+import ProjectsUpdateDate from "../components/ProjectsUpdateDate.astro";
+import AllRepo from "../components/AllRepo.astro";
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    </head>
+    <body>
+        <div
+            class="min-h-screen flex flex-col"
+            style={{
+                backgroundColor: "var(--theme-background)",
+                color: "var(--theme-text)",
+            }}
+        >
+            <Header />
+            <div
+                class="min-h-screen font-mono pb-16"
+                style={{
+                    backgroundColor: "var(--theme-background)",
+                    color: "var(--theme-text)",
+                }}
+            >
+                <div class="max-w-6xl mx-auto py-4 sm:py-8 px-2 sm:px-4">
+                    {/* Terminal navigation */}
+                    <div class="mb-4 sm:mb-6">
+                        <div
+                            class="bg-gray-900 border border-gray-700 rounded-lg p-3 sm:p-4"
+                        >
+                            <div
+                                class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2"
+                            >
+                                <div
+                                    class="flex items-center space-x-1 text-xs sm:text-sm"
+                                >
+                                    <span class="text-blue-400 hidden sm:inline"
+                                        >user@localhost</span
+                                    >
+                                    <span class="text-white hidden sm:inline"
+                                        >:</span
+                                    >
+                                    <span class="text-blue-600 hidden sm:inline"
+                                        >~/projects</span
+                                    >
+                                    <span class="text-white">$ </span>
+                                    <a
+                                        href="/"
+                                        class="text-green-400 hover:text-green-300 underline"
+                                    >
+                                        cd ~
+                                    </a>
+                                </div>
+                                <span class="text-gray-500 text-xs sm:text-sm"
+                                    ># Back to home</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Terminal window */}
+                    <div
+                        class="bg-gray-900 border border-gray-700 rounded-t-lg"
+                    >
+                        <div
+                            class="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border-b border-gray-700 space-y-2 sm:space-y-0"
+                        >
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 bg-red-500 rounded-full">
+                                </div>
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full">
+                                </div>
+                                <div class="w-3 h-3 bg-green-500 rounded-full">
+                                </div>
+                                <span
+                                    class="text-gray-400 text-xs sm:text-sm ml-4"
+                                    >~/projects/github-repos</span
+                                >
+                            </div>
+                            <div class="text-gray-500 text-xs">
+                                gh repo list --limit 100
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-black border-x border-b border-gray-700 rounded-b-lg p-4 sm:p-8"
+                    >
+                        {/* Header */}
+                        <div class="mb-6 border-b border-gray-800 pb-4">
+                            <div class="text-gray-500 text-sm mb-2">
+                                <span class="text-blue-400">$ </span>
+                                <span
+                                    >gh repo list @{githubData.user.login} --json
+                                    name,description,language,stars</span
+                                >
+                            </div>
+                            <div class="text-gray-500 text-sm mb-2">
+                                <span class="text-blue-400">$ </span>
+                                <span
+                                    >gh api user/repos | jq '.[] | .language' |
+                                    sort | uniq</span
+                                >
+                                <span class="text-gray-600 ml-2"
+                                    ># Show all languages</span
+                                >
+                            </div>
+                            <h1
+                                class="text-2xl sm:text-3xl font-bold mb-4 text-green-400"
+                            >
+                                <span class="text-gray-600"># </span>GitHub
+                                Projects
+                            </h1>
+                            <div
+                                class="flex flex-wrap items-center gap-4 text-sm"
+                            >
+                                <span class="text-blue-400"
+                                    >👤 @{githubData.user.login}</span
+                                >
+                                <span class="text-yellow-400"
+                                    >📁 {githubData.stats.totalRepos} repos</span
+                                >
+                                <span class="text-purple-400"
+                                    >⭐ {githubData.stats.totalStars} stars</span
+                                >
+                                <span class="text-green-400"
+                                    >🍴 {githubData.stats.totalForks} forks</span
+                                >
+                            </div>
+                        </div>
+
+                        {/* GitHub Stats */}
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+                            <div
+                                class="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center"
+                            >
+                                <div class="text-blue-400 text-2xl font-bold">
+                                    {githubData.stats.totalRepos}
+                                </div>
+                                <div class="text-gray-400 text-sm">Repos</div>
+                            </div>
+                            <div
+                                class="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center"
+                            >
+                                <div class="text-yellow-400 text-2xl font-bold">
+                                    {githubData.stats.totalStars}
+                                </div>
+                                <div class="text-gray-400 text-sm">
+                                    Total Stars
+                                </div>
+                            </div>
+                            <div
+                                class="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center"
+                            >
+                                <div class="text-purple-400 text-2xl font-bold">
+                                    {githubData.stats.totalForks}
+                                </div>
+                                <div class="text-gray-400 text-sm">
+                                    Total Forks
+                                </div>
+                            </div>
+                            <div
+                                class="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center"
+                            >
+                                <div class="text-green-400 text-2xl font-bold">
+                                    {githubData.stats.languages.length}
+                                </div>
+                                <div class="text-gray-400 text-sm">
+                                    Languages
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* All Languages Section */}
+                        <div class="mb-6">
+                            <h2
+                                class="text-lg font-semibold text-green-400 mb-3"
+                            >
+                                <span class="text-gray-600">## </span>All
+                                Languages Used
+                            </h2>
+                            <div
+                                class="bg-gray-800 border border-gray-600 rounded-lg p-4"
+                            >
+                                <div class="flex flex-wrap gap-2">
+                                    {
+                                        githubData.stats.allLanguages.map(
+                                            (language) => (
+                                                <div
+                                                    id={language}
+                                                    class="flex items-center space-x-2 bg-gray-700 px-3 py-2 rounded-lg"
+                                                >
+                                                    <div
+                                                        class="w-3 h-3 rounded-full"
+                                                        style={{
+                                                            backgroundColor:
+                                                                getLanguageColor(
+                                                                    language,
+                                                                ),
+                                                        }}
+                                                    />
+                                                    <span class="text-gray-300 text-sm">
+                                                        {language}
+                                                    </span>
+                                                </div>
+                                            ),
+                                        )
+                                    }
+                                </div>
+                                <div class="mt-3 text-gray-400 text-xs">
+                                    Total: {
+                                        githubData.stats.allLanguages.length
+                                    } languages across all repositories
+                                </div>
+                            </div>
+                        </div>
+                        <FeatureRepo featuredRepo={githubData.featured} />
+                        <AllRepo allRepo={githubData.repositories} />
+                    </div>
+                    <ProjectsUpdateDate lastUpdated={githubData.lastUpdated} />
+                </div>
+                <Footer />
+            </div>
+        </div>
+    </body>
+</html>

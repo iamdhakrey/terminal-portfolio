@@ -1,0 +1,16 @@
+---
+const { lastUpdated } = Astro.props;
+---
+
+{/* Update Info */}
+<div class="text-center text-gray-500 text-xs border-t border-gray-800 pt-4">
+    <p>
+        Last updated: {new Date(lastUpdated).toLocaleString()}
+    </p>
+    <p class="mt-1">
+        Data fetched using GitHub CLI • Run <code
+            class="bg-gray-800 px-1 rounded"
+            >./scripts/fetch-github-data.sh</code
+        > to update
+    </p>
+</div>

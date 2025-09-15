@@ -1,6 +1,6 @@
 {
-  "name": "iamdhakre-dev-react",
-  "homepage": "https://iamdhakrey.github.io/iamdhakre-dev-react",
+  "name": "terminal-portfolio",
+  "homepage": "https://terminal-portfolio.iamdhakrey.dev",
   "private": true,
   "version": "1.6.1",
   "type": "module",
@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "update-github": "bash scripts/fetch-github-data.sh"
+    "update-github": "python3 scripts/fetch-github-data.py"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.4",

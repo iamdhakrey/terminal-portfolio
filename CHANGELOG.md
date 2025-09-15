@@ -47,6 +47,64 @@ All notable changes to this project will be documented in this file.
 
 ### 📝 Other Changes
 - chore: release v2.0.0
+- chore: release v2.0.0
+- chore: update githubdata
+- Merge pull request #12 from iamdhakrey/astro
+- docs: update README to reflect active development status and encourage contributions
+- Add GitHub projects data for user iamdhakrey including repositories, stats, and featured projects
+- Implement code changes to enhance functionality and improve performance
+- style: update font-family variables for consistency across themes
+- style: format profile.config.ts for consistency and readability
+- style: format tsconfig.json for improved readability
+- chore: update .gitignore to include additional files and directories
+- refactor: remove unused utility files and components
+
+
+## [2.0.0] - 2025-09-15
+
+### ✨ Features
+- feat: add SVG images for blog content and update references
+- feat: add GitHub data types for repositories and user statistics
+- feat: create AllRepo component to display all GitHub projects and repositories with details
+- feat: add FeatureRepo component to display featured GitHub projects with details
+- feat: add ProjectsUpdateDate component to display last updated information
+- feat: create projects page to display GitHub project statistics and details
+- feat: implement fetchGitHubData function to retrieve GitHub project data
+- feat: add getLanguageColor function to return color codes for programming languages
+- feat: enhance GitHub data fetching by excluding forked repositories and updating output path
+- feat: implement GitHub data fetching and processing script
+- feat: add RSS feed generation for blog posts
+- feat: add dynamic blog post routing with getStaticPaths function
+- feat: add CommandOutput and BlogPost components for command output display and blog layout
+- feat: update package.json for Astro integration and remove unused dependencies
+- feat: add CommandOutputType interface for command output handling
+- feat: add BlogContent component for rendering blog posts with markdown support
+- feat: add BlogHeader component for blog post display
+- feat: add Footer component for layout and status display
+- feat: add FormattedDate component for date formatting
+- feat: implement Header component with terminal-style navigation and theme toggle
+- feat: add HeaderLink component for navigation with active state styling
+- feat: add blog collection configuration for Markdown and MDX files
+- feat: add BaseHead component for global metadata and font preloading
+- feat: add blog index page with dynamic post rendering
+- feat: create interactive terminal interface with command support
+- feat: add global constants for site configuration
+- feat: implement markdown rendering utility with syntax highlighting
+- feat: add favicon SVG for improved branding
+- feat: add blog linking guide and related images
+- feat: add initial Astro configuration file
+
+### 🐛 Bug Fixes
+- fix: update project name and homepage in package.json
+- fix: update package-lock.json to include markdown-it and its dependencies
+- fix: update README for project name and improve clarity
+- fix: remove console.log statement from AllRepo component
+- fix: comment out profile link in profile configuration
+- fix: update image paths in blog linking guide for correct resolution
+- fix: update muted theme color for better visibility
+
+### 📝 Other Changes
+- chore: release v2.0.0
 - chore: update githubdata
 - Merge pull request #12 from iamdhakrey/astro
 - docs: update README to reflect active development status and encourage contributions

@@ -19,6 +19,17 @@ A modern, terminal-style portfolio website built with Astro that's fully configu
 - **💾 Smart Caching** - GitHub data served from static files for optimal performance
 - **🏗️ Component-Based** - Modular Astro components for easy customization
 
+## 🚧 Development Status
+
+> **Note**: This Astro version is currently under active development. The **terminal command interface** and **blog features** are still being migrated from React to Astro.
+> 
+> **For full functionality**, please use the [React branch](https://github.com/iamdhakrey/terminal-portfolio/tree/react) which has complete implementations of:
+> - Interactive terminal commands
+> - Full blog system with markdown processing
+> - All interactive features
+>
+> **Contributions Welcome!** 🎉 Pull requests are highly encouraged to help complete the Astro migration. Check out our [issues](https://github.com/iamdhakrey/terminal-portfolio/issues) or submit PRs to help bring these features to the Astro version.
+
 ## 🚀 Quick Start
 
 ### Prerequisites

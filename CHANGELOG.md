@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.1] - 2025-12-02
+
+### ✨ Features
+- feat: add blog index number of blogs list page
+
+
 ## [2.2.0] - 2025-12-02
 
 ### 📝 Other Changes

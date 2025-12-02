@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.0] - 2025-12-02
+
+### 📝 Other Changes
+- chore: release v2.1.0
+
+
 ## [2.1.0] - 2025-12-02
 
 

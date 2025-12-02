@@ -8,167 +8,170 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 import FormattedDate from "../../components/FormattedDate.astro";
 
 const posts = (await getCollection("blog")).sort(
-	(a: { data: { pubDate: number } }, b: { data: { pubDate: number } }) =>
-		b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+    (a: { data: { pubDate: number } }, b: { data: { pubDate: number } }) =>
+        b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
 <!doctype html>
 <html lang="en" data-theme="dark">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<div
-			class="min-h-screen font-mono pb-16"
-			style={{
-				backgroundColor: "var(--theme-background)",
-				color: "var(--theme-text)",
-			}}
-		>
-			<div class="space-y-4">
-				<div
-					class="max-w-screen-xl mx-auto px-4 py-8 grid gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1"
-				>
-					{
-						posts &&
-							posts.map((blog: any) => (
-								<div class="bg-gray-900 border border-gray-700 rounded-lg hover:border-green-500 transition-all duration-300 group ">
-									<a
-										class="block p-4 sm:p-6 hover:bg-gray-800 transition-colors"
-										href={`/blogs/${blog.id}`}
-									>
-										<div class="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4">
-											{/* File permissions and info */}
-											<div class="text-xs text-gray-500 font-mono mt-3 min-w-fit flex sm:flex-col space-x-4 sm:space-x-0">
-												<div>-rw-r--r--</div>
-												{/* <div class="text-blue-400">
-                                        {String(index + 1).padStart(3, "0")}
-                                    </div> */}
-											</div>
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    </head>
+    <body>
+        <Header />
+        <div
+            class="min-h-screen font-mono pb-16"
+            style={{
+                backgroundColor: "var(--theme-background)",
+                color: "var(--theme-text)",
+            }}
+        >
+            <div class="space-y-4">
+                <div
+                    class="max-w-screen-xl mx-auto px-4 py-8 grid gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1"
+                >
+                    {
+                        posts &&
+                            posts.map((blog: any, index: number) => (
+                                <div class="bg-gray-900 border border-gray-700 rounded-lg hover:border-green-500 transition-all duration-300 group ">
+                                    <a
+                                        class="block p-4 sm:p-6 hover:bg-gray-800 transition-colors"
+                                        href={`/blogs/${blog.id}`}
+                                    >
+                                        <div class="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4">
+                                            {/* File permissions and info */}
+                                            <div class="text-xs text-gray-500 font-mono mt-3 min-w-fit flex sm:flex-col space-x-4 sm:space-x-0">
+                                                <div>-rw-r--r--</div>
+                                                <div class="text-blue-400">
+                                                    {String(index + 1).padStart(
+                                                        3,
+                                                        "0",
+                                                    )}
+                                                </div>
+                                            </div>
 
-											{/* File content */}
-											<div class="flex-1">
-												<div class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 mb-2">
-													<div class="flex items-center space-x-2">
-														<span class="text-green-400">
-															📄
-														</span>
-														<h2 class="text-lg sm:text-xl font-semibold text-white group-hover:text-green-400 transition-colors">
-															{blog.data.title}
-														</h2>
-													</div>
-													<span class="text-gray-500 text-sm">
-														.md
-													</span>
-												</div>
+                                            {/* File content */}
+                                            <div class="flex-1">
+                                                <div class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 mb-2">
+                                                    <div class="flex items-center space-x-2">
+                                                        <span class="text-green-400">
+                                                            📄
+                                                        </span>
+                                                        <h2 class="text-lg sm:text-xl font-semibold text-white group-hover:text-green-400 transition-colors">
+                                                            {blog.data.title}
+                                                        </h2>
+                                                    </div>
+                                                    <span class="text-gray-500 text-sm">
+                                                        .md
+                                                    </span>
+                                                </div>
 
-												<div class="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-4 text-xs sm:text-sm">
-													<span class="text-blue-400">
-														📅{" "}
-														<FormattedDate
-															date={
-																blog.data
-																	.pubDate
-															}
-														/>
-													</span>
-													{blog.data.author && (
-														<span class="text-yellow-400">
-															👤{" "}
-															{blog.data.author}
-														</span>
-													)}
-													<span class="text-gray-500">
-														size:{" "}
-														{Math.floor(
-															Math.random() * 50 +
-																10,
-														)}
-														K
-													</span>
-													<span class="text-pink-400 flex items-center space-x-1">
-														{/* <span>
+                                                <div class="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-4 text-xs sm:text-sm">
+                                                    <span class="text-blue-400">
+                                                        📅{" "}
+                                                        <FormattedDate
+                                                            date={
+                                                                blog.data
+                                                                    .pubDate
+                                                            }
+                                                        />
+                                                    </span>
+                                                    {blog.data.author && (
+                                                        <span class="text-yellow-400">
+                                                            👤{" "}
+                                                            {blog.data.author}
+                                                        </span>
+                                                    )}
+                                                    <span class="text-gray-500">
+                                                        size:{" "}
+                                                        {Math.floor(
+                                                            Math.random() * 50 +
+                                                                10,
+                                                        )}
+                                                        K
+                                                    </span>
+                                                    <span class="text-pink-400 flex items-center space-x-1">
+                                                        {/* <span>
                                                 {blog.userLiked ? "❤️" : "🤍"}
                                             </span> */}
-														<span>
-															{blog.views} views
-															{/* {blog.views !== 1 ? "s" : ""} */}
-														</span>
-													</span>
-												</div>
+                                                        <span>
+                                                            {blog.views} views
+                                                            {/* {blog.views !== 1 ? "s" : ""} */}
+                                                        </span>
+                                                    </span>
+                                                </div>
 
-												{blog.data.description && (
-													<p class="text-gray-400 mt-2 text-sm">
-														<span class="text-gray-600">
-															#{" "}
-														</span>
-														{blog.data.description}
-													</p>
-												)}
+                                                {blog.data.description && (
+                                                    <p class="text-gray-400 mt-2 text-sm">
+                                                        <span class="text-gray-600">
+                                                            #{" "}
+                                                        </span>
+                                                        {blog.data.description}
+                                                    </p>
+                                                )}
 
-												{/* Command preview */}
-												<div class="mt-3 text-xs text-gray-600">
-													<span class="text-blue-400">
-														${" "}
-													</span>
-													<span>
-														cat {blog.data.title}
-													</span>
-													<span class="text-green-400 ml-2">
-														→ click to read
-													</span>
-												</div>
-											</div>
+                                                {/* Command preview */}
+                                                <div class="mt-3 text-xs text-gray-600">
+                                                    <span class="text-blue-400">
+                                                        ${" "}
+                                                    </span>
+                                                    <span>
+                                                        cat {blog.data.title}
+                                                    </span>
+                                                    <span class="text-green-400 ml-2">
+                                                        → click to read
+                                                    </span>
+                                                </div>
+                                            </div>
 
-											{/* Blog Image on the right */}
-											{blog.data.heroImage && (
-												<div class="w-full sm:w-32 md:w-48 lg:w-56 sm:flex-shrink-0">
-													<div class="relative">
-														<Image
-															width={720}
-															height={360}
-															src={
-																blog.data
-																	.heroImage
-															}
-															alt=""
-														/>
+                                            {/* Blog Image on the right */}
+                                            {blog.data.heroImage && (
+                                                <div class="w-full sm:w-32 md:w-48 lg:w-56 sm:flex-shrink-0">
+                                                    <div class="relative">
+                                                        <Image
+                                                            width={720}
+                                                            height={360}
+                                                            src={
+                                                                blog.data
+                                                                    .heroImage
+                                                            }
+                                                            alt=""
+                                                        />
 
-														<div
-															class="absolute top-1 right-1 px-1 py-0.5 rounded text-xs"
-															style={{
-																backgroundColor:
-																	"rgba(0, 0, 0, 0.7)",
-																color: "white",
-															}}
-														>
-															🖼️
-														</div>
-													</div>
-												</div>
-											)}
+                                                        <div
+                                                            class="absolute top-1 right-1 px-1 py-0.5 rounded text-xs"
+                                                            style={{
+                                                                backgroundColor:
+                                                                    "rgba(0, 0, 0, 0.7)",
+                                                                color: "white",
+                                                            }}
+                                                        >
+                                                            🖼️
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
 
-											{/* Terminal arrow */}
-											<div class="text-green-400 opacity-0 group-hover:opacity-100 transition-opacity self-end sm:self-start">
-												→
-											</div>
-										</div>
-									</a>
-								</div>
-							))
-					}
+                                            {/* Terminal arrow */}
+                                            <div class="text-green-400 opacity-0 group-hover:opacity-100 transition-opacity self-end sm:self-start">
+                                                →
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            ))
+                    }
 
-					<!-- <Pagination
+                    <!-- <Pagination
 							currentpage={currentpage}
 							pages={pages}
 							total={blogPosts.total}
 							perPage={blogPosts.limit}
 						/> -->
-				</div>
-			</div>
-		</div>
-		<Footer />
-	</body>
+                </div>
+            </div>
+        </div>
+        <Footer />
+    </body>
 </html>

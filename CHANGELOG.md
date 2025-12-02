@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0] - 2025-12-02
+
+### ✨ Features
+- feat: add blogs index number
+
+### 📝 Other Changes
+- Merge branch 'main' of github.com:iamdhakrey/Github-Profile into astro
+- chore: release v1.7.0
+
+
 ## [2.0.0] - 2025-09-15
 
 ### ✨ Features

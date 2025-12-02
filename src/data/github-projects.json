@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-09-09T10:53:34.600307Z",
+  "lastUpdated": "2025-09-15T13:49:34.979358Z",
   "user": {
     "login": "iamdhakrey",
     "id": 35266081,
@@ -31,7 +31,7 @@
     "notification_email": null,
     "public_repos": 24,
     "public_gists": 0,
-    "followers": 21,
+    "followers": 23,
     "following": 3,
     "created_at": "2018-01-09T15:06:24Z",
     "updated_at": "2025-09-09T02:08:19Z"
@@ -49,13 +49,79 @@
       "licenseInfo": null,
       "name": "iamdhakrey",
       "primaryLanguage": null,
-      "pushedAt": "2025-09-09T07:52:01Z",
+      "pushedAt": "2025-09-15T01:51:04Z",
       "repositoryTopics": null,
       "stargazerCount": 0,
-      "updatedAt": "2025-09-09T07:52:05Z",
+      "updatedAt": "2025-09-14T09:44:12Z",
       "url": "https://github.com/iamdhakrey/iamdhakrey",
       "primaryLanguages": [],
       "languageStats": {}
+    },
+    {
+      "createdAt": "2023-12-18T12:11:57Z",
+      "description": "",
+      "forkCount": 0,
+      "homepageUrl": "https://iamdhakrey.dev",
+      "isArchived": false,
+      "isFork": false,
+      "isPrivate": true,
+      "languages": [
+        {
+          "size": 42107,
+          "node": {
+            "name": "JavaScript"
+          }
+        },
+        {
+          "size": 2723,
+          "node": {
+            "name": "HTML"
+          }
+        },
+        {
+          "size": 1676,
+          "node": {
+            "name": "CSS"
+          }
+        },
+        {
+          "size": 431026,
+          "node": {
+            "name": "TypeScript"
+          }
+        },
+        {
+          "size": 4104,
+          "node": {
+            "name": "Shell"
+          }
+        }
+      ],
+      "licenseInfo": {
+        "key": "mit",
+        "name": "MIT License",
+        "nickname": ""
+      },
+      "name": "iamdhakrey-react-dev",
+      "primaryLanguage": {
+        "name": "TypeScript"
+      },
+      "pushedAt": "2025-09-10T03:36:04Z",
+      "repositoryTopics": null,
+      "stargazerCount": 0,
+      "updatedAt": "2025-09-10T03:36:08Z",
+      "url": "https://github.com/iamdhakrey/iamdhakrey-react-dev",
+      "primaryLanguages": [
+        "TypeScript",
+        "JavaScript"
+      ],
+      "languageStats": {
+        "JavaScript": 42107,
+        "HTML": 2723,
+        "CSS": 1676,
+        "TypeScript": 431026,
+        "Shell": 4104
+      }
     },
     {
       "createdAt": "2025-09-01T12:29:14Z",
@@ -158,72 +224,6 @@
         "Dockerfile": 911,
         "Makefile": 1332,
         "Go": 53791
-      }
-    },
-    {
-      "createdAt": "2023-12-18T12:11:57Z",
-      "description": "",
-      "forkCount": 0,
-      "homepageUrl": "https://iamdhakrey.dev",
-      "isArchived": false,
-      "isFork": false,
-      "isPrivate": true,
-      "languages": [
-        {
-          "size": 42107,
-          "node": {
-            "name": "JavaScript"
-          }
-        },
-        {
-          "size": 2723,
-          "node": {
-            "name": "HTML"
-          }
-        },
-        {
-          "size": 1676,
-          "node": {
-            "name": "CSS"
-          }
-        },
-        {
-          "size": 431026,
-          "node": {
-            "name": "TypeScript"
-          }
-        },
-        {
-          "size": 4104,
-          "node": {
-            "name": "Shell"
-          }
-        }
-      ],
-      "licenseInfo": {
-        "key": "mit",
-        "name": "MIT License",
-        "nickname": ""
-      },
-      "name": "iamdhakrey-react-dev",
-      "primaryLanguage": {
-        "name": "TypeScript"
-      },
-      "pushedAt": "2025-08-28T12:11:09Z",
-      "repositoryTopics": null,
-      "stargazerCount": 0,
-      "updatedAt": "2025-08-28T12:11:12Z",
-      "url": "https://github.com/iamdhakrey/iamdhakrey-react-dev",
-      "primaryLanguages": [
-        "TypeScript",
-        "JavaScript"
-      ],
-      "languageStats": {
-        "JavaScript": 42107,
-        "HTML": 2723,
-        "CSS": 1676,
-        "TypeScript": 431026,
-        "Shell": 4104
       }
     },
     {
@@ -932,16 +932,16 @@
   ],
   "stats": {
     "totalRepos": 10,
-    "totalStars": 50,
+    "totalStars": 52,
     "totalForks": 13,
     "languages": [
-      "CSS",
-      "C",
       "Go",
-      "Python",
-      "Rust",
       "TypeScript",
-      "Astro"
+      "CSS",
+      "Rust",
+      "C",
+      "Astro",
+      "Python"
     ],
     "allLanguages": [
       "Assembly",
@@ -964,16 +964,16 @@
       "description": "A modern, terminal-style portfolio website that's fully configurable through a single configuration file. Perfect for developers who want to showcase their skills and projects in a unique way.",
       "html_url": "https://github.com/iamdhakrey/terminal-portfolio",
       "homepage": "https://terminal-portfolio.iamdhakrey.dev",
-      "language": "TypeScript",
+      "language": "Astro",
       "primaryLanguages": [
-        "TypeScript",
-        "JavaScript"
+        "Astro",
+        "TypeScript"
       ],
-      "stargazers_count": 44,
+      "stargazers_count": 46,
       "forks_count": 12,
       "created_at": "2025-07-10T03:59:40Z",
-      "updated_at": "2025-09-07T18:55:10Z",
-      "pushed_at": "2025-09-06T09:01:40Z",
+      "updated_at": "2025-09-15T13:41:10Z",
+      "pushed_at": "2025-09-15T13:41:05Z",
       "topics": [
         {
           "name": "backend-developer"
@@ -1103,8 +1103,8 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "created_at": "2024-11-21T16:08:12Z",
-      "updated_at": "2025-09-08T16:39:56Z",
-      "pushed_at": "2025-09-08T16:39:59Z",
+      "updated_at": "2025-09-15T04:57:20Z",
+      "pushed_at": "2025-09-15T04:57:22Z",
       "topics": [
         {
           "name": "discord"

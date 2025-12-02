@@ -383,7 +383,7 @@ export const profileConfig: ProfileConfig = {
     links: [
       { name: "blogs", path: "/blogs", color: "var(--theme-primary)" },
       { name: "projects", path: "/projects", color: "var(--theme-secondary)" },
-      { name: "profile", path: "/profile", color: "var(--theme-accent)" },
+      // { name: "profile", path: "/profile", color: "var(--theme-accent)" },
       { name: "tg", path: "https://t.me/iamdhakrey", external: true, color: "var(--theme-muted)" },
       { name: "gh", path: "https://github.com/iamdhakrey/", external: true, color: "var(--theme-muted)" }
     ],

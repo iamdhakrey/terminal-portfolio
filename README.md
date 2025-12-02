@@ -1,8 +1,8 @@
-# Github Profile Portfolio
+# Terminal Portfolio
 
-[![Production Ready](https://img.shields.io/badge/Production-Ready-green.svg)](https://github.com/yourusername/github-profile) [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Production Ready](https://img.shields.io/badge/Production-Ready-green.svg)](https://github.com/iamdhakrey/terminal-portfolio) [![Astro](https://img.shields.io/badge/Astro-FF5A03?logo=astro&logoColor=white)](https://astro.build/) [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A modern, terminal-style portfolio website that's fully configurable through a single configuration file. Perfect for developers who want to showcase their skills and projects in a unique way.
+A modern, terminal-style portfolio website built with Astro that's fully configurable through a single configuration file. Perfect for developers who want to showcase their skills and projects in a unique way with blazing-fast performance.
 
 [![Demo](docs/demo.gif)](docs/demo.gif)
 
@@ -13,17 +13,29 @@ A modern, terminal-style portfolio website that's fully configurable through a s
 - **⚙️ Easy Configuration** - Everything configurable through `profile.config.ts`
 - **🔄 GitHub Integration** - Displays your GitHub stats and projects from static data
 - **🎨 Customizable Themes** - Dark, light, matrix, and cyberpunk themes
-- **📝 Blog Support** - Built-in blog functionality with markdown support
-- **🔍 SEO Optimized** - Perfect for social media sharing
-- **🚀 Fast & Modern** - Built with React, TypeScript, and Vite
+- **📝 Blog Support** - Built-in blog functionality with MDX support
+- **🔍 SEO Optimized** - Perfect for social media sharing with automatic sitemap generation
+- **🚀 Lightning Fast** - Built with Astro for optimal performance and SEO
 - **💾 Smart Caching** - GitHub data served from static files for optimal performance
+- **🏗️ Component-Based** - Modular Astro components for easy customization
+
+## 🚧 Development Status
+
+> **Note**: This Astro version is currently under active development. The **terminal command interface** and **blog features** are still being migrated from React to Astro.
+> 
+> **For full functionality**, please use the [React branch](https://github.com/iamdhakrey/terminal-portfolio/tree/react) which has complete implementations of:
+> - Interactive terminal commands
+> - Full blog system with markdown processing
+> - All interactive features
+>
+> **Contributions Welcome!** 🎉 Pull requests are highly encouraged to help complete the Astro migration. Check out our [issues](https://github.com/iamdhakrey/terminal-portfolio/issues) or submit PRs to help bring these features to the Astro version.
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
 - Node.js 18+
-- npm or yarn
+- npm, yarn, pnpm, or bun
 
 ### Installation
 
@@ -31,13 +43,19 @@ A modern, terminal-style portfolio website that's fully configurable through a s
 
    ```bash
    git clone https://github.com/iamdhakrey/terminal-portfolio.git
-   cd github-profile
+   cd terminal-portfolio
    ```
 
 2. **Install dependencies**
 
    ```bash
    npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   # or
+   bun install
    ```
 
 3. **Configure your profile**
@@ -90,11 +108,15 @@ A modern, terminal-style portfolio website that's fully configurable through a s
    npm run dev
    ```
 
+   Your site will be available at `http://localhost:4321`
+
 6. **Build for production**
 
    ```bash
    npm run build
    ```
+
+   The built site will be in the `dist/` directory.
 
 ## 📋 Configuration Guide
 
@@ -272,7 +294,7 @@ For automatic updates, you can set up a GitHub Action to run the update script a
 
 ## 📝 Blog Setup
 
-Add markdown files to `/public/blogs/` and configure them in `profile.config.ts`:
+Astro uses content collections for managing blog posts. Add markdown or MDX files to `/src/content/blog/` and configure them in `profile.config.ts`.
 
 ### Blog Configuration
 
@@ -354,48 +376,63 @@ const allLinks = await getAllBlogLinks();
 
 ### Adding New Blog Posts
 
-1. Create a `.md` file in `/public/blogs/`
+1. Create a `.md` or `.mdx` file in `/src/content/blog/`
 2. Add frontmatter to your markdown file:
 
    ```markdown
    ---
    title: "Your Blog Post Title"
-   date: "2025-07-10"
+   pubDate: "2025-07-10"
    description: "Brief description of your post"
    author: "Your Name"
+   tags: ["astro", "tutorial", "web-dev"]
    ---
 
    # Your Content Here
+
+   You can use MDX components and regular markdown syntax.
    ```
 
-3. Add the filename to `availableBlogs` in `profile.config.ts`
-4. Optionally add to `featuredPosts` for prominence
+3. The blog will be automatically discovered by Astro's content collections
+4. Update `featuredPosts` in `profile.config.ts` for prominence
 
 ### Blog Features
 
-- **Automatic Discovery**: Blogs are loaded from configuration
+- **Content Collections**: Astro's type-safe content management
+- **MDX Support**: Full MDX with component support and syntax highlighting
 - **Featured Posts**: Highlight important posts
-- **Markdown Support**: Full markdown with syntax highlighting
+- **Automatic Discovery**: Blogs are automatically loaded from content collections
 - **Responsive Design**: Mobile-friendly blog layout
+- **RSS Feed**: Automatically generated RSS feed for your blog
 - **Table of Contents**: Auto-generated for longer posts
 
-## � Deployment
+## 🚀 Deployment
 
 ### Vercel (Recommended)
 
 1. Push to GitHub
 2. Connect to Vercel
-3. Deploy automatically
+3. Deploy automatically with Astro preset
 
 ### Netlify
 
 1. Build the project: `npm run build`
 2. Deploy the `dist` folder to Netlify
+3. Or use Netlify's Git integration with automatic builds
 
 ### GitHub Pages
 
-1. Build the project: `npm run build`
-2. Deploy the `dist` folder to GitHub Pages
+1. Add the GitHub Pages adapter to `astro.config.mjs`:
+   ```javascript
+   import { defineConfig } from 'astro/config';
+   
+   export default defineConfig({
+     output: 'static',
+     base: '/your-repo-name',
+   });
+   ```
+2. Build: `npm run build`
+3. Deploy the `dist` folder to GitHub Pages
 
 ### Docker
 
@@ -419,40 +456,44 @@ CMD ["nginx", "-g", "daemon off;"]
 
 ```text
 src/
-├── components/          # React components
+├── components/          # Astro components
+├── content/            # Content collections (blogs)
+├── layouts/            # Astro layouts
+├── pages/              # Astro pages (file-based routing)
 ├── utils/              # Utility functions
 ├── assets/             # Static assets
-└── styles/             # CSS styles
+├── styles/             # CSS styles
+└── data/               # Static data files
 
 public/
 ├── github-projects.json # GitHub data
-├── blogs/              # Blog posts
 └── fonts/              # Custom fonts
 ```
 
 ### Available Scripts
 
-- `npm run dev` - Start development server
+- `npm run dev` - Start Astro development server (localhost:4321)
 - `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-- `npm run type-check` - Run TypeScript type checking
+- `npm run preview` - Preview production build locally
+- `npm run astro` - Run Astro CLI commands
+- `npm run update-github` - Fetch latest GitHub data
 
 ### Technologies Used
 
-- **React 18** with TypeScript
-- **Vite** for build tooling and dev server
-- **Tailwind CSS** for styling
-- **React Router** for navigation
-- **Gray Matter** for markdown processing
+- **Astro 5** with TypeScript for static site generation
+- **MDX** for enhanced markdown with components
+- **Tailwind CSS** for utility-first styling
+- **Sharp** for optimized image processing
+- **Highlight.js** for syntax highlighting in blogs
 
 ## 🔧 Performance
 
-- ⚡ Fast initial load with Vite
+- ⚡ Lightning-fast builds and rendering with Astro
 - 📱 Mobile-optimized responsive design
-- 🎯 Optimized bundle size
+- 🎯 Zero JavaScript by default, enhanced progressively
 - 💾 Static GitHub data for instant loading
-- 🔍 SEO optimized with meta tags
+- 🔍 SEO optimized with automatic sitemap generation
+- 🖼️ Optimized images with Sharp integration
 
 ## 📈 SEO Features
 
@@ -481,7 +522,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you have any questions or need help:
 
 1. Check the documentation above
-2. Search existing [Issues](https://github.com/iamdhakrey/github-profile/issues)
+2. Search existing [Issues](https://github.com/iamdhakrey/terminal-portfolio/issues)
 3. Create a new issue if needed
 
 ## 🙏 Acknowledgments
@@ -494,6 +535,6 @@ If you have any questions or need help:
 
 ⭐ **Star this repository if you found it helpful!**
 
-🐛 **Found a bug?** [Open an issue](https://github.com/iamdhakrey/github-profile/issues)
+🐛 **Found a bug?** [Open an issue](https://github.com/iamdhakrey/terminal-portfolio/issues)
 
-💡 **Have a feature request?** [Start a discussion](https://github.com/iamdhakrey/github-profile/discussions)
+💡 **Have a feature request?** [Start a discussion](https://github.com/iamdhakrey/terminal-portfolio/discussions)

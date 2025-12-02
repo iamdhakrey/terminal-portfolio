@@ -8,9 +8,6 @@ All notable changes to this project will be documented in this file.
 - chore: release v2.1.0
 
 
-## [2.1.0] - 2025-12-02
-
-
 ## [2.0.0] - 2025-09-15
 
 ### ✨ Features

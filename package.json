@@ -12,12 +12,12 @@
     "update-github": "python3 scripts/fetch-github-data.py"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.4",
-    "@astrojs/node": "^9.4.3",
-    "@astrojs/rss": "^4.0.12",
-    "@astrojs/sitemap": "^3.5.1",
+    "@astrojs/mdx": "4.3.13",
+    "@astrojs/node": "9.5.2",
+    "@astrojs/rss": "4.0.15",
+    "@astrojs/sitemap": "3.7.0",
     "@tailwindcss/vite": "^4.1.13",
-    "astro": "^5.16.4",
+    "astro": "5.16.16",
     "highlight.js": "^11.11.1",
     "markdown-it": "^14.1.0",
     "sharp": "^0.34.2",

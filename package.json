@@ -2,7 +2,7 @@
   "name": "terminal-portfolio",
   "homepage": "https://terminal-portfolio.iamdhakrey.dev",
   "private": true,
-  "version": "2.2.1",
+  "version": "2.2.2",
   "type": "module",
   "scripts": {
     "dev": "astro dev",

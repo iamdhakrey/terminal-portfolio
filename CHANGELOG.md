@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.2] - 2026-01-29
+
+### 📝 Other Changes
+- chore(deps): update mdast-util-to-hast and minizlib versions, remove mkdirp
+- chore: update project dependencies
+- chore: update dependencies to latest versions
+- Merge pull request #14 from iamdhakrey/dependabot/npm_and_yarn/astro-5.16.4
+- chore(deps): bump astro from 5.13.5 to 5.16.4
+- Merge pull request #13 from iamdhakrey/dependabot/npm_and_yarn/multi-07f73e8078
+- chore(deps): bump vite
+
+
 ## [2.2.1] - 2025-12-02
 
 ### ✨ Features

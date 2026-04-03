@@ -1,0 +1,98 @@
+---
+interface RelatedPost {
+    id: string;
+    data: {
+        title: string;
+        description: string;
+        tags?: string[];
+        heroImage?: any;
+    };
+}
+
+interface Props {
+    posts: RelatedPost[];
+}
+
+const { posts } = Astro.props;
+---
+
+<div class="mb-8">
+    <h3
+        class="text-xl font-bold mb-4 flex items-center gap-2"
+        style={{ color: "var(--theme-primary)" }}
+    >
+        <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width={2}
+                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+            ></path>
+        </svg>
+        Related Articles
+    </h3>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+        {
+            posts.map((post) => (
+                <a
+                    href={`/blog/${post.id}`}
+                    class="related-post-card group block rounded-lg border p-4 transition-all duration-200"
+                    style={{
+                        borderColor: "var(--theme-border)",
+                        backgroundColor: "var(--theme-welcomeBoxBg)",
+                    }}
+                >
+                    <h4
+                        class="font-semibold text-sm mb-2 group-hover:underline line-clamp-2"
+                        style={{ color: "var(--theme-link)" }}
+                    >
+                        {post.data.title}
+                    </h4>
+                    <p
+                        class="text-xs line-clamp-2 mb-3"
+                        style={{ color: "var(--theme-muted)" }}
+                    >
+                        {post.data.description}
+                    </p>
+                    {post.data.tags && post.data.tags.length > 0 && (
+                        <div class="flex flex-wrap gap-1">
+                            {post.data.tags.slice(0, 3).map((tag) => (
+                                <span
+                                    class="text-xs px-2 py-0.5 rounded-full"
+                                    style={{
+                                        backgroundColor:
+                                            "var(--theme-background)",
+                                        color: "var(--theme-accent)",
+                                        border: "1px solid var(--theme-border)",
+                                    }}
+                                >
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+                </a>
+            ))
+        }
+    </div>
+</div>
+
+<style>
+    .related-post-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>

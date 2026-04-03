@@ -6,8 +6,13 @@ author: "Portfolio Author"
 category: "Documentation"
 tags: ["Blogging", "Documentation", "Content Management"]
 heroImage: "/public/images/sample-image.svg"
-next: "blog-linking-guide"
-prev: "react-typescript-guide"
+prev:
+    slug: "react-typescript-guide"
+    title: "Getting Started with React and TypeScript"
+next:
+    slug: "blog-linking-guide"
+    title: "Blog Linking Guide - Connect Your Content"
+relatedPosts: ["react-typescript-guide"]
 ---
 
 # Blog Linking Guide - Connect Your Content
@@ -98,10 +103,10 @@ Group related posts by themes:
 Here's how you might reference other content in your blogs:
 
 ```markdown
-Before diving into advanced React patterns, make sure you're comfortable with 
+Before diving into advanced React patterns, make sure you're comfortable with
 {{blog:react-typescript-guide|React and TypeScript fundamentals}}.
 
-For setting up your development environment, check out my 
+For setting up your development environment, check out my
 {{blog:linux_commands|Linux commands guide}}.
 ```
 

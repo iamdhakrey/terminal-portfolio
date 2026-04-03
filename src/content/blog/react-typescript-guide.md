@@ -5,7 +5,11 @@ description: "Learn how to set up a React project with TypeScript for better dev
 author: "Hrithik Dhakrey"
 category: "Documentation"
 tags: ["React", "TypeScript", "Web Development"]
-next: blog-linking-guide
+next:
+    slug: "blog-linking-guide"
+    title: "Blog Linking Guide - Connect Your Content"
+
+relatedPosts: ["blog-linking-guide"]
 ---
 
 # Getting Started with React and TypeScript
@@ -35,17 +39,17 @@ Here's a simple example of a React component with TypeScript:
 
 ```tsx
 interface GreetingProps {
-  name: string;
-  age?: number;
+    name: string;
+    age?: number;
 }
 
 const Greeting: React.FC<GreetingProps> = ({ name, age }) => {
-  return (
-    <div>
-      <h1>Hello, {name}!</h1>
-      {age && <p>You are {age} years old.</p>}
-    </div>
-  );
+    return (
+        <div>
+            <h1>Hello, {name}!</h1>
+            {age && <p>You are {age} years old.</p>}
+        </div>
+    );
 };
 
 export default Greeting;

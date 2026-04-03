@@ -7,14 +7,38 @@ import FallbackImage from "../assets/H.svg";
 import { SITE_TITLE } from "../consts";
 
 interface Props {
-	title: string;
-	description: string;
-	image?: ImageMetadata;
+    title: string;
+    description: string;
+    image?: ImageMetadata;
+    tags?: string[];
+    keywords?: string;
+    author?: string;
+    pubDate?: Date;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = FallbackImage } = Astro.props;
+const {
+    title,
+    description,
+    image = FallbackImage,
+    tags,
+    keywords,
+    author,
+    pubDate,
+} = Astro.props;
+
+// Determine if this is an article page (blog post)
+const isArticle = Astro.url.pathname.startsWith("/blog/");
+const ogType = isArticle ? "article" : "website";
+
+// Build keywords string from tags + explicit keywords
+const metaKeywords = [
+    ...(tags || []),
+    ...(keywords ? keywords.split(",").map((k: string) => k.trim()) : []),
+]
+    .filter(Boolean)
+    .join(", ");
 ---
 
 <!-- Global Metadata -->
@@ -23,99 +47,99 @@ const { title, description, image = FallbackImage } = Astro.props;
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
-	rel="alternate"
-	type="application/rss+xml"
-	title={SITE_TITLE}
-	href={new URL("rss.xml", Astro.site)}
+    rel="alternate"
+    type="application/rss+xml"
+    title={SITE_TITLE}
+    href={new URL("rss.xml", Astro.site)}
 />
 <meta name="generator" content={Astro.generator} />
 
 <!-- Font preloads -->
 <link
-	rel="preload"
-	href="/fonts/CascadiaCodeItalic.woff2"
-	as="font"
-	type="font/woff2"
-	crossorigin
+    rel="preload"
+    href="/fonts/CascadiaCodeItalic.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
 />
 <link
-	rel="preload"
-	href="/fonts/CascadiaCode.woff2"
-	as="font"
-	type="font/woff2"
-	crossorigin
-/>
-
-<link
-	rel="preload"
-	href="/fonts/CascadiaCodePL.woff2"
-	as="font"
-	type="font/woff2"
-	crossorigin
+    rel="preload"
+    href="/fonts/CascadiaCode.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
 />
 
 <link
-	rel="preload"
-	href="/fonts/CascadiaMonoItalic.woff2"
-	as="font"
-	type="font/woff2"
-	crossorigin
+    rel="preload"
+    href="/fonts/CascadiaCodePL.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
 />
 
 <link
-	rel="preload"
-	href="/fonts/CascadiaMonoPL.woff2"
-	as="font"
-	type="font/woff2"
-	crossorigin
+    rel="preload"
+    href="/fonts/CascadiaMonoItalic.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
+/>
+
+<link
+    rel="preload"
+    href="/fonts/CascadiaMonoPL.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
 />
 <!--  -->
 <link
-	rel="preload"
-	href="/fonts/CascadiaCodePLItalic.woff2"
-	as="font"
-	type="font/woff2"
-	crossorigin
+    rel="preload"
+    href="/fonts/CascadiaCodePLItalic.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
 />
 
 <link
-	rel="preload"
-	href="/fonts/CascadiaMonoPLItalic.woff2"
-	as="font"
-	type="font/woff2"
-	crossorigin
+    rel="preload"
+    href="/fonts/CascadiaMonoPLItalic.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
 /><link
-	rel="preload"
-	href="/fonts/CascadiaMono.woff2"
-	as="font"
-	type="font/woff2"
-	crossorigin
+    rel="preload"
+    href="/fonts/CascadiaMono.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
 />
 
 <style>
-	@font-face {
-		font-family: "Cascadia Code";
-		src: url("/fonts/CascadiaCode.woff2") format("woff2");
-		font-weight: normal;
-		font-style: normal;
-		font-display: swap;
-	}
+    @font-face {
+        font-family: "Cascadia Code";
+        src: url("/fonts/CascadiaCode.woff2") format("woff2");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
 
-	@font-face {
-		font-family: "Cascadia Code Italic";
-		src: url("/fonts/CascadiaCodeItalic.woff2") format("woff2");
-		font-weight: normal;
-		font-style: italic;
-		font-display: swap;
-	}
+    @font-face {
+        font-family: "Cascadia Code Italic";
+        src: url("/fonts/CascadiaCodeItalic.woff2") format("woff2");
+        font-weight: normal;
+        font-style: italic;
+        font-display: swap;
+    }
 
-	@font-face {
-		font-family: "Cascadia Mono";
-		src: url("/fonts/CascadiaMono.woff2") format("woff2");
-		font-weight: normal;
-		font-style: normal;
-		font-display: swap;
-	}
+    @font-face {
+        font-family: "Cascadia Mono";
+        src: url("/fonts/CascadiaMono.woff2") format("woff2");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
 </style>
 
 <!-- Canonical URL -->
@@ -125,17 +149,35 @@ const { title, description, image = FallbackImage } = Astro.props;
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+{metaKeywords && <meta name="keywords" content={metaKeywords} />}
+{author && <meta name="author" content={author} />}
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
+<meta property="og:type" content={ogType} />
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image.src, Astro.url)} />
+<meta property="og:image" content={new URL(image.src, Astro.url.origin)} />
+
+<!-- Article-specific Open Graph tags -->
+{
+    isArticle && pubDate && (
+        <meta
+            property="article:published_time"
+            content={pubDate.toISOString()}
+        />
+    )
+}
+{isArticle && author && <meta property="article:author" content={author} />}
+{
+    isArticle &&
+        tags &&
+        tags.map((tag) => <meta property="article:tag" content={tag} />)
+}
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image.src, Astro.url)} />
+<meta property="twitter:image" content={new URL(image.src, Astro.url.origin)} />

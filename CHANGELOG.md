@@ -12,6 +12,22 @@ All notable changes to this project will be documented in this file.
 
 ### 📝 Other Changes
 - chore: revert project version to 2.3.0
+- chore: release v2.4.0
+- chore: revert project version to 2.3.0
+- chore: release v2.5.0
+- chore: release v2.4.0
+
+
+## [2.4.0] - 2026-04-03
+
+### ✨ Features
+- feat: add RelatedPosts component and integrate it into BlogPost layout with TOC support
+- feat: implement related posts component and update blog schema to support cross-linking and metadata
+- feat: enhance blog Pre and Next blogs
+- feat: add interactive table of contents
+
+### 📝 Other Changes
+- chore: revert project version to 2.3.0
 - chore: release v2.5.0
 - chore: release v2.4.0
 

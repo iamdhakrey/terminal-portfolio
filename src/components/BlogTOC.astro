@@ -1,0 +1,269 @@
+---
+import BlogPreNext from "./BlogPreNext.astro";
+
+const { headings = ([] = ""), prev, next } = Astro.props;
+
+// Filter and limit headings for better UX
+const filteredHeadings = headings.filter((heading: any) => heading.level <= 4); // Only show H1-H4
+// .slice(0, 15); // Limit to max 15 headings
+
+const hasHeadings = filteredHeadings.length > 0;
+---
+
+<div class="hidden lg:block w-80">
+    <div class="sticky top-20 space-y-6">
+        {/* Table of Contents */}
+        {
+            hasHeadings && (
+                <div
+                    class="rounded-lg border p-4 max-h-[70vh] flex flex-col"
+                    style={{
+                        backgroundColor: "var(--theme-welcomeBoxBg)",
+                        borderColor: "var(--theme-border)",
+                    }}
+                >
+                    <h3
+                        class="text-base font-semibold mb-3 flex-shrink-0"
+                        style={{ color: "var(--theme-h1)" }}
+                    >
+                        📑 Table of Contents
+                    </h3>
+
+                    <nav class="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
+                        <div class="space-y-1 pr-2">
+                            {filteredHeadings.map(
+                                (
+                                    heading: {
+                                        id: string;
+                                        level: number;
+                                        text: string;
+                                    },
+                                    index: number,
+                                ) => {
+                                    // Calculate indentation based on level
+                                    const indent = Math.max(
+                                        0,
+                                        (heading.level - 1) * 12,
+                                    );
+                                    const maxIndent = 36; // Max 3 levels of indentation
+                                    const finalIndent = Math.min(
+                                        indent,
+                                        maxIndent,
+                                    );
+
+                                    return (
+                                        <a
+                                            id={`toc-${index}`}
+                                            href={`#${heading.id}`}
+                                            class="toc-link block py-1.5 px-2 text-xs rounded transition-all duration-200 hover:bg-opacity-50 border-l-2 border-transparent"
+                                            style={{
+                                                paddingLeft: `${8 + finalIndent}px`,
+                                                color: "var(--theme-muted)",
+                                                lineHeight: "1.3",
+                                            }}
+                                            data-heading-level={heading.level}
+                                        >
+                                            <span
+                                                class="block truncate"
+                                                title={heading.text}
+                                            >
+                                                {heading.text}
+                                            </span>
+                                        </a>
+                                    );
+                                },
+                            )}
+                        </div>
+                    </nav>
+
+                    {/* Back to top button */}
+                    <div
+                        class="flex-shrink-0 pt-3 border-t border-opacity-20"
+                        style={{ borderColor: "var(--theme-border)" }}
+                    >
+                        <button
+                            id="to-top-button"
+                            class="w-full text-xs px-3 py-2 rounded hover:bg-opacity-10 transition-all duration-200 flex items-center justify-center gap-1"
+                            style={{
+                                color: "var(--theme-muted)",
+                                backgroundColor: "transparent",
+                            }}
+                        >
+                            <svg
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path d="M18 15l-6-6-6 6" />
+                            </svg>
+                            Back to Top
+                        </button>
+                    </div>
+                </div>
+            )
+        }
+
+        {/* Navigation */}
+        <BlogPreNext prev={prev} next={next} />
+    </div>
+</div>
+
+<script>
+    // Smooth scroll to hash on page load
+    const hash = window.location.hash;
+    if (hash) {
+        setTimeout(() => {
+            const element = document.querySelector(hash);
+            if (element) {
+                element.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        }, 100);
+    }
+</script>
+
+<script is:inline>
+    // Enhanced TOC intersection observer
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                const id = entry.target.getAttribute("id");
+                if (entry.isIntersecting) {
+                    // Remove active state from all TOC links
+                    document.querySelectorAll(".toc-link").forEach((link) => {
+                        link.classList.remove("active");
+                        link.style.color = "var(--theme-muted)";
+                        link.style.fontWeight = "normal";
+                        link.style.borderLeftColor = "transparent";
+                    });
+
+                    // Add active state to current link
+                    const activeLink = document.querySelector(
+                        `.toc-link[href="#${id}"]`,
+                    );
+                    if (activeLink) {
+                        activeLink.classList.add("active");
+                        activeLink.style.color = "var(--theme-accent)";
+                        activeLink.style.fontWeight = "500";
+                        activeLink.style.borderLeftColor =
+                            "var(--theme-accent)";
+
+                        // Keep active link visible in TOC
+                        const tocNav = activeLink.closest("nav");
+                        if (tocNav) {
+                            const linkRect = activeLink.getBoundingClientRect();
+                            const navRect = tocNav.getBoundingClientRect();
+
+                            if (
+                                linkRect.top < navRect.top ||
+                                linkRect.bottom > navRect.bottom
+                            ) {
+                                activeLink.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "nearest",
+                                    inline: "nearest",
+                                });
+                            }
+                        }
+                    }
+                }
+            });
+        },
+        {
+            rootMargin: "0px 0px -60% 0px",
+            threshold: 0.1,
+        },
+    );
+
+    // Observe all headings
+    document.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach((heading) => {
+        if (heading.id) {
+            observer.observe(heading);
+        }
+    });
+
+    // Back to top functionality
+    const toTopButton = document.getElementById("to-top-button");
+    if (toTopButton) {
+        toTopButton.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+
+            // Clear active states when going to top
+            document.querySelectorAll(".toc-link").forEach((link) => {
+                link.classList.remove("active");
+                link.style.color = "var(--theme-muted)";
+                link.style.fontWeight = "normal";
+                link.style.borderLeftColor = "transparent";
+            });
+        });
+    }
+
+    // Enhanced click handling for TOC links
+    document.querySelectorAll(".toc-link").forEach((link) => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute("href")?.substring(1);
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+                // Smooth scroll with proper offset
+                const headerOffset = 80;
+                const elementPosition =
+                    targetElement.getBoundingClientRect().top;
+                const offsetPosition =
+                    elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth",
+                });
+
+                // Update URL without triggering scroll
+                history.pushState(null, null, `#${targetId}`);
+            }
+        });
+    });
+</script>
+
+<style>
+    /* Custom scrollbar for TOC */
+    .scrollbar-thin {
+        scrollbar-width: thin;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+        background-color: rgba(156, 163, 175, 0.5);
+        border-radius: 2px;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(156, 163, 175, 0.8);
+    }
+
+    /* TOC link transitions */
+    .toc-link {
+        transition: all 0.2s ease;
+    }
+
+    .toc-link:hover {
+        background-color: rgba(var(--theme-accent-rgb, 59, 130, 246), 0.1);
+        color: var(--theme-accent) !important;
+    }
+
+    .toc-link.active {
+        background-color: rgba(var(--theme-accent-rgb, 59, 130, 246), 0.1);
+    }
+</style>

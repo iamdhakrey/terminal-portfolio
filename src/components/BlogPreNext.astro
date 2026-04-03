@@ -1,0 +1,59 @@
+---
+type LinkMeta = { title: string; slug: string };
+
+interface Props {
+    prev?: LinkMeta | null;
+    next?: LinkMeta | null;
+}
+
+const { prev, next } = Astro.props as Props;
+---
+
+<div
+    class="flex justify-between mt-8"
+    style={{
+        borderTop: "1px solid var(--theme-border)",
+        paddingTop: "1.5rem",
+    }}
+>
+    <div>
+        {
+            prev ? (
+                <a
+                    href={`/blogs/${prev.slug}`}
+                    class="text-sm font-medium hover:underline"
+                    style={{ color: "var(--theme-link)" }}
+                >
+                    ← {prev.title}
+                </a>
+            ) : (
+                <span
+                    class="text-sm text-gray-500"
+                    style={{ color: "var(--theme-muted)" }}
+                >
+                    ← No previous post
+                </span>
+            )
+        }
+    </div>
+    <div>
+        {
+            next ? (
+                <a
+                    href={`/blogs/${next.slug}`}
+                    class="text-sm font-medium hover:underline"
+                    style={{ color: "var(--theme-link)" }}
+                >
+                    {next.title} →
+                </a>
+            ) : (
+                <span
+                    class="text-sm text-gray-500"
+                    style={{ color: "var(--theme-muted)" }}
+                >
+                    No next post →
+                </span>
+            )
+        }
+    </div>
+</div>

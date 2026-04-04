@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.4.1](https://github.com/iamdhakrey/Github-Profile/releases/tag/v2.4.1) — 2026-04-04
+
+> 🗓 2026-04-04 &nbsp;·&nbsp; 📦 6 commits
+
+### 📦 Other Changes
+
+- 0b7e7447f39769576bcc0807378a4609 Merge branch 'main' of github.com:iamdhakrey/Github-Profile [`7d79ff6`](https://github.com/iamdhakrey/Github-Profile/commit/7d79ff6)
+- a9f4e6bbd4dabeba7d79d96f7f911789 chore: update release versioning logic in bump-and-release script [`9a13457`](https://github.com/iamdhakrey/Github-Profile/commit/9a13457)
+- 09dbf3a112057f55f6220d196852d894 Merge pull request #15 from iamdhakrey/dependabot/npm_and_yarn/rollup-4.60.0 [`e014ca7`](https://github.com/iamdhakrey/Github-Profile/commit/e014ca7)
+- bfd5092fc41a50fad1777f189871ff01 Merge pull request #16 from iamdhakrey/dependabot/npm_and_yarn/tar-7.5.13 [`9646769`](https://github.com/iamdhakrey/Github-Profile/commit/9646769)
+- 1384685ef98451a153ebee67287b5dbb chore(deps): bump tar from 7.5.7 to 7.5.13 [`3163d1f`](https://github.com/iamdhakrey/Github-Profile/commit/3163d1f)
+- 0b3c304eb0ae01844076968f25b8f8c2 chore(deps): bump rollup from 4.45.0 to 4.60.0 [`eab4c06`](https://github.com/iamdhakrey/Github-Profile/commit/eab4c06)
+
+---
+
+*Full diff: [v2.4.1](https://github.com/iamdhakrey/Github-Profile/compare/HEAD...v2.4.1)*
+
 ## [2.4.0] - 2026-04-03
 
 ### ✨ Features

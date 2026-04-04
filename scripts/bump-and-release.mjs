@@ -172,6 +172,9 @@ function parseCommits(rawLines) {
         const hash = line.slice(0, 7);
         const msg = line.slice(8).trim();
 
+        // skip merge commits — they're noise in release notes
+        if (/^Merge (pull request|branch)/i.test(msg)) continue;
+
         if (/BREAKING[- ]?CHANGE/i.test(msg)) groups.breaking.push({ hash, msg });
         else if (/^feat[:(]/.test(msg)) groups.feat.push({ hash, msg });
         else if (/^fix[:(]/.test(msg)) groups.fix.push({ hash, msg });
@@ -227,10 +230,7 @@ function renderChangelog(version, commits, repoUrl = '') {
         for (const { hash, msg } of items) {
             // strip conventional-commit prefix for cleaner display
             const cleanMsg = msg.replace(/^(feat|fix|perf|refactor|docs?|chore|build|ci)[:(][^)]*\)?:?\s*/i, '');
-            const hashLink = repoUrl
-                ? `[\`${hash}\`](${repoUrl}/commit/${hash})`
-                : `\`${hash}\``;
-            md += `- ${cleanMsg} ${hashLink}\n`;
+            md += `- ${cleanMsg}\n`;
         }
         md += '\n';
     }

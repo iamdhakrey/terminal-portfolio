@@ -19,7 +19,7 @@
     "@tailwindcss/vite": "^4.1.13",
     "astro": "^6.1.1",
     "highlight.js": "^11.11.1",
-    "markdown-it": "^14.1.0",
+    "markdown-it": "^14.1.1",
     "sharp": "^0.34.2",
     "tailwindcss": "^4.1.13"
   }

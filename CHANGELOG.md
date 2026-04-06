@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.4.2](https://github.com/iamdhakrey/terminal-portfolio/releases/tag/v2.4.2) — 2026-04-06
+
+> 🗓 2026-04-06 &nbsp;·&nbsp; 📦 7 commits
+
+### ✨ New Features
+
+- Add permissions section to Node.js CI workflow
+
+### 🔧 Maintenance
+
+- add pull request template and code of conduct files
+- add pull request template, code of conduct, and update release script
+- bump markdown-it from 14.1.0 to 14.1.1
+- bump picomatch
+- bump defu from 6.1.4 to 6.1.6
+- bump h3 from 1.15.5 to 1.15.11
+
+---
+
+*Full diff: [v2.4.2](https://github.com/iamdhakrey/terminal-portfolio/compare/HEAD...v2.4.2)*
+
 ## [2.4.1](https://github.com/iamdhakrey/Github-Profile/releases/tag/v2.4.1) — 2026-04-04
 
 > 🗓 2026-04-04 &nbsp;·&nbsp; 📦 6 commits

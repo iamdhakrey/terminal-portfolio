@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.4.3](https://github.com/iamdhakrey/terminal-portfolio/releases/tag/v2.4.3) — 2026-04-09
+
+> 🗓 2026-04-09 &nbsp;·&nbsp; 📦 2 commits
+
+### 🔧 Maintenance
+
+- bump vite from 7.3.1 to 7.3.2
+
+### 📦 Other Changes
+
+- Remove duplicate Footer component in BlogPost layout (Issue #21)
+
+---
+
+*Full diff: [v2.4.3](https://github.com/iamdhakrey/terminal-portfolio/compare/HEAD...v2.4.3)*
+
 ## [2.4.2](https://github.com/iamdhakrey/terminal-portfolio/releases/tag/v2.4.2) — 2026-04-06
 
 > 🗓 2026-04-06 &nbsp;·&nbsp; 📦 7 commits

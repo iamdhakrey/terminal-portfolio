@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.5.0](https://github.com/iamdhakrey/terminal-portfolio/releases/tag/v2.5.0) — 2026-04-13
+
+> 🗓 2026-04-13 &nbsp;·&nbsp; 📦 2 commits
+
+### ✨ New Features
+
+- add custom 404 page
+
+### 🔧 Maintenance
+
+- remove Vercel rewrite configuration
+
+---
+
+*Full diff: [v2.5.0](https://github.com/iamdhakrey/terminal-portfolio/compare/HEAD...v2.5.0)*
+
 ## [2.4.3](https://github.com/iamdhakrey/terminal-portfolio/releases/tag/v2.4.3) — 2026-04-09
 
 > 🗓 2026-04-09 &nbsp;·&nbsp; 📦 2 commits

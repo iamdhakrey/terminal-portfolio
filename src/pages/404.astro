@@ -1,0 +1,290 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { terminalConfig } from "../consts";
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+	<head>
+		<BaseHead
+			title="404 - Page Not Found | Terminal Portfolio"
+			description="The page you're looking for doesn't exist. Navigate back to the terminal."
+		/>
+		<style>
+			@keyframes blink {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0; }
+			}
+			@keyframes glitch {
+				0% { transform: translate(0); }
+				20% { transform: translate(-2px, 2px); }
+				40% { transform: translate(-2px, -2px); }
+				60% { transform: translate(2px, 2px); }
+				80% { transform: translate(2px, -2px); }
+				100% { transform: translate(0); }
+			}
+			@keyframes fadeInUp {
+				from {
+					opacity: 0;
+					transform: translateY(16px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+			@keyframes typewriter {
+				from { width: 0; }
+				to { width: 100%; }
+			}
+			.cursor-blink::after {
+				content: "█";
+				animation: blink 1s step-end infinite;
+				color: var(--theme-primary);
+			}
+			.glitch-text {
+				animation: glitch 0.3s ease-in-out infinite alternate;
+			}
+			.glitch-text:hover {
+				animation: glitch 0.1s ease-in-out infinite alternate;
+			}
+			.fade-in-up {
+				animation: fadeInUp 0.5s ease-out forwards;
+				opacity: 0;
+			}
+			.delay-1 { animation-delay: 0.1s; }
+			.delay-2 { animation-delay: 0.3s; }
+			.delay-3 { animation-delay: 0.5s; }
+			.delay-4 { animation-delay: 0.7s; }
+			.delay-5 { animation-delay: 0.9s; }
+			.delay-6 { animation-delay: 1.1s; }
+			.nav-link {
+				transition: all 0.2s ease;
+			}
+			.nav-link:hover {
+				transform: translateX(8px);
+			}
+			.error-code {
+				font-size: clamp(4rem, 15vw, 10rem);
+				line-height: 1;
+				letter-spacing: -0.05em;
+				text-shadow:
+					0 0 20px var(--theme-error),
+					0 0 40px color-mix(in srgb, var(--theme-error) 50%, transparent),
+					0 0 80px color-mix(in srgb, var(--theme-error) 25%, transparent);
+			}
+			.scanline {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				pointer-events: none;
+				background: repeating-linear-gradient(
+					0deg,
+					transparent,
+					transparent 2px,
+					rgba(0, 0, 0, 0.05) 2px,
+					rgba(0, 0, 0, 0.05) 4px
+				);
+				z-index: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div
+			class="min-h-screen flex flex-col"
+			style={{
+				backgroundColor: "var(--theme-background)",
+				color: "var(--theme-text)",
+			}}
+		>
+			<Header />
+			<main class="flex-grow flex items-center justify-center relative">
+				<div class="scanline"></div>
+				<div
+					class="font-mono max-w-2xl mx-auto p-4 sm:p-8 w-full relative z-10"
+				>
+					<!-- Error Code -->
+					<div class="text-center mb-6 sm:mb-8 fade-in-up delay-1">
+						<div
+							class="error-code font-bold glitch-text"
+							style={{ color: "var(--theme-error)" }}
+						>
+							404
+						</div>
+					</div>
+
+					<!-- Terminal Output Block -->
+					<div
+						class="rounded-lg p-4 sm:p-6 mb-6 fade-in-up delay-2"
+						style={{
+							border: `1px solid var(--theme-border)`,
+							backgroundColor: "var(--theme-welcomeBoxBg)",
+						}}
+					>
+						<!-- Command that caused the error -->
+						<div class="flex items-center text-sm sm:text-base mb-3">
+							<span style={{ color: "var(--theme-promptUser)" }}
+								>user@{terminalConfig.hostname}</span
+							>
+							<span style={{ color: "var(--theme-text)" }}>:</span>
+							<span style={{ color: "var(--theme-promptPath)" }}>~</span>
+							<span style={{ color: "var(--theme-promptSymbol)" }}>$ </span>
+							<span
+								style={{ color: "var(--theme-commandText)" }}
+								id="typed-path"
+								class="cursor-blink"></span>
+						</div>
+
+						<!-- Error output -->
+						<div
+							class="text-sm sm:text-base space-y-1"
+							style={{ color: "var(--theme-error)" }}
+						>
+							<p>bash: page not found: No such file or directory</p>
+						</div>
+
+						<div
+							class="text-sm mt-2"
+							style={{ color: "var(--theme-warning)" }}
+						>
+							<p>⚠ The path you requested does not exist on this server.</p>
+						</div>
+
+						<!-- Return code -->
+						<div
+							class="text-xs mt-3 pt-3"
+							style={{
+								color: "var(--theme-muted)",
+								borderTop: `1px solid var(--theme-border)`,
+							}}
+						>
+							Process exited with code <span
+								style={{ color: "var(--theme-error)" }}>404</span
+							> (ENOENT)
+						</div>
+					</div>
+
+					<!-- Suggestion box -->
+					<div
+						class="rounded-lg p-4 sm:p-6 mb-6 fade-in-up delay-3"
+						style={{
+							border: `1px solid var(--theme-border)`,
+							backgroundColor: "var(--theme-welcomeBoxBg)",
+						}}
+					>
+						<h2
+							class="text-sm font-semibold mb-3 flex items-center gap-2"
+							style={{ color: "var(--theme-info)" }}
+						>
+							<span>💡</span>
+							<span>Did you mean one of these?</span>
+						</h2>
+
+						<div class="space-y-2">
+							<a
+								href="/"
+								class="nav-link flex items-center gap-3 text-sm py-2 px-3 rounded"
+								style={{
+									color: "var(--theme-primary)",
+								}}
+							>
+								<span style={{ color: "var(--theme-promptSymbol)" }}>→</span>
+								<span style={{ color: "var(--theme-commandText)" }}>cd ~</span>
+								<span style={{ color: "var(--theme-muted)" }}>
+									# Go to home directory
+								</span>
+							</a>
+							<a
+								href="/projects"
+								class="nav-link flex items-center gap-3 text-sm py-2 px-3 rounded"
+								style={{
+									color: "var(--theme-primary)",
+								}}
+							>
+								<span style={{ color: "var(--theme-promptSymbol)" }}>→</span>
+								<span style={{ color: "var(--theme-commandText)" }}
+									>cd ~/projects</span
+								>
+								<span style={{ color: "var(--theme-muted)" }}>
+									# Browse projects
+								</span>
+							</a>
+							<a
+								href="/blogs"
+								class="nav-link flex items-center gap-3 text-sm py-2 px-3 rounded"
+								style={{
+									color: "var(--theme-primary)",
+								}}
+							>
+								<span style={{ color: "var(--theme-promptSymbol)" }}>→</span>
+								<span style={{ color: "var(--theme-commandText)" }}
+									>cd ~/blogs</span
+								>
+								<span style={{ color: "var(--theme-muted)" }}>
+									# Read blog posts
+								</span>
+							</a>
+						</div>
+					</div>
+
+					<!-- Go Home button -->
+					<div class="text-center fade-in-up delay-4">
+						<a
+							href="/"
+							class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-mono text-sm transition-all duration-200 hover:-translate-y-0.5"
+							style={{
+								backgroundColor: "var(--theme-primary)",
+								color: "var(--theme-background)",
+							}}
+						>
+							<span>←</span>
+							<span>cd ~</span>
+						</a>
+					</div>
+
+					<!-- New prompt -->
+					<div class="mt-8 fade-in-up delay-5">
+						<div class="flex items-center text-sm">
+							<span style={{ color: "var(--theme-promptUser)" }}
+								>user@{terminalConfig.hostname}</span
+							>
+							<span style={{ color: "var(--theme-text)" }}>:</span>
+							<span style={{ color: "var(--theme-promptPath)" }}>~</span>
+							<span style={{ color: "var(--theme-promptSymbol)" }}>$ </span>
+							<span class="cursor-blink"></span>
+						</div>
+					</div>
+				</div>
+			</main>
+			<Footer />
+		</div>
+	</body>
+</html>
+
+<script>
+	// Typewriter effect for the failed path
+	const pathEl = document.getElementById("typed-path");
+	if (pathEl) {
+		const currentPath = window.location.pathname;
+		const text = `cd ${currentPath}`;
+		let i = 0;
+		const type = () => {
+			if (i < text.length) {
+				pathEl.textContent += text.charAt(i);
+				i++;
+				setTimeout(type, 50 + Math.random() * 80);
+			}
+		};
+		setTimeout(type, 600);
+	}
+
+	// Apply saved theme
+	const savedTheme = localStorage.getItem("selected-theme");
+	if (savedTheme) {
+		document.documentElement.setAttribute("data-theme", savedTheme);
+	}
+</script>

@@ -21,6 +21,6 @@
     "highlight.js": "^11.11.1",
     "markdown-it": "^14.1.1",
     "sharp": "^0.34.2",
-    "tailwindcss": "^4.1.13"
+    "tailwindcss": "^4.2.4"
   }
 }

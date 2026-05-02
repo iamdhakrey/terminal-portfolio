@@ -16,7 +16,7 @@
     "@astrojs/node": "^10.0.5",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
-    "@tailwindcss/vite": "^4.1.13",
+    "@tailwindcss/vite": "^4.2.4",
     "astro": "^6.1.9",
     "highlight.js": "^11.11.1",
     "markdown-it": "^14.1.1",

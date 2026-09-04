@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.6.0](https://github.com/iamdhakrey/terminal-portfolio/releases/tag/v2.6.0) — 2026-09-04
+
+> 🗓 2026-09-04 &nbsp;·&nbsp; 📦 13 commits
+
+### ✨ New Features
+
+- add search, tag filtering, and pagination UI to the blog index page
+
+### 🔧 Maintenance
+
+- update package
+- update package
+- bump @astrojs/mdx from 5.0.4 to 5.0.6
+- bump @tailwindcss/vite from 4.2.4 to 4.3.0
+- bump @astrojs/node from 10.0.6 to 10.1.1
+- bump the npm_and_yarn group across 1 directory with 2 updates
+- bump tailwindcss from 4.1.13 to 4.2.4
+- bump @tailwindcss/vite from 4.1.13 to 4.2.4
+- bump the npm_and_yarn group across 1 directory with 2 updates
+- bump fast-xml-parser
+
+### 📦 Other Changes
+
+- update package-lock.json
+- Configure Dependabot for Bun package ecosystem
+
+---
+
+*Full diff: [v2.6.0](https://github.com/iamdhakrey/terminal-portfolio/compare/HEAD...v2.6.0)*
+
 ## [2.5.0](https://github.com/iamdhakrey/terminal-portfolio/releases/tag/v2.5.0) — 2026-04-13
 
 > 🗓 2026-04-13 &nbsp;·&nbsp; 📦 2 commits

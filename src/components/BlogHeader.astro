@@ -17,12 +17,13 @@ const { ...post } = Astro.props;
             {/* Breadcrumb */}
             <nav class="mb-6">
                 <div class="flex items-center space-x-2 text-sm">
-                    <button
-                        class="hover:opacity-75 transition-colors"
+                    <a
+                        href="/blogs"
+                        class="hover:opacity-75 transition-colors inline-block"
                         style={{ color: "var(--theme-primary)" }}
                     >
                         ← Back to blogs
-                    </button>
+                    </a>
                 </div>
             </nav>
 

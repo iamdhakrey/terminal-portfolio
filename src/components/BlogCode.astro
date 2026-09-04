@@ -21,9 +21,21 @@ const { language, code, title } = Astro.props;
     >
         <div class="flex items-center space-x-3">
             <div class="flex space-x-1">
-                <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                <div
+                    class="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: "var(--theme-error)" }}
+                >
+                </div>
+                <div
+                    class="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: "var(--theme-warning)" }}
+                >
+                </div>
+                <div
+                    class="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: "var(--theme-success)" }}
+                >
+                </div>
             </div>
             {
                 title && (
